@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Product Details</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <nav style="margin-bottom: 1rem;">
+      <a href="products.html" data-cy="back-to-products">&larr; Terug naar producten</a>
+    </nav>
+
+    <div data-cy="product-detail">
+      <div class="loading">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <section class="mt-3">
+      <h2 data-cy="related-title">Gerelateerde Producten</h2>
+      <div class="product-grid" data-cy="related-products">
+        <!-- Related products loaded by JS -->
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load related products
+      const params = new URLSearchParams(window.location.search);
+      const productId = parseInt(params.get('id'));
+      const product = Products.getById(productId);
+
+      if (product) {
+        const related = Products.getByCategory(product.category)
+          .filter(p => p.id !== productId)
+          .slice(0, 4);
+
+        const grid = document.querySelector('[data-cy="related-products"]');
+        if (related.length > 0) {
+          grid.innerHTML = related.map(p => `
+            <div class="product-card" data-cy="related-card" data-product-id="${p.id}">
+              <div class="product-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                ${p.name.charAt(0)}
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">${p.name}</h3>
+                <p class="product-price">${UI.formatPrice(p.price)}</p>
+                <a href="product-detail.html?id=${p.id}" class="btn btn-outline btn-sm">Bekijk</a>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          grid.innerHTML = '<p>Geen gerelateerde producten gevonden.</p>';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.products-page {
+  max-width: var(--rhs-container-max);
+  margin: 0 auto;
+}
+
+.products-count {
+  color: var(--rhs-color-grijs-4);
+  font-size: var(--rhs-font-size-sm);
+  margin-bottom: var(--rhs-space-4);
+}

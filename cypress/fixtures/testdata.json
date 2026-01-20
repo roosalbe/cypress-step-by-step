@@ -1,0 +1,75 @@
+{
+  "checkoutForm": {
+    "firstName": "Test",
+    "lastName": "User",
+    "email": "test@example.com",
+    "phone": "0612345678",
+    "address": "Teststraat 123",
+    "postcode": "1234 AB",
+    "city": "Amsterdam"
+  },
+  "alternativeCheckoutForm": {
+    "firstName": "Jan",
+    "lastName": "Jansen",
+    "email": "jan@jansen.nl",
+    "phone": "0698765432",
+    "address": "Hoofdweg 45",
+    "postcode": "5678 CD",
+    "city": "Rotterdam"
+  },
+  "invalidEmails": [
+    "invalid",
+    "test@",
+    "@test.com",
+    "test.com",
+    ""
+  ],
+  "validEmails": [
+    "test@example.com",
+    "user.name@domain.nl",
+    "info@test-domain.com"
+  ],
+  "searchTerms": {
+    "valid": ["Laptop", "Mouse", "USB", "Book"],
+    "noResults": ["xyz123", "nonexistent", "!!@@##"]
+  },
+  "loginScenarios": [
+    {
+      "description": "Valid student login",
+      "username": "student",
+      "password": "cypress123",
+      "shouldPass": true
+    },
+    {
+      "description": "Valid admin login",
+      "username": "admin",
+      "password": "admin123",
+      "shouldPass": true
+    },
+    {
+      "description": "Invalid username",
+      "username": "wronguser",
+      "password": "cypress123",
+      "shouldPass": false
+    },
+    {
+      "description": "Invalid password",
+      "username": "student",
+      "password": "wrongpassword",
+      "shouldPass": false
+    },
+    {
+      "description": "Empty credentials",
+      "username": "",
+      "password": "",
+      "shouldPass": false
+    }
+  ],
+  "cartQuantities": [1, 2, 5, 10],
+  "priceRanges": [
+    { "min": 0, "max": 50 },
+    { "min": 50, "max": 100 },
+    { "min": 100, "max": 500 },
+    { "min": 500, "max": 2000 }
+  ]
+}

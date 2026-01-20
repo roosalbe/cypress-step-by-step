@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mocking & Stubbing - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Mocking & Stubbing</h1>
+        <p>Neem controle over je network</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Network requests intercepten met cy.intercept()</li>
+            <li>Responses mocken voor gecontroleerde tests</li>
+            <li>Error scenarios simuleren</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Waarom Mocken?</h2>
+        <ul>
+          <li>Tests onafhankelijk van backend state</li>
+          <li>Edge cases testen (errors, lege data)</li>
+          <li>Snellere tests (geen echte API calls)</li>
+          <li>Stabielere tests (geen network issues)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>cy.intercept() Basics</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Spy op requests (observeren)
+cy.intercept('GET', '/api/products').as('getProducts')
+cy.visit('/products')
+cy.wait('@getProducts')
+
+// Check de response
+cy.wait('@getProducts').then((interception) =&gt; {
+  expect(interception.response.statusCode).to.eq(200)
+  expect(interception.response.body.products).to.have.length(10)
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Responses Mocken</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Mock met vaste data
+cy.intercept('GET', '/api/products', {
+  statusCode: 200,
+  body: { products: [{ id: 1, name: 'Test Product' }] }
+})
+
+// Mock met fixture file
+cy.intercept('GET', '/api/products', {
+  fixture: 'products.json'
+})
+
+// Simuleer een error
+cy.intercept('GET', '/api/products', {
+  statusCode: 500,
+  body: { error: 'Server error' }
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 15:</strong> Requests intercepten en observeren</li>
+          <li><strong>Opdracht 16:</strong> Responses mocken</li>
+          <li>Test ook error scenarios!</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

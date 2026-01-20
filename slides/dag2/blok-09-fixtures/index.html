@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixtures & Testdata - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Fixtures & Testdata</h1>
+        <p>Georganiseerde test data</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Fixtures laden en gebruiken met cy.fixture()</li>
+            <li>Test data organiseren en beheren</li>
+            <li>Data-driven tests schrijven met loops</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Wat zijn Fixtures?</h2>
+        <ul>
+          <li>JSON bestanden met test data</li>
+          <li>Leven in cypress/fixtures/</li>
+          <li>Herbruikbaar in meerdere tests</li>
+          <li>Makkelijk te onderhouden</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Fixtures Gebruiken</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// cypress/fixtures/users.json
+{
+  "validUser": {
+    "email": "student@test.nl",
+    "password": "cypress123"
+  },
+  "invalidUser": {
+    "email": "wrong@test.nl",
+    "password": "wrong"
+  }
+}
+
+// In je test
+cy.fixture('users').then((users) =&gt; {
+  cy.login(users.validUser.email, users.validUser.password)
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Data-Driven Tests</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Test meerdere scenarios
+const testCases = [
+  { product: 'Laptop', expected: 1299 },
+  { product: 'Mouse', expected: 49 },
+  { product: 'Keyboard', expected: 129 }
+]
+
+testCases.forEach(({ product, expected }) =&gt; {
+  it(`shows correct price for ${product}`, () =&gt; {
+    productsPage.searchProduct(product)
+    productsPage.getPrice().should('contain', expected)
+  })
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 17:</strong> Fixtures laden en gebruiken</li>
+          <li><strong>Opdracht 18:</strong> Data-driven tests</li>
+          <li>Organiseer je data logisch!</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

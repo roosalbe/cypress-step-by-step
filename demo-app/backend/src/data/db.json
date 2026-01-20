@@ -1,0 +1,223 @@
+{
+  "users": [
+    {
+      "id": "25040db8-1ecf-459c-a445-93d43661b029",
+      "email": "student@test.nl",
+      "password": "$2a$10$gxSQpycA3LKGXhKehZk6J.lFTUOfU69qxewjCdiQptpzZFSFEwVea",
+      "name": "Student User",
+      "firstName": "Student",
+      "lastName": "User",
+      "role": "user",
+      "createdAt": "2026-01-13T16:33:59.419Z"
+    },
+    {
+      "id": "e7286c68-5bbc-4d65-924e-bafa05fd9297",
+      "email": "admin@test.nl",
+      "password": "$2a$10$J3DCLaUwn4fBx0zf.mzm..8bss5ddXnDwOIKoqn/.RmADiuASdRly",
+      "name": "Admin User",
+      "firstName": "Admin",
+      "lastName": "User",
+      "role": "admin",
+      "createdAt": "2026-01-13T16:33:59.489Z"
+    },
+    {
+      "id": "2d1f7676-ff32-4069-bdd4-348f1b9ba446",
+      "email": "tester@test.nl",
+      "password": "$2a$10$PAaDJ7pl3kYE9kcrx11O6usfBFH1NKCSBSwupieMX0ph/NJeuWi3u",
+      "name": "Test User",
+      "firstName": "Test",
+      "lastName": "User",
+      "role": "user",
+      "createdAt": "2026-01-13T16:33:59.557Z"
+    },
+    {
+      "id": "e0d18343-c9bc-4869-bd5c-cdb7183b25f6",
+      "email": "test@taskflow.com",
+      "password": "$2a$10$xzlDLAsxaIhl8qPiuGyLIuvqekn.uRc8E3tSba2v2jmcAdzkvdi46",
+      "name": "Test User",
+      "firstName": "Test",
+      "lastName": "User",
+      "role": "user",
+      "createdAt": "2026-01-13T16:33:59.626Z"
+    },
+    {
+      "id": "b2d2baea-8749-48c6-ae3b-dc7eb5ec0379",
+      "email": "admin@taskflow.com",
+      "password": "$2a$10$a/ebXKiS1RYxnE9dzk3RmeYooIpTDjz89TTBjxQ2ZjVx4vGmVfWCe",
+      "name": "Admin User",
+      "firstName": "Admin",
+      "lastName": "User",
+      "role": "admin",
+      "createdAt": "2026-01-13T16:33:59.694Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "4770c539-96ff-4673-88a1-7d4c4a03d8b5",
+      "name": "Laptop Pro 15\"",
+      "description": "Krachtige laptop voor professionals met 16GB RAM en 512GB SSD.",
+      "price": 1299.99,
+      "category": "electronics",
+      "stock": 15,
+      "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "e11a967a-3f44-42dc-884a-b09bc54a270d",
+      "name": "Wireless Mouse",
+      "description": "Ergonomische draadloze muis met lange batterijduur.",
+      "price": 49.99,
+      "category": "electronics",
+      "stock": 50,
+      "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "ada467ac-56eb-4f89-8648-c05f247d6a38",
+      "name": "USB-C Hub",
+      "description": "7-in-1 USB-C hub met HDMI, USB-A en SD kaartlezer.",
+      "price": 79.99,
+      "category": "electronics",
+      "stock": 30,
+      "image": "https://images.unsplash.com/photo-1625723044792-44de16ccb4e9?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "8ec99fcb-fd27-4049-b3a0-c62e7575eaa3",
+      "name": "Mechanical Keyboard",
+      "description": "RGB mechanisch toetsenbord met Cherry MX switches.",
+      "price": 129.99,
+      "category": "electronics",
+      "stock": 25,
+      "image": "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "3c21a28b-8e0b-4b40-8bbe-770ac45e5ac6",
+      "name": "Monitor 27\"",
+      "description": "4K IPS monitor met USB-C aansluiting.",
+      "price": 349.99,
+      "category": "electronics",
+      "stock": 10,
+      "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "a2c0c6f1-4192-4968-b48e-05f3063852d0",
+      "name": "Webcam HD",
+      "description": "1080p webcam met ingebouwde microfoon.",
+      "price": 89.99,
+      "category": "electronics",
+      "stock": 39,
+      "image": "https://images.unsplash.com/photo-1587826080692-f439cd0b70da?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "10f2241d-473f-4d0c-88f6-10deecb5cac5",
+      "name": "Cypress T-Shirt",
+      "description": "Comfortabel katoenen t-shirt met Cypress logo.",
+      "price": 24.99,
+      "category": "clothing",
+      "stock": 100,
+      "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "5a5c66f0-7edf-449f-a1b1-ff1b269d4e95",
+      "name": "Developer Hoodie",
+      "description": "Warme hoodie voor developers, \"It works on my machine\".",
+      "price": 59.99,
+      "category": "clothing",
+      "stock": 45,
+      "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "e39ed666-d26d-4959-8e80-3a64170fe3fa",
+      "name": "Testing Book",
+      "description": "Uitgebreide gids voor testautomatisering.",
+      "price": 39.99,
+      "category": "books",
+      "stock": 60,
+      "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "3f2db22e-3bc3-4330-b5a6-a20aafb5ce82",
+      "name": "Cypress Stickers",
+      "description": "Set van 10 Cypress stickers voor je laptop.",
+      "price": 9.99,
+      "category": "accessories",
+      "stock": 200,
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "463838e9-afd3-4fda-87b1-239b3ef7e309",
+      "name": "Standing Desk",
+      "description": "Elektrisch verstelbaar sta-bureau.",
+      "price": 499.99,
+      "category": "furniture",
+      "stock": 5,
+      "image": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "aeb4f037-6b13-4492-8175-83c6f5de1d29",
+      "name": "Ergonomic Chair",
+      "description": "Ergonomische bureaustoel met lumbaalsteun.",
+      "price": 299.99,
+      "category": "furniture",
+      "stock": 8,
+      "image": "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "fad8216b-e93a-4f74-a46e-49860e405575",
+      "name": "Headphones",
+      "description": "Noise-cancelling koptelefoon - UITVERKOCHT",
+      "price": 199.99,
+      "category": "electronics",
+      "stock": 0,
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "be113215-495d-4fba-9251-2f0637148d8d",
+      "name": "Coffee Mug",
+      "description": "\"First, solve the problem. Then, write the code.\" mok.",
+      "price": 14.99,
+      "category": "accessories",
+      "stock": 150,
+      "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=300&fit=crop"
+    },
+    {
+      "id": "8b598c0a-574c-4861-8139-80008af0b4e2",
+      "name": "Desk Lamp",
+      "description": "LED bureaulamp met verstelbare helderheid.",
+      "price": 44.99,
+      "category": "accessories",
+      "stock": 35,
+      "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=300&fit=crop"
+    }
+  ],
+  "carts": [
+    {
+      "id": "69bee21b-0e94-41d6-b173-18359c2da208",
+      "userId": "25040db8-1ecf-459c-a445-93d43661b029",
+      "items": []
+    }
+  ],
+  "orders": [
+    {
+      "id": "2ba66d3c-ae40-4063-a681-5aeb1f5561f4",
+      "userId": "25040db8-1ecf-459c-a445-93d43661b029",
+      "items": [
+        {
+          "productId": "a2c0c6f1-4192-4968-b48e-05f3063852d0",
+          "name": "Webcam HD",
+          "price": 89.99,
+          "quantity": 1,
+          "subtotal": 89.99
+        }
+      ],
+      "total": 89.99,
+      "status": "pending",
+      "shippingInfo": {
+        "name": "Albert Roos",
+        "address": "Nelly sachslaan 38",
+        "city": "den haag",
+        "postalCode": "2553DD",
+        "phone": ""
+      },
+      "createdAt": "2026-01-14T12:01:39.123Z"
+    }
+  ]
+}

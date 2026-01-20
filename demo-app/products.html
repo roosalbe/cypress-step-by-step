@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Producten</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 data-cy="page-title">Producten</h1>
+
+    <div class="filters" data-cy="filters">
+      <div class="filter-group">
+        <label class="form-label" style="margin: 0;">Zoeken:</label>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Zoek producten..."
+          data-cy="search-input"
+        >
+      </div>
+
+      <div class="filter-group">
+        <label class="form-label" style="margin: 0;">Categorie:</label>
+        <select class="form-control" data-cy="category-filter">
+          <option value="all">Alle categorieën</option>
+          <!-- Categories loaded by JS -->
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="form-label" style="margin: 0;">Sorteren:</label>
+        <select class="form-control" data-cy="sort-select">
+          <option value="">Standaard</option>
+          <option value="price-asc">Prijs: laag naar hoog</option>
+          <option value="price-desc">Prijs: hoog naar laag</option>
+          <option value="name">Naam: A-Z</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="in-stock" data-cy="in-stock-filter">
+          <label class="form-check-label" for="in-stock" data-cy="in-stock-label">Alleen op voorraad</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <span data-cy="product-count">15 producten gevonden</span>
+    </div>
+
+    <div class="product-grid" data-cy="product-grid">
+      <!-- Products loaded by JavaScript -->
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Handle category from URL
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const category = params.get('category');
+
+      if (category) {
+        const categoryFilter = document.querySelector('[data-cy="category-filter"]');
+        // Wait for categories to be loaded
+        setTimeout(() => {
+          categoryFilter.value = category;
+          categoryFilter.dispatchEvent(new Event('change'));
+        }, 100);
+      }
+
+      // Update product count when filters change
+      const updateCount = () => {
+        setTimeout(() => {
+          const cards = document.querySelectorAll('[data-cy="product-card"]');
+          const noProducts = document.querySelector('[data-cy="no-products"]');
+          const count = noProducts ? 0 : cards.length;
+          document.querySelector('[data-cy="product-count"]').textContent = `${count} producten gevonden`;
+        }, 350);
+      };
+
+      document.querySelector('[data-cy="search-input"]').addEventListener('input', updateCount);
+      document.querySelector('[data-cy="category-filter"]').addEventListener('change', updateCount);
+      document.querySelector('[data-cy="sort-select"]').addEventListener('change', updateCount);
+      document.querySelector('[data-cy="in-stock-filter"]').addEventListener('change', updateCount);
+    });
+  </script>
+</body>
+</html>

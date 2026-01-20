@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 data-cy="welcome-message">Welkom terug!</h1>
+
+    <div class="stats-grid">
+      <div class="stat-card" data-cy="stat-card-orders">
+        <div class="stat-value" data-cy="stat-orders">0</div>
+        <div class="stat-label">Bestellingen</div>
+      </div>
+      <div class="stat-card" data-cy="stat-card-cart">
+        <div class="stat-value" data-cy="stat-cart">0</div>
+        <div class="stat-label">Items in winkelwagen</div>
+      </div>
+      <div class="stat-card" data-cy="stat-card-spent">
+        <div class="stat-value" data-cy="stat-spent">€0,00</div>
+        <div class="stat-label">Totaal besteed</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">Recente Bestellingen</div>
+          <div data-cy="recent-orders">
+            <p>Laden...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="card-header">Account Informatie</div>
+          <div data-cy="account-info">
+            <div class="form-group">
+              <label class="form-label">Naam</label>
+              <p data-cy="user-name">-</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-mail</label>
+              <p data-cy="user-email">-</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Account type</label>
+              <p><span class="badge badge-primary" data-cy="user-role">Gebruiker</span></p>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" data-cy="edit-profile-button">Profiel bewerken</button>
+        </div>
+
+        <div class="card mt-2">
+          <div class="card-header">Snelle Acties</div>
+          <div data-cy="quick-actions">
+            <a href="products.html" class="btn btn-primary btn-block mb-1" data-cy="action-shop">
+              Verder winkelen
+            </a>
+            <a href="cart.html" class="btn btn-outline btn-block mb-1" data-cy="action-cart">
+              Bekijk winkelwagen
+            </a>
+            <button class="btn btn-secondary btn-block" data-cy="action-export">
+              Exporteer bestellingen
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="edit-profile-modal" data-cy="edit-profile-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Profiel Bewerken</h3>
+          <button class="modal-close" data-cy="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form data-cy="edit-profile-form">
+            <div class="form-group">
+              <label class="form-label">Naam</label>
+              <input type="text" class="form-control" data-cy="edit-name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-mail</label>
+              <input type="email" class="form-control" data-cy="edit-email" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-cy="modal-cancel">Annuleren</button>
+          <button class="btn btn-primary" data-cy="modal-save">Opslaan</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update account info
+      if (AppState.currentUser) {
+        const userNameEl = document.querySelector('[data-cy="user-name"]');
+        const userEmailEl = document.querySelector('[data-cy="user-email"]');
+        const userRoleEl = document.querySelector('[data-cy="user-role"]');
+
+        if (userNameEl) userNameEl.textContent = AppState.currentUser.name;
+        if (userEmailEl) userEmailEl.textContent = AppState.currentUser.email;
+        if (AppState.currentUser.role === 'admin' && userRoleEl) {
+          userRoleEl.textContent = 'Admin';
+          userRoleEl.classList.remove('badge-primary');
+          userRoleEl.classList.add('badge-success');
+        }
+      }
+
+      // Edit profile modal
+      const modal = document.getElementById('edit-profile-modal');
+      const editBtn = document.querySelector('[data-cy="edit-profile-button"]');
+
+      if (!modal || !editBtn) return;
+
+      const closeBtn = modal.querySelector('[data-cy="modal-close"]');
+      const cancelBtn = modal.querySelector('[data-cy="modal-cancel"]');
+      const saveBtn = modal.querySelector('[data-cy="modal-save"]');
+
+      editBtn.addEventListener('click', () => {
+        if (AppState.currentUser) {
+          const editNameEl = document.querySelector('[data-cy="edit-name"]');
+          const editEmailEl = document.querySelector('[data-cy="edit-email"]');
+          if (editNameEl) editNameEl.value = AppState.currentUser.name;
+          if (editEmailEl) editEmailEl.value = AppState.currentUser.email;
+        }
+        modal.classList.add('active');
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      if (cancelBtn) cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+
+      if (saveBtn) saveBtn.addEventListener('click', () => {
+        const editNameEl = document.querySelector('[data-cy="edit-name"]');
+        const editEmailEl = document.querySelector('[data-cy="edit-email"]');
+        const name = editNameEl ? editNameEl.value : '';
+        const email = editEmailEl ? editEmailEl.value : '';
+
+        if (name && email && AppState.currentUser) {
+          AppState.currentUser.name = name;
+          AppState.currentUser.email = email;
+          AppState.saveToStorage();
+          AppState.updateUI();
+
+          const userNameEl = document.querySelector('[data-cy="user-name"]');
+          const userEmailEl = document.querySelector('[data-cy="user-email"]');
+          const welcomeEl = document.querySelector('[data-cy="welcome-message"]');
+
+          if (userNameEl) userNameEl.textContent = name;
+          if (userEmailEl) userEmailEl.textContent = email;
+          if (welcomeEl) welcomeEl.textContent = `Welkom terug, ${name}!`;
+
+          modal.classList.remove('active');
+          UI.showAlert('Profiel succesvol bijgewerkt', 'success');
+        }
+      });
+
+      // Export button
+      const exportBtn = document.querySelector('[data-cy="action-export"]');
+      if (exportBtn) exportBtn.addEventListener('click', () => {
+        const orders = Orders.getByUser();
+        if (orders.length === 0) {
+          UI.showAlert('Je hebt nog geen bestellingen om te exporteren', 'warning');
+          return;
+        }
+
+        const csv = [
+          'Order ID,Datum,Items,Totaal,Status',
+          ...orders.map(o => `${o.id},${new Date(o.createdAt).toLocaleDateString('nl-NL')},${o.items.length},${o.total},${o.status}`)
+        ].join('\n');
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'bestellingen.csv';
+        a.click();
+
+        UI.showAlert('Export gedownload', 'success');
+      });
+    });
+  </script>
+</body>
+</html>

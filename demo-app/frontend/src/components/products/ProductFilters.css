@@ -1,0 +1,66 @@
+.product-filters {
+  background-color: var(--rhs-color-grijs-1);
+  padding: var(--rhs-space-4);
+  border-radius: var(--rhs-radius-lg);
+  margin-bottom: var(--rhs-space-6);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rhs-space-4);
+  align-items: flex-end;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+.filter-group .form-group {
+  margin-bottom: 0;
+}
+
+.filter-checkbox {
+  flex: 0 0 auto;
+  min-width: auto;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--rhs-space-2);
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--rhs-color-donkerblauw);
+}
+
+.filter-actions {
+  display: flex;
+  gap: var(--rhs-space-3);
+  margin-top: var(--rhs-space-4);
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .filter-row {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .filter-actions {
+    justify-content: stretch;
+  }
+
+  .filter-actions .btn {
+    flex: 1;
+  }
+}

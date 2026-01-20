@@ -1,0 +1,79 @@
+/* Rijkshuisstijl Design Tokens */
+:root {
+  /* Primaire kleuren */
+  --rhs-color-donkerblauw: #01689b;
+  --rhs-color-hemelblauw: #007bc7;
+  --rhs-color-wit: #ffffff;
+
+  /* Grijstinten */
+  --rhs-color-grijs-1: #f3f3f3;
+  --rhs-color-grijs-2: #e6e6e6;
+  --rhs-color-grijs-3: #cccccc;
+  --rhs-color-grijs-4: #696969;
+  --rhs-color-zwart: #000000;
+
+  /* Feedback kleuren */
+  --rhs-color-groen: #39870c;
+  --rhs-color-rood: #d52b1e;
+  --rhs-color-oranje: #e17000;
+  --rhs-color-paars: #42145f;
+
+  /* Link kleuren */
+  --rhs-color-link: #01689b;
+  --rhs-color-link-visited: #884488;
+  --rhs-color-link-hover: #000000;
+
+  /* Tinten donkerblauw */
+  --rhs-color-donkerblauw-tint-1: #b3d2e1;
+  --rhs-color-donkerblauw-tint-2: #d9e8f0;
+
+  /* Font stack - fallback fonts */
+  --rhs-font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  --rhs-font-family-heading: Calibri, 'Segoe UI', Arial, sans-serif;
+
+  /* Font sizes */
+  --rhs-font-size-xs: 0.75rem;
+  --rhs-font-size-sm: 0.875rem;
+  --rhs-font-size-base: 1rem;
+  --rhs-font-size-lg: 1.125rem;
+  --rhs-font-size-xl: 1.25rem;
+  --rhs-font-size-2xl: 1.5rem;
+  --rhs-font-size-3xl: 2rem;
+
+  /* Line heights */
+  --rhs-line-height-tight: 1.25;
+  --rhs-line-height-normal: 1.5;
+  --rhs-line-height-relaxed: 1.75;
+
+  /* Spacing */
+  --rhs-space-1: 0.25rem;
+  --rhs-space-2: 0.5rem;
+  --rhs-space-3: 0.75rem;
+  --rhs-space-4: 1rem;
+  --rhs-space-5: 1.5rem;
+  --rhs-space-6: 2rem;
+  --rhs-space-8: 3rem;
+  --rhs-space-10: 4rem;
+
+  /* Border radius */
+  --rhs-radius-sm: 2px;
+  --rhs-radius-md: 4px;
+  --rhs-radius-lg: 8px;
+
+  /* Shadows */
+  --rhs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --rhs-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --rhs-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  /* Transitions */
+  --rhs-transition-fast: 150ms ease-in-out;
+  --rhs-transition-normal: 250ms ease-in-out;
+
+  /* Focus */
+  --rhs-focus-outline: 2px solid var(--rhs-color-donkerblauw);
+  --rhs-focus-offset: 2px;
+
+  /* Container */
+  --rhs-container-max: 1200px;
+  --rhs-container-padding: var(--rhs-space-4);
+}

@@ -1,0 +1,71 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop Pro 15",
+      "description": "Krachtige laptop voor professionals",
+      "price": 1299.99,
+      "category": "electronics",
+      "stock": 15,
+      "image": "laptop.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Wireless Mouse",
+      "description": "Ergonomische draadloze muis",
+      "price": 49.99,
+      "category": "electronics",
+      "stock": 50,
+      "image": "mouse.jpg"
+    },
+    {
+      "id": 3,
+      "name": "USB-C Hub",
+      "description": "7-in-1 USB-C adapter",
+      "price": 79.99,
+      "category": "electronics",
+      "stock": 30,
+      "image": "usb-hub.jpg"
+    },
+    {
+      "id": 4,
+      "name": "T-Shirt Basic",
+      "description": "Comfortabel katoenen t-shirt",
+      "price": 24.99,
+      "category": "clothing",
+      "stock": 100,
+      "image": "tshirt.jpg"
+    },
+    {
+      "id": 5,
+      "name": "JavaScript Handbook",
+      "description": "Complete gids voor JavaScript",
+      "price": 39.99,
+      "category": "books",
+      "stock": 25,
+      "image": "book.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Bureaulamp LED",
+      "description": "Verstelbare LED bureaulamp",
+      "price": 59.99,
+      "category": "furniture",
+      "stock": 20,
+      "image": "lamp.jpg"
+    }
+  ],
+  "categories": [
+    "electronics",
+    "clothing",
+    "books",
+    "accessories",
+    "furniture"
+  ],
+  "sortOptions": [
+    { "value": "name-asc", "label": "Naam (A-Z)" },
+    { "value": "name-desc", "label": "Naam (Z-A)" },
+    { "value": "price-asc", "label": "Prijs (laag-hoog)" },
+    { "value": "price-desc", "label": "Prijs (hoog-laag)" }
+  ]
+}

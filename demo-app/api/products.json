@@ -1,0 +1,139 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop Pro 15\"",
+      "price": 1299.99,
+      "category": "electronics",
+      "stock": 15,
+      "description": "Krachtige laptop voor professionals met 16GB RAM en 512GB SSD.",
+      "image": "laptop.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Wireless Mouse",
+      "price": 49.99,
+      "category": "electronics",
+      "stock": 50,
+      "description": "Ergonomische draadloze muis met lange batterijduur.",
+      "image": "mouse.jpg"
+    },
+    {
+      "id": 3,
+      "name": "USB-C Hub",
+      "price": 79.99,
+      "category": "electronics",
+      "stock": 30,
+      "description": "7-in-1 USB-C hub met HDMI, USB-A en SD kaartlezer.",
+      "image": "hub.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Mechanical Keyboard",
+      "price": 129.99,
+      "category": "electronics",
+      "stock": 25,
+      "description": "RGB mechanisch toetsenbord met Cherry MX switches.",
+      "image": "keyboard.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Monitor 27\"",
+      "price": 349.99,
+      "category": "electronics",
+      "stock": 10,
+      "description": "4K IPS monitor met USB-C aansluiting.",
+      "image": "monitor.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Webcam HD",
+      "price": 89.99,
+      "category": "electronics",
+      "stock": 40,
+      "description": "1080p webcam met ingebouwde microfoon.",
+      "image": "webcam.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Cypress T-Shirt",
+      "price": 24.99,
+      "category": "clothing",
+      "stock": 100,
+      "description": "Comfortabel katoenen t-shirt met Cypress logo.",
+      "image": "tshirt.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Developer Hoodie",
+      "price": 59.99,
+      "category": "clothing",
+      "stock": 45,
+      "description": "Warme hoodie voor developers, \"It works on my machine\".",
+      "image": "hoodie.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Testing Book",
+      "price": 39.99,
+      "category": "books",
+      "stock": 60,
+      "description": "Uitgebreide gids voor testautomatisering.",
+      "image": "book.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Cypress Stickers",
+      "price": 9.99,
+      "category": "accessories",
+      "stock": 200,
+      "description": "Set van 10 Cypress stickers voor je laptop.",
+      "image": "stickers.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Standing Desk",
+      "price": 499.99,
+      "category": "furniture",
+      "stock": 5,
+      "description": "Elektrisch verstelbaar sta-bureau.",
+      "image": "desk.jpg"
+    },
+    {
+      "id": 12,
+      "name": "Ergonomic Chair",
+      "price": 299.99,
+      "category": "furniture",
+      "stock": 8,
+      "description": "Ergonomische bureaustoel met lumbaalsteun.",
+      "image": "chair.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Headphones",
+      "price": 199.99,
+      "category": "electronics",
+      "stock": 0,
+      "description": "Noise-cancelling koptelefoon - UITVERKOCHT",
+      "image": "headphones.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Coffee Mug",
+      "price": 14.99,
+      "category": "accessories",
+      "stock": 150,
+      "description": "\"First, solve the problem. Then, write the code.\" mok.",
+      "image": "mug.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Desk Lamp",
+      "price": 44.99,
+      "category": "accessories",
+      "stock": 35,
+      "description": "LED bureaulamp met verstelbare helderheid.",
+      "image": "lamp.jpg"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "cypress-cursus",
+  "version": "1.0.0",
+  "description": "Cypress testautomatisering cursus - 2 dagen workshop met praktijkopdrachten",
+  "scripts": {
+    "setup": "npm install && cd demo-app/backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd demo-app/backend && npm run dev",
+    "dev:frontend": "cd demo-app/frontend && npm run dev",
+    "start": "npm run dev",
+    "db:seed": "cd demo-app/backend && npm run seed",
+    "db:reset": "cd demo-app/backend && npm run seed",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:opdrachten": "cypress run --spec 'cypress/e2e/opdrachten/**/*.cy.ts'",
+    "cy:run:uitwerkingen": "cypress run --spec 'cypress/e2e/uitwerkingen/**/*.cy.ts'",
+    "cy:run:dag1": "cypress run --spec 'cypress/e2e/**/dag1/**/*.cy.ts'",
+    "cy:run:dag2": "cypress run --spec 'cypress/e2e/**/dag2/**/*.cy.ts'",
+    "test": "npm run cy:run",
+    "test:headed": "cypress run --headed",
+    "lint": "eslint cypress/**/*.ts",
+    "validate": "node scripts/agents/validate-all.js",
+    "validate:styling": "node scripts/agents/validate-rijkshuisstijl.js",
+    "validate:tests": "node scripts/agents/run-cypress-tests.js",
+    "generate:slides": "node scripts/agents/generate-presentation.js",
+    "slides": "npx serve slides -p 8080"
+  },
+  "keywords": [
+    "cypress",
+    "testing",
+    "e2e",
+    "cursus",
+    "workshop",
+    "typescript"
+  ],
+  "author": "Cypress Cursus",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cypress": "^13.6.0",
+    "typescript": "^5.3.0",
+    "@types/node": "^20.10.0"
+  }
+}

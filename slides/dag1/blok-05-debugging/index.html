@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debugging & Timeouts - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Debugging & Timeouts</h1>
+        <p>Als tests niet doen wat je verwacht</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Cypress debugging tools effectief gebruiken</li>
+            <li>Timeouts begrijpen en configureren</li>
+            <li>Flaky tests oplossen</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Debugging Tools</h2>
+        <ul>
+          <li><code>cy.log()</code> - berichten in de Test Runner</li>
+          <li><code>.debug()</code> - pauzeert en opent DevTools</li>
+          <li><code>cy.pause()</code> - stopt de test</li>
+          <li><code>cy.screenshot()</code> - maakt screenshot</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Debugging in Actie</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>it('debug voorbeeld', () =&gt; {
+  cy.visit('/products')
+
+  cy.log('Zoeken naar producten...')
+
+  cy.get('[data-cy="product-list"]')
+    .debug()  // Opent DevTools, pauzeert hier
+    .find('.product-card')
+    .should('have.length.gt', 0)
+
+  cy.pause()  // Test stopt hier, je kunt stappen
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Timeouts Configureren</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Globaal in cypress.config.ts
+defaultCommandTimeout: 10000,  // 10 sec default
+
+// Per command
+cy.get('[data-cy="slow-element"]', { timeout: 15000 })
+  .should('be.visible')
+
+// Per assertion
+cy.get('[data-cy="loading"]')
+  .should('not.exist', { timeout: 20000 })</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 9:</strong> Debugging tools gebruiken</li>
+          <li><strong>Opdracht 10:</strong> Timeouts configureren</li>
+          <li>Tip: cy.log() is je beste vriend</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

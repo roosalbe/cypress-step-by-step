@@ -1,0 +1,25 @@
+.footer {
+  background-color: var(--rhs-color-grijs-1);
+  border-top: 1px solid var(--rhs-color-grijs-2);
+  padding: var(--rhs-space-5) 0;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: var(--rhs-container-max);
+  margin: 0 auto;
+  padding: 0 var(--rhs-container-padding);
+  text-align: center;
+}
+
+.footer-text {
+  color: var(--rhs-color-grijs-4);
+  font-size: var(--rhs-font-size-sm);
+  margin-bottom: var(--rhs-space-1);
+}
+
+.footer-subtitle {
+  color: var(--rhs-color-grijs-3);
+  font-size: var(--rhs-font-size-xs);
+  margin-bottom: 0;
+}

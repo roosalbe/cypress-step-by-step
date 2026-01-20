@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Winkelwagen</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 data-cy="page-title">Winkelwagen</h1>
+
+    <div class="row">
+      <div class="col" style="flex: 2;">
+        <div data-cy="cart-container">
+          <!-- Cart items loaded by JS -->
+        </div>
+      </div>
+
+      <div class="col" style="flex: 1;">
+        <div class="card" data-cy="cart-actions">
+          <div class="card-header">Acties</div>
+          <button class="btn btn-outline btn-block mb-1" data-cy="clear-cart-button">
+            Winkelwagen legen
+          </button>
+          <a href="products.html" class="btn btn-secondary btn-block" data-cy="continue-shopping">
+            Verder winkelen
+          </a>
+        </div>
+
+        <div class="card mt-2" data-cy="promo-code-card">
+          <div class="card-header">Kortingscode</div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Voer code in" data-cy="promo-code-input">
+          </div>
+          <button class="btn btn-outline btn-block" data-cy="apply-promo-button">
+            Toepassen
+          </button>
+          <div class="alert alert-success hidden mt-2" data-cy="promo-success">
+            Kortingscode toegepast!
+          </div>
+          <div class="alert alert-error hidden mt-2" data-cy="promo-error">
+            Ongeldige kortingscode
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Confirm Clear Modal -->
+  <div class="modal-overlay" id="confirm-clear-modal" data-cy="confirm-clear-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Winkelwagen legen</h3>
+        <button class="modal-close" data-cy="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p data-cy="confirm-message">Weet je zeker dat je de winkelwagen wilt legen?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-cy="confirm-cancel">Annuleren</button>
+        <button class="btn btn-danger" data-cy="confirm-clear">Ja, legen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('confirm-clear-modal');
+      const clearBtn = document.querySelector('[data-cy="clear-cart-button"]');
+      const closeBtn = modal.querySelector('[data-cy="modal-close"]');
+      const cancelBtn = modal.querySelector('[data-cy="confirm-cancel"]');
+      const confirmBtn = modal.querySelector('[data-cy="confirm-clear"]');
+
+      clearBtn.addEventListener('click', () => {
+        if (Cart.getItems().length > 0) {
+          modal.classList.add('active');
+        }
+      });
+
+      closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+
+      confirmBtn.addEventListener('click', () => {
+        Cart.clear();
+        modal.classList.remove('active');
+        PageHandlers.initCartPage();
+        UI.showAlert('Winkelwagen geleegd', 'success');
+      });
+
+      // Promo code
+      const validCodes = ['CYPRESS10', 'TEST2024', 'KORTING'];
+      const promoInput = document.querySelector('[data-cy="promo-code-input"]');
+      const applyBtn = document.querySelector('[data-cy="apply-promo-button"]');
+      const promoSuccess = document.querySelector('[data-cy="promo-success"]');
+      const promoError = document.querySelector('[data-cy="promo-error"]');
+
+      applyBtn.addEventListener('click', () => {
+        const code = promoInput.value.trim().toUpperCase();
+        promoSuccess.classList.add('hidden');
+        promoError.classList.add('hidden');
+
+        if (validCodes.includes(code)) {
+          promoSuccess.classList.remove('hidden');
+        } else if (code) {
+          promoError.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

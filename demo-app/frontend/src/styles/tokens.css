@@ -1,0 +1,137 @@
+/**
+ * Rijkshuisstijl Design Tokens
+ *
+ * Dit bestand bevat alle design tokens gebaseerd op de Rijkshuisstijl.
+ * Bron: https://www.rijkshuisstijl.nl/
+ */
+
+:root {
+  /* ============================================
+     KLEUREN - Rijkshuisstijl Kleurenpalet
+     ============================================ */
+
+  /* Primaire kleuren */
+  --rhs-color-donkerblauw: #01689b;
+  --rhs-color-donkerblauw-tint-1: #cce0f1;
+  --rhs-color-donkerblauw-tint-2: #e5f0f9;
+
+  --rhs-color-hemelblauw: #007bc7;
+  --rhs-color-hemelblauw-tint-1: #b2d7ee;
+  --rhs-color-hemelblauw-tint-2: #d9ebf7;
+
+  /* Secundaire kleuren */
+  --rhs-color-donkergroen: #275937;
+  --rhs-color-groen: #39870c;
+  --rhs-color-mintgroen: #76d2b6;
+  --rhs-color-lichtblauw: #8fcae7;
+
+  /* Signaleringskleuren */
+  --rhs-color-rood: #d52b1e;
+  --rhs-color-oranje: #e17000;
+
+  /* Violet */
+  --rhs-color-paars: #42145f;
+  --rhs-color-violet: #a90061;
+
+  /* Grijstinten */
+  --rhs-color-zwart: #154273;
+  --rhs-color-grijs-1: #f3f3f3;
+  --rhs-color-grijs-2: #e6e6e6;
+  --rhs-color-grijs-3: #b4b4b4;
+  --rhs-color-grijs-4: #535353;
+
+  /* Wit */
+  --rhs-color-wit: #ffffff;
+
+  /* Link kleuren */
+  --rhs-color-link: #01689b;
+  --rhs-color-link-hover: #154273;
+  --rhs-color-link-visited: #42145f;
+
+  /* ============================================
+     TYPOGRAFIE
+     ============================================ */
+
+  /* Font families - Fallback fonts (RijksoverheidSans is niet open source) */
+  --rhs-font-family: 'Calibri', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --rhs-font-family-heading: 'Calibri', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Font sizes */
+  --rhs-font-size-xs: 0.75rem;    /* 12px */
+  --rhs-font-size-sm: 0.875rem;   /* 14px */
+  --rhs-font-size-base: 1rem;     /* 16px */
+  --rhs-font-size-lg: 1.125rem;   /* 18px */
+  --rhs-font-size-xl: 1.25rem;    /* 20px */
+  --rhs-font-size-2xl: 1.5rem;    /* 24px */
+  --rhs-font-size-3xl: 1.875rem;  /* 30px */
+  --rhs-font-size-4xl: 2.25rem;   /* 36px */
+
+  /* Line heights */
+  --rhs-line-height-tight: 1.25;
+  --rhs-line-height-normal: 1.5;
+  --rhs-line-height-relaxed: 1.75;
+
+  /* ============================================
+     SPACING (8px grid systeem)
+     ============================================ */
+
+  --rhs-space-1: 0.25rem;   /* 4px */
+  --rhs-space-2: 0.5rem;    /* 8px */
+  --rhs-space-3: 0.75rem;   /* 12px */
+  --rhs-space-4: 1rem;      /* 16px */
+  --rhs-space-5: 1.5rem;    /* 24px */
+  --rhs-space-6: 2rem;      /* 32px */
+  --rhs-space-8: 3rem;      /* 48px */
+  --rhs-space-10: 4rem;     /* 64px */
+
+  /* ============================================
+     LAYOUT
+     ============================================ */
+
+  --rhs-container-max: 1200px;
+  --rhs-container-padding: 1rem;
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+
+  --rhs-radius-sm: 2px;
+  --rhs-radius-md: 4px;
+  --rhs-radius-lg: 8px;
+  --rhs-radius-full: 9999px;
+
+  /* ============================================
+     SHADOWS
+     ============================================ */
+
+  --rhs-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --rhs-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --rhs-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  /* ============================================
+     TRANSITIONS
+     ============================================ */
+
+  --rhs-transition-fast: 150ms ease;
+  --rhs-transition-normal: 300ms ease;
+  --rhs-transition-slow: 500ms ease;
+
+  /* ============================================
+     FOCUS (Accessibility)
+     ============================================ */
+
+  --rhs-focus-outline: 2px solid var(--rhs-color-donkerblauw);
+  --rhs-focus-offset: 2px;
+}
+
+/* ============================================
+   DARK MODE (optioneel)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Donkerblauw achtergrond met lichte tekst */
+    --rhs-color-background: #154273;
+    --rhs-color-text: var(--rhs-color-wit);
+  }
+}

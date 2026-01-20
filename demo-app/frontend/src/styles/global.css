@@ -1,0 +1,250 @@
+/* Global Reset & Base Styles - Rijkshuisstijl */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--rhs-font-family);
+  font-size: var(--rhs-font-size-base);
+  line-height: var(--rhs-line-height-normal);
+  color: var(--rhs-color-zwart);
+  background-color: var(--rhs-color-wit);
+  min-height: 100vh;
+}
+
+/* App Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--rhs-space-6) var(--rhs-container-padding);
+}
+
+/* Container */
+.container {
+  max-width: var(--rhs-container-max);
+  margin: 0 auto;
+  padding: 0 var(--rhs-container-padding);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--rhs-font-family-heading);
+  font-weight: 700;
+  line-height: var(--rhs-line-height-tight);
+  color: var(--rhs-color-zwart);
+  margin-bottom: var(--rhs-space-4);
+}
+
+h1 {
+  font-size: var(--rhs-font-size-3xl);
+}
+
+h2 {
+  font-size: var(--rhs-font-size-2xl);
+}
+
+h3 {
+  font-size: var(--rhs-font-size-xl);
+}
+
+h4 {
+  font-size: var(--rhs-font-size-lg);
+}
+
+p {
+  margin-bottom: var(--rhs-space-4);
+}
+
+/* Links */
+a {
+  color: var(--rhs-color-link);
+  text-decoration: underline;
+  transition: color var(--rhs-transition-fast);
+}
+
+a:hover {
+  color: var(--rhs-color-link-hover);
+}
+
+a:visited {
+  color: var(--rhs-color-link-visited);
+}
+
+a:focus {
+  outline: var(--rhs-focus-outline);
+  outline-offset: var(--rhs-focus-offset);
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: var(--rhs-focus-outline);
+  outline-offset: var(--rhs-focus-offset);
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+/* Forms */
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lists */
+ul, ol {
+  padding-left: var(--rhs-space-5);
+}
+
+li {
+  margin-bottom: var(--rhs-space-2);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: var(--rhs-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--rhs-color-grijs-2);
+}
+
+th {
+  font-weight: 700;
+  background-color: var(--rhs-color-grijs-1);
+}
+
+/* Utility Classes */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-2 { margin-bottom: var(--rhs-space-2); }
+.mb-4 { margin-bottom: var(--rhs-space-4); }
+.mb-6 { margin-bottom: var(--rhs-space-6); }
+
+.mt-0 { margin-top: 0; }
+.mt-2 { margin-top: var(--rhs-space-2); }
+.mt-4 { margin-top: var(--rhs-space-4); }
+.mt-6 { margin-top: var(--rhs-space-6); }
+
+/* Loading */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: var(--rhs-font-size-lg);
+  color: var(--rhs-color-grijs-4);
+}
+
+/* Error message */
+.error-message {
+  color: var(--rhs-color-rood);
+  background-color: #fdf2f2;
+  border: 1px solid var(--rhs-color-rood);
+  padding: var(--rhs-space-3) var(--rhs-space-4);
+  border-radius: var(--rhs-radius-md);
+  margin-bottom: var(--rhs-space-4);
+}
+
+/* Success message */
+.success-message {
+  color: var(--rhs-color-groen);
+  background-color: #f0f9eb;
+  border: 1px solid var(--rhs-color-groen);
+  padding: var(--rhs-space-3) var(--rhs-space-4);
+  border-radius: var(--rhs-radius-md);
+  margin-bottom: var(--rhs-space-4);
+}
+
+/* Page title */
+.page-title {
+  margin-bottom: var(--rhs-space-6);
+}
+
+/* Card grid */
+.grid {
+  display: grid;
+  gap: var(--rhs-space-5);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 992px) {
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

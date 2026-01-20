@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Flows Testen - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>UI Flows Testen</h1>
+        <p>Van login tot checkout</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Complete user flows end-to-end testen</li>
+            <li>Happy path en error scenarios dekken</li>
+            <li>Page Objects combineren in flows</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Wat is een UI Flow?</h2>
+        <ul>
+          <li>Een complete user journey door de applicatie</li>
+          <li>Meerdere pagina's en acties achter elkaar</li>
+          <li>Test de applicatie zoals een echte gebruiker</li>
+          <li>Combinatie van je Page Objects</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Login Flow Voorbeeld</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>describe('Login Flow', () =&gt; {
+  it('successful login shows dashboard', () =&gt; {
+    loginPage.visit()
+    loginPage.login('student@test.nl', 'cypress123')
+
+    dashboardPage.shouldBeVisible()
+    dashboardPage.shouldShowWelcomeMessage('Student')
+  })
+
+  it('invalid password shows error', () =&gt; {
+    loginPage.visit()
+    loginPage.login('student@test.nl', 'wrong')
+
+    loginPage.shouldShowError('Ongeldige inloggegevens')
+  })
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Product Flow Voorbeeld</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>describe('Product Flow', () =&gt; {
+  beforeEach(() =&gt; {
+    cy.loginViaApi('student@test.nl', 'cypress123')
+  })
+
+  it('adds product to cart', () =&gt; {
+    productsPage.visit()
+    productsPage.searchProduct('Laptop')
+    productsPage.addToCart('Laptop Pro')
+
+    cartPage.visit()
+    cartPage.shouldContainProduct('Laptop Pro')
+  })
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 7:</strong> Complete login flow testen</li>
+          <li><strong>Opdracht 8:</strong> Product en cart flow</li>
+          <li>Test ook de unhappy paths!</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

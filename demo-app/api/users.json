@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "student",
+      "name": "Student User",
+      "email": "student@test.nl",
+      "role": "user",
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "username": "admin",
+      "name": "Admin User",
+      "email": "admin@test.nl",
+      "role": "admin",
+      "createdAt": "2024-01-10T08:00:00Z"
+    },
+    {
+      "id": 3,
+      "username": "tester",
+      "name": "Test User",
+      "email": "tester@test.nl",
+      "role": "user",
+      "createdAt": "2024-01-20T14:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "orders": [
+    {
+      "id": 1001,
+      "userId": 1,
+      "items": [
+        { "productId": 1, "name": "Laptop Pro 15\"", "price": 1299.99, "quantity": 1 },
+        { "productId": 2, "name": "Wireless Mouse", "price": 49.99, "quantity": 2 }
+      ],
+      "total": 1399.97,
+      "status": "delivered",
+      "shipping": {
+        "firstName": "Student",
+        "lastName": "User",
+        "address": "Teststraat 123",
+        "city": "Amsterdam",
+        "postcode": "1234 AB"
+      },
+      "createdAt": "2024-01-15T14:30:00Z"
+    },
+    {
+      "id": 1002,
+      "userId": 1,
+      "items": [
+        { "productId": 7, "name": "Cypress T-Shirt", "price": 24.99, "quantity": 3 }
+      ],
+      "total": 74.97,
+      "status": "shipped",
+      "shipping": {
+        "firstName": "Student",
+        "lastName": "User",
+        "address": "Teststraat 123",
+        "city": "Amsterdam",
+        "postcode": "1234 AB"
+      },
+      "createdAt": "2024-01-20T09:15:00Z"
+    },
+    {
+      "id": 1003,
+      "userId": 2,
+      "items": [
+        { "productId": 11, "name": "Standing Desk", "price": 499.99, "quantity": 1 },
+        { "productId": 12, "name": "Ergonomic Chair", "price": 299.99, "quantity": 1 }
+      ],
+      "total": 799.98,
+      "status": "processing",
+      "shipping": {
+        "firstName": "Admin",
+        "lastName": "User",
+        "address": "Adminweg 456",
+        "city": "Rotterdam",
+        "postcode": "5678 CD"
+      },
+      "createdAt": "2024-01-22T16:45:00Z"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selectors Strategie - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Selectors Strategie</h1>
+        <p>Stabiele tests beginnen hier</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Best practices voor stabiele selectors begrijpen</li>
+            <li>data-cy attributen effectief gebruiken</li>
+            <li>Formulieren testen met type(), select() en check()</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Het selector probleem</h2>
+        <ul>
+          <li>CSS classes veranderen bij redesigns</li>
+          <li>ID's worden hergebruikt of verwijderd</li>
+          <li>XPath is fragiel en moeilijk leesbaar</li>
+          <li><strong>Oplossing:</strong> data-cy attributen</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>De selector prioriteit</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Vermijd (fragiel)
+cy.get('.btn-primary')
+cy.get('#submit-btn')
+cy.get('form &gt; div:nth-child(2) &gt; button')
+
+// Gebruik (stabiel)
+cy.get('[data-cy="submit-button"]')
+cy.getByDataCy('submit-button')  // custom command</code></pre>
+      </section>
+
+      <section>
+        <h2>Formulier interacties</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Tekst invoeren
+cy.get('[data-cy="email"]').type('test@example.com')
+
+// Dropdown selecteren
+cy.get('[data-cy="country"]').select('Nederland')
+
+// Checkbox aan/uit
+cy.get('[data-cy="terms"]').check()
+cy.get('[data-cy="newsletter"]').uncheck()</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 3:</strong> Selector strategie oefenen</li>
+          <li><strong>Opdracht 4:</strong> Formulieren testen</li>
+          <li>Let op: gebruik alleen data-cy selectors!</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

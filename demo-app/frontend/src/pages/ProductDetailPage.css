@@ -1,0 +1,106 @@
+.product-detail-page {
+  max-width: 1000px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--rhs-space-5);
+  color: var(--rhs-color-donkerblauw);
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--rhs-space-8);
+}
+
+.product-detail-image {
+  aspect-ratio: 1;
+  background-color: var(--rhs-color-grijs-1);
+  border-radius: var(--rhs-radius-lg);
+  overflow: hidden;
+}
+
+.product-detail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-detail-name {
+  font-size: var(--rhs-font-size-3xl);
+  margin-bottom: var(--rhs-space-3);
+}
+
+.product-detail-category {
+  display: inline-block;
+  background-color: var(--rhs-color-donkerblauw-tint-2);
+  color: var(--rhs-color-donkerblauw);
+  font-size: var(--rhs-font-size-sm);
+  padding: var(--rhs-space-1) var(--rhs-space-3);
+  border-radius: var(--rhs-radius-sm);
+  text-transform: capitalize;
+  margin-bottom: var(--rhs-space-4);
+}
+
+.product-detail-description {
+  color: var(--rhs-color-grijs-4);
+  line-height: var(--rhs-line-height-relaxed);
+  margin-bottom: var(--rhs-space-5);
+}
+
+.product-detail-price {
+  font-size: var(--rhs-font-size-3xl);
+  font-weight: 700;
+  color: var(--rhs-color-donkerblauw);
+  margin-bottom: var(--rhs-space-3);
+}
+
+.product-detail-stock {
+  margin-bottom: var(--rhs-space-5);
+}
+
+.in-stock {
+  color: var(--rhs-color-groen);
+  font-weight: 600;
+}
+
+.out-of-stock {
+  color: var(--rhs-color-rood);
+  font-weight: 600;
+}
+
+.product-detail-actions {
+  display: flex;
+  gap: var(--rhs-space-4);
+  align-items: flex-end;
+}
+
+.quantity-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rhs-space-2);
+}
+
+.quantity-selector label {
+  font-weight: 600;
+}
+
+.quantity-selector select {
+  width: 80px;
+}
+
+@media (max-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quantity-selector select {
+    width: 100%;
+  }
+}

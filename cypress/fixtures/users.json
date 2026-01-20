@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "student",
+      "name": "Student User",
+      "email": "student@test.nl",
+      "role": "user"
+    },
+    {
+      "id": 2,
+      "username": "admin",
+      "name": "Admin User",
+      "email": "admin@test.nl",
+      "role": "admin"
+    },
+    {
+      "id": 3,
+      "username": "tester",
+      "name": "Test User",
+      "email": "tester@test.nl",
+      "role": "user"
+    }
+  ],
+  "invalidUsers": [
+    {
+      "username": "nonexistent",
+      "password": "wrong123"
+    },
+    {
+      "username": "",
+      "password": "password"
+    },
+    {
+      "username": "student",
+      "password": "wrongpassword"
+    }
+  ],
+  "credentials": {
+    "student": {
+      "username": "student",
+      "password": "cypress123"
+    },
+    "admin": {
+      "username": "admin",
+      "password": "admin123"
+    },
+    "tester": {
+      "username": "tester",
+      "password": "test123"
+    }
+  }
+}

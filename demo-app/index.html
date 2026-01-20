@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1 data-cy="hero-title">Welkom bij Cypress Shop</h1>
+    <p data-cy="hero-subtitle">De beste webshop om Cypress te leren! Test onze applicatie en word een testautomatisering expert.</p>
+    <a href="products.html" class="btn btn-lg" style="background: white; color: var(--primary-color);" data-cy="shop-now-button">
+      Bekijk Producten
+    </a>
+  </section>
+
+  <main class="container">
+    <section class="mb-3">
+      <h2 data-cy="featured-title">Uitgelichte Producten</h2>
+      <div class="product-grid" data-cy="featured-products">
+        <!-- Featured products loaded by JS -->
+      </div>
+    </section>
+
+    <section class="mb-3">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">Waarom Cypress Shop?</div>
+            <ul data-cy="features-list">
+              <li>Speciaal ontworpen voor Cypress testing</li>
+              <li>Alle UI-elementen voorzien van data-cy attributen</li>
+              <li>Realistische e-commerce flows</li>
+              <li>Mock API endpoints voor API testing</li>
+              <li>Diverse formulieren met validatie</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-header">Categorieën</div>
+            <div data-cy="category-links">
+              <a href="products.html?category=electronics" class="btn btn-outline btn-sm mb-1" data-cy="category-electronics">Electronics</a>
+              <a href="products.html?category=clothing" class="btn btn-outline btn-sm mb-1" data-cy="category-clothing">Kleding</a>
+              <a href="products.html?category=books" class="btn btn-outline btn-sm mb-1" data-cy="category-books">Boeken</a>
+              <a href="products.html?category=accessories" class="btn btn-outline btn-sm mb-1" data-cy="category-accessories">Accessoires</a>
+              <a href="products.html?category=furniture" class="btn btn-outline btn-sm mb-1" data-cy="category-furniture">Meubels</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-3">
+      <div class="card">
+        <div class="card-header">Nieuwsbrief</div>
+        <p>Meld je aan voor onze nieuwsbrief en blijf op de hoogte!</p>
+        <form data-cy="newsletter-form" id="newsletter-form">
+          <div class="row">
+            <div class="col">
+              <input type="email" class="form-control" placeholder="Je e-mailadres" data-cy="newsletter-email" required>
+            </div>
+            <div class="col" style="flex: 0;">
+              <button type="submit" class="btn btn-primary" data-cy="newsletter-submit">Aanmelden</button>
+            </div>
+          </div>
+        </form>
+        <div class="alert alert-success hidden mt-2" data-cy="newsletter-success">
+          Bedankt voor je aanmelding!
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="background: var(--secondary-color); color: white; padding: 2rem; text-align: center; margin-top: 2rem;">
+    <p data-cy="footer-text">&copy; 2024 Cypress Shop - Demo applicatie voor testautomatisering cursus</p>
+    <p>
+      <a href="#" style="color: white;" data-cy="footer-privacy">Privacy</a> |
+      <a href="#" style="color: white;" data-cy="footer-terms">Voorwaarden</a> |
+      <a href="#" style="color: white;" data-cy="footer-contact">Contact</a>
+    </p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Load featured products
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('[data-cy="featured-products"]');
+      const featured = Products.getAll().slice(0, 4);
+
+      grid.innerHTML = featured.map(product => `
+        <div class="product-card" data-cy="product-card" data-product-id="${product.id}">
+          <div class="product-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+            ${product.name.charAt(0)}
+          </div>
+          <div class="product-info">
+            <div class="product-category" data-cy="product-category">${product.category}</div>
+            <h3 class="product-name" data-cy="product-name">${product.name}</h3>
+            <p class="product-price" data-cy="product-price">${UI.formatPrice(product.price)}</p>
+            <a href="product-detail.html?id=${product.id}" class="btn btn-outline btn-sm" data-cy="view-product">Bekijk</a>
+          </div>
+        </div>
+      `).join('');
+
+      // Newsletter form
+      const newsletterForm = document.getElementById('newsletter-form');
+      newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.querySelector('[data-cy="newsletter-email"]').value;
+        if (email) {
+          document.querySelector('[data-cy="newsletter-success"]').classList.remove('hidden');
+          newsletterForm.reset();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

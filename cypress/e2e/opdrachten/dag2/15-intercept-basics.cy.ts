@@ -1,0 +1,179 @@
+/**
+ * OPDRACHT 15: cy.intercept() Basics
+ *
+ * Doel: Leer network requests intercepten en observeren
+ *
+ * In deze opdracht ga je:
+ * 1. Requests intercepten
+ * 2. Wachten op requests
+ * 3. Request/response data bekijken
+ *
+ * Bouwt voort op: Opdracht 14
+ * Tijd: ~25 minuten
+ */
+
+describe('Opdracht 15: cy.intercept() Basics', () => {
+  /**
+   * TEST 15.1: Basis intercept
+   *
+   * TODO: Intercept een GET request
+   */
+  it('should intercept a GET request', () => {
+    // TODO: Intercept de products request
+    // cy.intercept('GET', '/api/products.json').as('getProducts');
+
+    cy.visit('/products.html');
+
+    // TODO: Wacht op de request
+    // cy.wait('@getProducts');
+
+    // Verify products zijn geladen
+    cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
+  });
+
+  /**
+   * TEST 15.2: Intercept met wildcard
+   *
+   * TODO: Intercept alle API requests
+   */
+  it('should intercept with wildcard', () => {
+    // TODO: Intercept alle /api/* requests
+    // cy.intercept('GET', '/api/*').as('apiCall');
+
+    cy.visit('/products.html');
+
+    // TODO: Wacht op een API call
+    // cy.wait('@apiCall');
+  });
+
+  /**
+   * TEST 15.3: Bekijk response data
+   *
+   * TODO: Inspecteer de response van een request
+   */
+  it('should inspect response data', () => {
+    cy.intercept('GET', '/api/products.json').as('getProducts');
+
+    cy.visit('/products.html');
+
+    // TODO: Wacht en bekijk response
+    cy.wait('@getProducts').then((interception) => {
+      // TODO: Log status code
+      // cy.log('Status: ' + interception.response?.statusCode);
+
+      // TODO: Check response body
+      // expect(interception.response?.body).to.have.property('products');
+    });
+  });
+
+  /**
+   * TEST 15.4: Bekijk request data
+   *
+   * TODO: Inspecteer de request van een form submission
+   */
+  it('should inspect request data', () => {
+    // Intercept login request (zou normaal een POST zijn)
+    cy.intercept('GET', '/api/users.json').as('getUsers');
+
+    cy.visit('/login.html');
+
+    // Trigger de page load die users laadt
+    cy.wait('@getUsers').then((interception) => {
+      // TODO: Log request URL
+      // cy.log('URL: ' + interception.request.url);
+
+      // TODO: Log request headers
+      // cy.log('Headers: ' + JSON.stringify(interception.request.headers));
+    });
+  });
+
+  /**
+   * TEST 15.5: Meerdere intercepts
+   *
+   * TODO: Intercept meerdere verschillende requests
+   */
+  it('should handle multiple intercepts', () => {
+    // TODO: Intercept products en users
+    cy.intercept('GET', '/api/products.json').as('products');
+    cy.intercept('GET', '/api/users.json').as('users');
+
+    // Visit page die beide laadt
+    cy.visit('/');
+
+    // TODO: Wacht op beide (of een van beide)
+    // Niet alle pagina's laden beide, dus we checken alleen products
+    // cy.wait('@products');
+  });
+
+  /**
+   * TEST 15.6: Intercept met regex
+   *
+   * TODO: Gebruik regex voor flexibele matching
+   */
+  it('should intercept with regex', () => {
+    // TODO: Intercept alle .json requests
+    // cy.intercept('GET', /\.json$/).as('jsonRequest');
+
+    cy.visit('/products.html');
+
+    // TODO: Wacht op de request
+    // cy.wait('@jsonRequest');
+  });
+
+  /**
+   * TEST 15.7: Spy op request count
+   *
+   * TODO: Tel hoeveel requests er gemaakt worden
+   */
+  it('should count requests', () => {
+    let requestCount = 0;
+
+    // Intercept en tel
+    cy.intercept('GET', '/api/*', () => {
+      requestCount++;
+    }).as('apiRequests');
+
+    cy.visit('/products.html');
+
+    // Wacht even voor alle requests
+    cy.wait(1000).then(() => {
+      cy.log(`Aantal API requests: ${requestCount}`);
+    });
+  });
+
+  /**
+   * TEST 15.8: Wacht op specifieke response
+   *
+   * TODO: Wacht tot response aan conditie voldoet
+   */
+  it('should wait for specific response', () => {
+    cy.intercept('GET', '/api/products.json').as('getProducts');
+
+    cy.visit('/products.html');
+
+    // TODO: Wacht en valideer response
+    cy.wait('@getProducts')
+      .its('response.statusCode')
+      .should('equal', 200);
+  });
+
+  /**
+   * BONUS: Log alle requests
+   *
+   * TODO: Maak een debug helper die alle requests logt
+   */
+  it('should log all network requests', () => {
+    // Intercept ALLES
+    cy.intercept('*', (req) => {
+      // Skip static assets
+      if (!req.url.includes('.js') && !req.url.includes('.css')) {
+        console.log(`[${req.method}] ${req.url}`);
+      }
+    });
+
+    cy.visit('/products.html');
+
+    // Check console in browser DevTools
+    cy.get('[data-cy="product-card"]').should('exist');
+  });
+});

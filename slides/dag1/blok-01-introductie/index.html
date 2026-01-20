@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introductie Cypress - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Introductie Cypress</h1>
+        <p>End-to-End Testing met plezier</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Begrijpen wat Cypress is en waarom het anders is dan Selenium</li>
+            <li>Een eerste test kunnen schrijven met cy.visit() en cy.get()</li>
+            <li>Assertions gebruiken met should() en and()</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Waarom Cypress?</h2>
+        <ul>
+          <li>Draait IN de browser, niet erbuiten</li>
+          <li>Automatische wachttijden (geen sleep() meer!)</li>
+          <li>Time-travel debugging</li>
+          <li>Realtime reloads tijdens development</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Cypress vs Selenium</h2>
+        <div class="columns">
+          <div>
+            <h3>Selenium</h3>
+            <ul>
+              <li>WebDriver protocol</li>
+              <li>Externe browser control</li>
+              <li>Veel async/wait code</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Cypress</h3>
+            <ul>
+              <li>Draait in browser</li>
+              <li>Directe DOM access</li>
+              <li>Automatisch wachten</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Je eerste test</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>describe('Mijn eerste test', () =&gt; {
+  it('bezoekt de homepage', () =&gt; {
+    cy.visit('/')
+    cy.get('[data-cy="welcome"]').should('be.visible')
+    cy.url().should('include', 'localhost')
+  })
+})</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 1:</strong> Schrijf je eerste test</li>
+          <li><strong>Opdracht 2:</strong> Navigatie en assertions</li>
+          <li>Open: cypress/e2e/opdrachten/dag1/</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

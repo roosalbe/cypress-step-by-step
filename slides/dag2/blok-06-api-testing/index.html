@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Testing - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>API Testing</h1>
+        <p>Testen onder de motorkap</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>API requests maken met cy.request()</li>
+            <li>Response data valideren</li>
+            <li>GET, POST, PUT en DELETE requests</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Waarom API Testing?</h2>
+        <ul>
+          <li>Sneller dan UI tests (geen browser rendering)</li>
+          <li>Test de business logic direct</li>
+          <li>Makkelijker edge cases testen</li>
+          <li>Setup data via API (loginViaApi!)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>GET Request</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>it('haalt producten op', () =&gt; {
+  cy.request('GET', '/api/products')
+    .then((response) =&gt; {
+      expect(response.status).to.eq(200)
+      expect(response.body.products).to.have.length.gt(0)
+      expect(response.body.products[0]).to.have.property('name')
+    })
+})
+
+// Of met .its() chaining
+cy.request('/api/products')
+  .its('body.products')
+  .should('have.length.gt', 0)</code></pre>
+      </section>
+
+      <section>
+        <h2>POST/PUT/DELETE</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// POST - nieuwe resource
+cy.request('POST', '/api/cart', {
+  productId: '123',
+  quantity: 2
+}).its('status').should('eq', 201)
+
+// PUT - update resource
+cy.request('PUT', '/api/cart/item-1', {
+  quantity: 5
+})
+
+// DELETE - verwijder resource
+cy.request('DELETE', '/api/cart/item-1')
+  .its('status').should('eq', 200)</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 11:</strong> GET requests en responses</li>
+          <li><strong>Opdracht 12:</strong> POST, PUT, DELETE</li>
+          <li>Check altijd status codes!</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

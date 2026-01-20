@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Object Model - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Page Object Model</h1>
+        <p>Onderhoudbare tests schrijven</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Het Page Object Model pattern begrijpen</li>
+            <li>Een LoginPage class kunnen maken</li>
+            <li>Method chaining toepassen voor leesbare tests</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Waarom Page Objects?</h2>
+        <ul>
+          <li>Selectors op één plek (DRY)</li>
+          <li>Tests lezen als user stories</li>
+          <li>Makkelijker onderhoud bij UI changes</li>
+          <li>Herbruikbare acties</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Een Page Object</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>export class LoginPage {
+  // Selectors op één plek
+  private emailInput = '[data-cy="email"]'
+  private passwordInput = '[data-cy="password"]'
+  private submitButton = '[data-cy="login-button"]'
+
+  visit() {
+    cy.visit('/login')
+    return this
+  }
+
+  login(email, password) {
+    cy.get(this.emailInput).type(email)
+    cy.get(this.passwordInput).type(password)
+    cy.get(this.submitButton).click()
+    return this
+  }
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Method Chaining</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// Zonder Page Object
+cy.visit('/login')
+cy.get('[data-cy="email"]').type('test@test.nl')
+cy.get('[data-cy="password"]').type('password123')
+cy.get('[data-cy="login-button"]').click()
+
+// Met Page Object
+const loginPage = new LoginPage()
+loginPage
+  .visit()
+  .login('test@test.nl', 'password123')</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 5:</strong> LoginPage class maken</li>
+          <li><strong>Opdracht 6:</strong> Meer Page Objects toevoegen</li>
+          <li>Tip: return this voor method chaining</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

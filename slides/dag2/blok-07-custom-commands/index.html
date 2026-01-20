@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Commands - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>Custom Commands</h1>
+        <p>Bouw je eigen Cypress toolkit</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Custom commands maken met Cypress.Commands.add()</li>
+            <li>TypeScript type declarations toevoegen</li>
+            <li>Child commands en dual commands</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Waarom Custom Commands?</h2>
+        <ul>
+          <li>Herbruikbare acties (login, setup data)</li>
+          <li>Leesbare tests (cy.login() vs 10 regels code)</li>
+          <li>Consistente implementatie overal</li>
+          <li>Makkelijk aan te passen op één plek</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Een Custom Command Maken</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// cypress/support/commands.ts
+Cypress.Commands.add('login', (email, password) =&gt; {
+  cy.request('POST', '/api/auth/login', { email, password })
+    .then((response) =&gt; {
+      window.localStorage.setItem('token', response.body.token)
+    })
+})
+
+// Gebruik in tests
+cy.login('student@test.nl', 'cypress123')</code></pre>
+      </section>
+
+      <section>
+        <h2>TypeScript Types</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>// cypress/support/index.d.ts
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * Login via de API
+     * @param email - User email
+     * @param password - User password
+     */
+    login(email: string, password: string): Chainable&lt;void&gt;
+  }
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 13:</strong> Login command maken</li>
+          <li><strong>Opdracht 14:</strong> Utility commands</li>
+          <li>Vergeet de TypeScript types niet!</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

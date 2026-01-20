@@ -1,0 +1,23 @@
+.product-description {
+  color: var(--rhs-color-grijs-4);
+  font-size: var(--rhs-font-size-sm);
+  line-height: var(--rhs-line-height-normal);
+  margin-bottom: var(--rhs-space-2);
+}
+
+.product-category {
+  display: inline-block;
+  background-color: var(--rhs-color-donkerblauw-tint-2);
+  color: var(--rhs-color-donkerblauw);
+  font-size: var(--rhs-font-size-xs);
+  padding: var(--rhs-space-1) var(--rhs-space-2);
+  border-radius: var(--rhs-radius-sm);
+  text-transform: capitalize;
+  margin-bottom: 0;
+}
+
+.product-price {
+  font-size: var(--rhs-font-size-lg);
+  font-weight: 700;
+  color: var(--rhs-color-donkerblauw);
+}

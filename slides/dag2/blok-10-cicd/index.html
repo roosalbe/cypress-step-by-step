@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CI/CD Integratie - Cypress Cursus</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="../../assets/minimal.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="title-slide">
+        <h1>CI/CD Integratie</h1>
+        <p>Tests automatisch draaien</p>
+      </section>
+
+      <section>
+        <h2>Wat gaan we leren?</h2>
+        <div class="leerdoelen">
+          <h3>Na dit blok kun je:</h3>
+          <ul>
+            <li>Cypress in CI/CD pipelines draaien</li>
+            <li>GitHub Actions workflow configureren</li>
+            <li>Test reports en artifacts beheren</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Waarom CI/CD?</h2>
+        <ul>
+          <li>Tests draaien bij elke PR</li>
+          <li>Bugs vinden voor ze in main komen</li>
+          <li>Consistent test environment</li>
+          <li>Automatische quality gates</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>GitHub Actions Workflow</h2>
+        <pre><code class="language-javascript" data-trim data-noescape>name: Cypress Tests
+on: [push, pull_request]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm run dev
+          wait-on: 'http://localhost:3000'</code></pre>
+      </section>
+
+      <section>
+        <h2>Best Practices</h2>
+        <ul>
+          <li>Gebruik de officiële cypress-io/github-action</li>
+          <li>Start je app in de workflow</li>
+          <li>Upload screenshots/videos als artifacts</li>
+          <li>Paralleliseer voor snelheid</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Tijd voor de opdracht!</h2>
+        <ul>
+          <li><strong>Opdracht 19:</strong> GitHub Actions configureren</li>
+          <li>Maak een werkende workflow</li>
+          <li>Test lokaal met act (optioneel)</li>
+          <li>Tijd: ~50 minuten</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

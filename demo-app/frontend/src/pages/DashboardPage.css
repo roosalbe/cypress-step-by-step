@@ -1,0 +1,95 @@
+.dashboard-page {
+  max-width: 1000px;
+}
+
+.welcome-card {
+  background-color: var(--rhs-color-donkerblauw);
+  color: var(--rhs-color-wit);
+  padding: var(--rhs-space-6);
+  border-radius: var(--rhs-radius-lg);
+  margin-bottom: var(--rhs-space-6);
+}
+
+.welcome-card h2 {
+  color: var(--rhs-color-wit);
+  margin-bottom: var(--rhs-space-2);
+}
+
+.welcome-card p {
+  color: var(--rhs-color-donkerblauw-tint-1);
+  margin-bottom: 0;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--rhs-space-5);
+  margin-bottom: var(--rhs-space-6);
+}
+
+.dashboard-grid .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dashboard-grid .card-content {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dashboard-grid h3 {
+  color: var(--rhs-color-donkerblauw);
+  margin-bottom: var(--rhs-space-3);
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--rhs-color-donkerblauw);
+  margin-bottom: 0;
+}
+
+.stat-label {
+  color: var(--rhs-color-grijs-4);
+  margin-bottom: 0;
+}
+
+.stat-description {
+  color: var(--rhs-color-grijs-4);
+  margin-bottom: 0;
+}
+
+.dashboard-grid .card-footer {
+  justify-content: center;
+}
+
+.account-info {
+  background-color: var(--rhs-color-wit);
+  border: 1px solid var(--rhs-color-grijs-2);
+  border-radius: var(--rhs-radius-lg);
+  padding: var(--rhs-space-5);
+}
+
+.account-info h2 {
+  margin-bottom: var(--rhs-space-4);
+}
+
+.info-table {
+  width: 100%;
+}
+
+.info-table td:first-child {
+  font-weight: 600;
+  width: 150px;
+  color: var(--rhs-color-grijs-4);
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

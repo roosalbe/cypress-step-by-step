@@ -1,0 +1,105 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rhs-space-2);
+  font-family: var(--rhs-font-family);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--rhs-radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--rhs-transition-fast);
+}
+
+.btn:focus {
+  outline: var(--rhs-focus-outline);
+  outline-offset: var(--rhs-focus-offset);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.btn-primary {
+  background-color: var(--rhs-color-donkerblauw);
+  color: var(--rhs-color-wit);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--rhs-color-hemelblauw);
+}
+
+.btn-secondary {
+  background-color: var(--rhs-color-grijs-1);
+  color: var(--rhs-color-zwart);
+  border: 1px solid var(--rhs-color-grijs-2);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--rhs-color-grijs-2);
+}
+
+.btn-danger {
+  background-color: var(--rhs-color-rood);
+  color: var(--rhs-color-wit);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #b52318;
+}
+
+.btn-success {
+  background-color: var(--rhs-color-groen);
+  color: var(--rhs-color-wit);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #2d6b0a;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--rhs-color-donkerblauw);
+  border: 2px solid var(--rhs-color-donkerblauw);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--rhs-color-donkerblauw);
+  color: var(--rhs-color-wit);
+}
+
+/* Sizes */
+.btn-small {
+  font-size: var(--rhs-font-size-sm);
+  padding: var(--rhs-space-2) var(--rhs-space-3);
+}
+
+.btn-medium {
+  font-size: var(--rhs-font-size-base);
+  padding: var(--rhs-space-3) var(--rhs-space-5);
+}
+
+.btn-large {
+  font-size: var(--rhs-font-size-lg);
+  padding: var(--rhs-space-4) var(--rhs-space-6);
+}
+
+/* Full width */
+.btn-full {
+  width: 100%;
+}
+
+/* Loading state */
+.btn-loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn-loading::after {
+  content: 'Laden...';
+  position: absolute;
+  color: inherit;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Inloggen</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div style="max-width: 400px; margin: 2rem auto;">
+      <div class="card">
+        <div class="card-header">
+          <h1 style="font-size: 1.5rem; margin: 0;" data-cy="login-title">Inloggen</h1>
+        </div>
+
+        <div class="alert alert-error hidden" data-cy="login-error"></div>
+
+        <form data-cy="login-form" id="login-form">
+          <div class="form-group">
+            <label for="username" class="form-label" data-cy="username-label">Gebruikersnaam</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control"
+              data-cy="username"
+              placeholder="Voer je gebruikersnaam in"
+              required
+              autocomplete="username"
+            >
+            <div class="invalid-feedback">Gebruikersnaam is verplicht</div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label" data-cy="password-label">Wachtwoord</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              data-cy="password"
+              placeholder="Voer je wachtwoord in"
+              required
+              autocomplete="current-password"
+            >
+            <div class="invalid-feedback">Wachtwoord is verplicht</div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" id="remember" name="remember" class="form-check-input" data-cy="remember-me">
+              <label for="remember" class="form-check-label" data-cy="remember-me-label">Onthoud mij</label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" data-cy="login-button">
+            Inloggen
+          </button>
+        </form>
+
+        <div class="mt-3 text-center">
+          <a href="#" data-cy="forgot-password">Wachtwoord vergeten?</a>
+        </div>
+      </div>
+
+      <div class="card mt-2">
+        <div class="card-header">Test Accounts</div>
+        <p style="font-size: 0.875rem; color: var(--text-secondary);">
+          Gebruik deze accounts om in te loggen:
+        </p>
+        <table class="table" data-cy="test-accounts">
+          <thead>
+            <tr>
+              <th>Gebruiker</th>
+              <th>Wachtwoord</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-cy="account-student">
+              <td>student</td>
+              <td>cypress123</td>
+            </tr>
+            <tr data-cy="account-admin">
+              <td>admin</td>
+              <td>admin123</td>
+            </tr>
+            <tr data-cy="account-tester">
+              <td>tester</td>
+              <td>test123</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress Shop - Afrekenen</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand" data-cy="navbar-brand">Cypress Shop</a>
+      <ul class="navbar-nav">
+        <li><a href="index.html" data-cy="nav-home">Home</a></li>
+        <li><a href="products.html" data-cy="nav-products">Producten</a></li>
+        <li><a href="dashboard.html" data-cy="nav-dashboard">Dashboard</a></li>
+        <li class="nav-cart">
+          <a href="cart.html" data-cy="nav-cart">Winkelwagen</a>
+          <span class="cart-count hidden" data-cy="cart-count">0</span>
+        </li>
+        <li><a href="login.html" data-cy="nav-login">Inloggen</a></li>
+        <li><a href="#" data-cy="logout-button" class="hidden">Uitloggen</a></li>
+        <li><span class="user-info hidden" data-cy="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 data-cy="page-title">Afrekenen</h1>
+
+    <div class="checkout-steps" data-cy="checkout-steps">
+      <div class="step active" data-cy="step-shipping">
+        <span class="step-number">1</span>
+        <span>Verzending</span>
+      </div>
+      <div class="step" data-cy="step-payment">
+        <span class="step-number">2</span>
+        <span>Betaling</span>
+      </div>
+      <div class="step" data-cy="step-confirm">
+        <span class="step-number">3</span>
+        <span>Bevestiging</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col" style="flex: 2;">
+        <div class="card">
+          <div class="card-header" data-cy="form-header">Verzendgegevens</div>
+
+          <form data-cy="checkout-form" id="checkout-form">
+            <div class="row">
+              <div class="col-50">
+                <div class="form-group">
+                  <label class="form-label" for="firstName">Voornaam *</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    class="form-control"
+                    data-cy="firstName"
+                    required
+                  >
+                  <div class="invalid-feedback">Voornaam is verplicht</div>
+                </div>
+              </div>
+              <div class="col-50">
+                <div class="form-group">
+                  <label class="form-label" for="lastName">Achternaam *</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    class="form-control"
+                    data-cy="lastName"
+                    required
+                  >
+                  <div class="invalid-feedback">Achternaam is verplicht</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">E-mailadres *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                data-cy="email"
+                required
+              >
+              <div class="invalid-feedback">Voer een geldig e-mailadres in</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">Telefoonnummer *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="form-control"
+                data-cy="phone"
+                data-validate="phone"
+                required
+              >
+              <div class="invalid-feedback">Voer een geldig telefoonnummer in</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="address">Adres *</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                class="form-control"
+                data-cy="address"
+                placeholder="Straat en huisnummer"
+                required
+              >
+              <div class="invalid-feedback">Adres is verplicht</div>
+            </div>
+
+            <div class="row">
+              <div class="col-50">
+                <div class="form-group">
+                  <label class="form-label" for="postcode">Postcode *</label>
+                  <input
+                    type="text"
+                    id="postcode"
+                    name="postcode"
+                    class="form-control"
+                    data-cy="postcode"
+                    data-validate="postcode"
+                    placeholder="1234 AB"
+                    required
+                  >
+                  <div class="invalid-feedback">Voer een geldige postcode in</div>
+                </div>
+              </div>
+              <div class="col-50">
+                <div class="form-group">
+                  <label class="form-label" for="city">Plaats *</label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    class="form-control"
+                    data-cy="city"
+                    required
+                  >
+                  <div class="invalid-feedback">Plaats is verplicht</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="country">Land</label>
+              <select id="country" name="country" class="form-control" data-cy="country">
+                <option value="NL">Nederland</option>
+                <option value="BE">België</option>
+                <option value="DE">Duitsland</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="notes">Opmerkingen</label>
+              <textarea
+                id="notes"
+                name="notes"
+                class="form-control"
+                data-cy="notes"
+                rows="3"
+                placeholder="Speciale instructies voor bezorging..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <input type="checkbox" id="terms" name="terms" class="form-check-input" data-cy="terms-checkbox" required>
+                <label class="form-check-label" for="terms" data-cy="terms-label">
+                  Ik ga akkoord met de <a href="#" data-cy="terms-link">algemene voorwaarden</a> *
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-check">
+                <input type="checkbox" id="newsletter" name="newsletter" class="form-check-input" data-cy="newsletter-checkbox">
+                <label class="form-check-label" for="newsletter" data-cy="newsletter-label">
+                  Ik wil graag de nieuwsbrief ontvangen
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block" data-cy="place-order-button">
+              Bestelling plaatsen
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col" style="flex: 1;">
+        <div class="card">
+          <div class="card-header">Bestelling Overzicht</div>
+          <div data-cy="order-summary">
+            <!-- Order summary loaded by JS -->
+          </div>
+        </div>
+
+        <div class="card mt-2">
+          <div class="card-header">Verzendopties</div>
+          <div data-cy="shipping-options">
+            <div class="form-check">
+              <input type="radio" name="shipping" value="standard" id="ship-standard" class="form-check-input" data-cy="shipping-standard" checked>
+              <label class="form-check-label" for="ship-standard">
+                Standaard verzending (gratis)
+                <br><small style="color: var(--text-secondary);">3-5 werkdagen</small>
+              </label>
+            </div>
+            <div class="form-check mt-1">
+              <input type="radio" name="shipping" value="express" id="ship-express" class="form-check-input" data-cy="shipping-express">
+              <label class="form-check-label" for="ship-express">
+                Express verzending (€9,95)
+                <br><small style="color: var(--text-secondary);">1-2 werkdagen</small>
+              </label>
+            </div>
+            <div class="form-check mt-1">
+              <input type="radio" name="shipping" value="pickup" id="ship-pickup" class="form-check-input" data-cy="shipping-pickup">
+              <label class="form-check-label" for="ship-pickup">
+                Afhalen (gratis)
+                <br><small style="color: var(--text-secondary);">Vandaag beschikbaar</small>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-2">
+          <div class="card-header">Betaalmethode</div>
+          <div data-cy="payment-options">
+            <div class="form-check">
+              <input type="radio" name="payment" value="ideal" id="pay-ideal" class="form-check-input" data-cy="payment-ideal" checked>
+              <label class="form-check-label" for="pay-ideal">iDEAL</label>
+            </div>
+            <div class="form-check mt-1">
+              <input type="radio" name="payment" value="creditcard" id="pay-cc" class="form-check-input" data-cy="payment-creditcard">
+              <label class="form-check-label" for="pay-cc">Creditcard</label>
+            </div>
+            <div class="form-check mt-1">
+              <input type="radio" name="payment" value="paypal" id="pay-paypal" class="form-check-input" data-cy="payment-paypal">
+              <label class="form-check-label" for="pay-paypal">PayPal</label>
+            </div>
+          </div>
+        </div>
+
+        <a href="cart.html" class="btn btn-outline btn-block mt-2" data-cy="back-to-cart">
+          &larr; Terug naar winkelwagen
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pre-fill form if user is logged in
+      if (AppState.currentUser) {
+        const nameParts = AppState.currentUser.name.split(' ');
+        const firstNameEl = document.querySelector('[data-cy="firstName"]');
+        const lastNameEl = document.querySelector('[data-cy="lastName"]');
+        const emailEl = document.querySelector('[data-cy="email"]');
+
+        if (firstNameEl) firstNameEl.value = nameParts[0] || '';
+        if (lastNameEl) lastNameEl.value = nameParts.slice(1).join(' ') || '';
+        if (emailEl) emailEl.value = AppState.currentUser.email || '';
+      }
+
+      // Update shipping cost display
+      const shippingOptions = document.querySelectorAll('[name="shipping"]');
+      shippingOptions.forEach(option => {
+        option.addEventListener('change', () => {
+          const total = Cart.getTotal();
+          let shippingCost = 0;
+          if (option.value === 'express') {
+            shippingCost = 9.95;
+          }
+          const totalEl = document.querySelector('[data-cy="checkout-total"]');
+          if (totalEl) totalEl.textContent = UI.formatPrice(total + shippingCost);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
