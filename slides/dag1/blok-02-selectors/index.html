@@ -29,6 +29,42 @@
       </section>
 
       <section>
+        <h2>Wat zijn Selectors?</h2>
+        <p>Selectors zijn patronen om elementen op een pagina te identificeren en ermee te interacteren.</p>
+        <p><em>Ze zijn essentieel voor zowel CSS styling, JavaScript manipulatie, als geautomatiseerd testen.</em></p>
+      </section>
+
+      <section>
+        <h2>Selector Types</h2>
+        <div class="selector-grid">
+          <div class="selector-item">
+            <strong>ID Selectors</strong>
+            <code>#elementId</code>
+          </div>
+          <div class="selector-item">
+            <strong>Class Selectors</strong>
+            <code>.elementClass</code>
+          </div>
+          <div class="selector-item">
+            <strong>Tag Selectors</strong>
+            <code>div, span, button</code>
+          </div>
+          <div class="selector-item">
+            <strong>Attribute Selectors</strong>
+            <code>[type="text"], [href="/home"]</code>
+          </div>
+          <div class="selector-item">
+            <strong>Data Attribute Selectors</strong>
+            <code>[data-cy="button-confirm"]</code>
+          </div>
+          <div class="selector-item">
+            <strong>Combinator Selectors</strong>
+            <code>div > p, div + p, div ~ p</code>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <h2>Het selector probleem</h2>
         <ul>
           <li>CSS classes veranderen bij redesigns</li>
@@ -40,14 +76,23 @@
 
       <section>
         <h2>De selector prioriteit</h2>
-        <pre><code class="language-javascript" data-trim data-noescape>// Vermijd (fragiel)
+        <pre><code class="language-javascript" data-trim data-noescape>// ❌ Vermijd (fragiel)
 cy.get('.btn-primary')
 cy.get('#submit-btn')
-cy.get('form &gt; div:nth-child(2) &gt; button')
+cy.get('form > div:nth-child(2) > button')
 
-// Gebruik (stabiel)
+// ✅ Gebruik (stabiel)
 cy.get('[data-cy="submit-button"]')
 cy.getByDataCy('submit-button')  // custom command</code></pre>
+      </section>
+
+      <section>
+        <h2>Cypress Best Practices</h2>
+        <blockquote>
+          "Don't target elements based on CSS attributes such as: id, class, tag.<br>
+          Target elements using data-* attributes."
+          <footer style="color: #98989d; font-size: 0.7em; margin-top: 0.5em;">— Cypress.io Documentation</footer>
+        </blockquote>
       </section>
 
       <section>

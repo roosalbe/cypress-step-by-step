@@ -2,13 +2,14 @@
  * LoginPage - Page Object voor de login pagina
  */
 export class LoginPage {
-  // Selectors
-  private emailInput = '[data-cy="email-input"]';
-  private passwordInput = '[data-cy="password-input"]';
+  // Selectors - using data-cy attributes expected by tests
+  private emailInput = '[data-cy="username"]';
+  private passwordInput = '[data-cy="password"]';
   private loginButton = '[data-cy="login-button"]';
   private loginError = '[data-cy="login-error"]';
   private registerLink = '[data-cy="register-link"]';
   private loginForm = '[data-cy="login-form"]';
+  private rememberMe = '[data-cy="remember-me"]';
 
   /**
    * Navigeer naar de login pagina
@@ -114,5 +115,35 @@ export class LoginPage {
    */
   getPasswordInput(): Cypress.Chainable<JQuery<HTMLElement>> {
     return cy.get(this.passwordInput);
+  }
+
+  /**
+   * Alias voor typeEmail - voor backwards compatibility met tests
+   */
+  enterUsername(email: string): this {
+    return this.typeEmail(email);
+  }
+
+  /**
+   * Alias voor typePassword - voor backwards compatibility met tests
+   */
+  enterPassword(password: string): this {
+    return this.typePassword(password);
+  }
+
+  /**
+   * Check de "Onthoud mij" checkbox
+   */
+  checkRememberMe(): this {
+    cy.get(this.rememberMe).check();
+    return this;
+  }
+
+  /**
+   * Uncheck de "Onthoud mij" checkbox
+   */
+  uncheckRememberMe(): this {
+    cy.get(this.rememberMe).uncheck();
+    return this;
   }
 }

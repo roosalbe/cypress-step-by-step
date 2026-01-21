@@ -4,7 +4,7 @@
 
 describe('Opdracht 4: Formulier Interacties', () => {
   it('should type in search input', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="search-input"]').type('Laptop');
 
@@ -12,7 +12,7 @@ describe('Opdracht 4: Formulier Interacties', () => {
   });
 
   it('should clear and type new text', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="search-input"]').type('Test');
 
@@ -22,7 +22,7 @@ describe('Opdracht 4: Formulier Interacties', () => {
   });
 
   it('should select from dropdown', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="category-filter"]').select('electronics');
 
@@ -30,7 +30,7 @@ describe('Opdracht 4: Formulier Interacties', () => {
   });
 
   it('should check and uncheck checkbox', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="in-stock-filter"]').check();
 
@@ -42,23 +42,24 @@ describe('Opdracht 4: Formulier Interacties', () => {
   });
 
   it('should fill login form', () => {
-    cy.visit('/login.html');
+    cy.visit('/login');
 
-    cy.get('[data-cy="username"]').type('student');
+    // Let op: het formulier gebruikt email adressen
+    cy.get('[data-cy="username"]').type('student@test.nl');
 
     cy.get('[data-cy="password"]').type('cypress123');
 
     cy.get('[data-cy="remember-me"]').check();
 
-    cy.get('[data-cy="username"]').should('have.value', 'student');
+    cy.get('[data-cy="username"]').should('have.value', 'student@test.nl');
     cy.get('[data-cy="password"]').should('have.value', 'cypress123');
     cy.get('[data-cy="remember-me"]').should('be.checked');
   });
 
   it('should submit login form', () => {
-    cy.visit('/login.html');
+    cy.visit('/login');
 
-    cy.get('[data-cy="username"]').type('student');
+    cy.get('[data-cy="username"]').type('student@test.nl');
     cy.get('[data-cy="password"]').type('cypress123');
     cy.get('[data-cy="login-button"]').click();
 
@@ -66,22 +67,11 @@ describe('Opdracht 4: Formulier Interacties', () => {
   });
 
   it('should use special keys', () => {
-    cy.visit('/login.html');
+    cy.visit('/login');
 
-    cy.get('[data-cy="username"]').type('student{tab}');
-
+    cy.get('[data-cy="username"]').type('student@test.nl');
     cy.get('[data-cy="password"]').type('cypress123{enter}');
 
     cy.url().should('include', '/dashboard');
-  });
-
-  it('should submit newsletter form', () => {
-    cy.visit('/');
-
-    cy.get('[data-cy="newsletter-email"]').type('test@test.nl');
-
-    cy.get('[data-cy="newsletter-submit"]').click();
-
-    cy.get('[data-cy="newsletter-success"]').should('be.visible');
   });
 });

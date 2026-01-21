@@ -18,10 +18,38 @@ declare namespace Cypress {
     login(email: string, password: string): Chainable<void>;
 
     /**
+     * Custom command om in te loggen via de API (sneller)
+     * @param email - E-mailadres
+     * @param password - Wachtwoord
+     * @example cy.loginViaApi('student@test.nl', 'cypress123')
+     */
+    loginViaApi(email: string, password: string): Chainable<void>;
+
+    /**
      * Custom command om uit te loggen
      * @example cy.logout()
      */
     logout(): Chainable<void>;
+
+    /**
+     * Custom command om product aan winkelwagen toe te voegen via API
+     * @param productId - Product ID (UUID)
+     * @param quantity - Aantal (default: 1)
+     * @example cy.addToCart('uuid-here', 2)
+     */
+    addToCart(productId: string, quantity?: number): Chainable<void>;
+
+    /**
+     * Custom command om winkelwagen leeg te maken via API
+     * @example cy.clearCart()
+     */
+    clearCart(): Chainable<void>;
+
+    /**
+     * Custom command om database te resetten naar seed data
+     * @example cy.resetDatabase()
+     */
+    resetDatabase(): Chainable<void>;
 
     /**
      * Custom command om element op te halen via data-cy attribuut
@@ -29,6 +57,25 @@ declare namespace Cypress {
      * @example cy.getByDataCy('login-button')
      */
     getByDataCy(selector: string): Chainable<JQuery<HTMLElement>>;
+
+    /**
+     * Assert dat element zichtbaar is
+     * @example cy.getByDataCy('welcome').shouldBeVisible()
+     */
+    shouldBeVisible(): Chainable<JQuery<HTMLElement>>;
+
+    /**
+     * Assert dat element bepaalde tekst bevat
+     * @param text - De tekst die element moet bevatten
+     * @example cy.getByDataCy('price').shouldContainText('€')
+     */
+    shouldContainText(text: string): Chainable<JQuery<HTMLElement>>;
+
+    /**
+     * Custom command om producten op te halen via de API
+     * @example cy.getProducts().then((products) => { ... })
+     */
+    getProducts(): Chainable<Product[]>;
   }
 }
 

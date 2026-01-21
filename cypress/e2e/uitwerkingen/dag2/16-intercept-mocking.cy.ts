@@ -4,17 +4,15 @@
 
 describe('Opdracht 16: cy.intercept() - Mocking', () => {
   it('should mock with static data', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       statusCode: 200,
-      body: {
-        products: [
-          { id: 1, name: 'Mock Product 1', price: 99.99, category: 'test', stock: 10 },
-          { id: 2, name: 'Mock Product 2', price: 149.99, category: 'test', stock: 5 }
-        ]
-      }
+      body: [
+        { id: 1, name: 'Mock Product 1', price: 99.99, category: 'test', stock: 10 },
+        { id: 2, name: 'Mock Product 2', price: 149.99, category: 'test', stock: 5 }
+      ]
     }).as('mockProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@mockProducts');
 
@@ -23,25 +21,23 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
   });
 
   it('should mock with fixture', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       fixture: 'products.json'
     }).as('fixtureProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@fixtureProducts');
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
   });
 
   it('should handle empty response', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       statusCode: 200,
-      body: {
-        products: []
-      }
+      body: []
     }).as('emptyProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@emptyProducts');
 
@@ -49,45 +45,43 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
   });
 
   it('should handle 404 error', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       statusCode: 404,
       body: {
         error: 'Products not found'
       }
     }).as('notFound');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@notFound');
     // App should handle 404 gracefully
   });
 
   it('should handle 500 error', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       statusCode: 500,
       body: {
         error: 'Internal server error'
       }
     }).as('serverError');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@serverError');
     // App should handle 500 gracefully
   });
 
   it('should handle slow response', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       statusCode: 200,
-      body: {
-        products: [
-          { id: 1, name: 'Slow Product', price: 99.99, category: 'test', stock: 10 }
-        ]
-      },
+      body: [
+        { id: 1, name: 'Slow Product', price: 99.99, category: 'test', stock: 10 }
+      ],
       delay: 2000
     }).as('slowProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // Optionally check loading state if it exists
     cy.get('body').then(($body) => {
@@ -102,27 +96,27 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
   });
 
   it('should handle network error', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       forceNetworkError: true
     }).as('networkError');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // App should handle network errors gracefully
     // Could show an error message or retry
   });
 
   it('should modify real response', () => {
-    cy.intercept('GET', '/api/products.json', (req) => {
+    cy.intercept('GET', '**/api/products*', (req) => {
       req.continue((res) => {
-        if (res.body && res.body.products) {
-          res.body.products = res.body.products.slice(0, 3);
+        if (res.body && Array.isArray(res.body)) {
+          res.body = res.body.slice(0, 3);
         }
         res.send();
       });
     }).as('modifiedProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@modifiedProducts');
 
@@ -130,22 +124,20 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
   });
 
   it('should conditionally mock based on request', () => {
-    cy.intercept('GET', '/api/products.json', (req) => {
+    cy.intercept('GET', '**/api/products*', (req) => {
       if (req.url.includes('category=electronics')) {
         req.reply({
           statusCode: 200,
-          body: {
-            products: [
-              { id: 1, name: 'Mocked Electronics', price: 999.99, category: 'electronics', stock: 5 }
-            ]
-          }
+          body: [
+            { id: 1, name: 'Mocked Electronics', price: 999.99, category: 'electronics', stock: 5 }
+          ]
         });
       } else {
         req.continue();
       }
     });
 
-    cy.visit('/products.html');
+    cy.visit('/products');
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
   });
 });

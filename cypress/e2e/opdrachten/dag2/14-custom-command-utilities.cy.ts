@@ -65,14 +65,12 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   /**
    * TEST 14.1: Gebruik getByDataCy command
    *
-   * Dit command bestaat al in commands.ts
+
    */
   it('should use getByDataCy command', () => {
     cy.visit('/products.html');
 
-    // Bestaand command
-    cy.getByDataCy('page-title').should('contain', 'Producten');
-    cy.getByDataCy('search-input').should('be.visible');
+    // Gebruik cy.getByDataCy om te navigeren door de applicatie
   });
 
   /**
@@ -86,9 +84,6 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
     // TODO: Uncomment als je het command hebt toegevoegd
     // cy.dataCy('page-title').should('contain', 'Producten');
     // cy.dataCy('search-input').type('Laptop');
-
-    // Tijdelijk: gebruik bestaand command
-    cy.getByDataCy('page-title').should('contain', 'Producten');
   });
 
   /**
@@ -110,12 +105,6 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
     //   'postcode': '1234 AB',
     //   'city': 'Amsterdam'
     // });
-
-    // Tijdelijk: handmatig invullen
-    cy.get('[data-cy="firstName"]').type('John');
-    cy.get('[data-cy="lastName"]').type('Doe');
-
-    cy.get('[data-cy="firstName"]').should('have.value', 'John');
   });
 
   /**
@@ -128,11 +117,6 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
 
     // TODO: Uncomment als je het command hebt toegevoegd
     // cy.getByDataCy('page-title').shouldBeVisibleWithText('Producten');
-
-    // Tijdelijk: gebruik standaard assertions
-    cy.getByDataCy('page-title')
-      .should('be.visible')
-      .and('contain', 'Producten');
   });
 
   /**
@@ -145,8 +129,6 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
 
     // TODO: Uncomment als je het command hebt toegevoegd
     // cy.waitForLoading();
-
-    cy.getByDataCy('product-card').should('have.length.greaterThan', 0);
   });
 
   /**
@@ -167,19 +149,13 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
 
     // Verify met shouldBeVisibleWithText
     // cy.getByDataCy('product-card').first().shouldBeVisibleWithText('Laptop');
-
-    // Tijdelijk
-    cy.getByDataCy('product-card').first().should('contain', 'Laptop');
   });
 
   /**
    * TEST 14.7: Test addToCart command
-   *
-   * Dit command bestaat al
    */
   it('should use addToCart command', () => {
-    // Bestaand command
-    cy.addToCart(1, 2);
+    // cy.addToCart(1, 2);
 
     cy.visit('/cart.html');
     cy.getByDataCy('cart-item').should('have.length.greaterThan', 0);
@@ -189,7 +165,6 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   /**
    * TEST 14.8: Test clearCart command
    *
-   * Dit command bestaat al
    */
   it('should use clearCart command', () => {
     // Voeg eerst toe
@@ -209,12 +184,7 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
    *
    * ```typescript
    * Cypress.Commands.add('selectProduct', (productName: string) => {
-   *   cy.visit('/products.html');
-   *   cy.get('[data-cy="search-input"]').type(productName);
-   *   cy.wait(500);
-   *   cy.contains('[data-cy="product-card"]', productName)
-   *     .find('[data-cy="add-to-cart"]')
-   *     .click();
+
    * });
    * ```
    */
@@ -224,10 +194,5 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
     // TODO: Uncomment als je het command hebt toegevoegd
     // cy.selectProduct('Laptop');
     // cy.getByDataCy('cart-count').should('contain', '1');
-
-    // Tijdelijk: handmatig
-    cy.visit('/products.html');
-    cy.get('[data-cy="add-to-cart"]').first().click();
-    cy.getByDataCy('cart-count').should('contain', '1');
   });
 });

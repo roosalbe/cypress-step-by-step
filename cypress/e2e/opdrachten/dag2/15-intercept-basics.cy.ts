@@ -5,7 +5,7 @@
  *
  * In deze opdracht ga je:
  * 1. Requests intercepten
- * 2. Wachten op requests
+ * 2. Wachten op requests doormiddel van aliasen
  * 3. Request/response data bekijken
  *
  * Bouwt voort op: Opdracht 14
@@ -20,12 +20,10 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    */
   it('should intercept a GET request', () => {
     // TODO: Intercept de products request
-    // cy.intercept('GET', '/api/products.json').as('getProducts');
-
-    cy.visit('/products.html');
+    
+    cy.visit('/products');
 
     // TODO: Wacht op de request
-    // cy.wait('@getProducts');
 
     // Verify products zijn geladen
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
@@ -38,12 +36,10 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    */
   it('should intercept with wildcard', () => {
     // TODO: Intercept alle /api/* requests
-    // cy.intercept('GET', '/api/*').as('apiCall');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Wacht op een API call
-    // cy.wait('@apiCall');
   });
 
   /**
@@ -52,17 +48,15 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    * TODO: Inspecteer de response van een request
    */
   it('should inspect response data', () => {
-    cy.intercept('GET', '/api/products.json').as('getProducts');
+    cy.intercept('GET', '/api/products').as('getProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Wacht en bekijk response
     cy.wait('@getProducts').then((interception) => {
       // TODO: Log status code
-      // cy.log('Status: ' + interception.response?.statusCode);
 
       // TODO: Check response body
-      // expect(interception.response?.body).to.have.property('products');
     });
   });
 
@@ -72,10 +66,10 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    * TODO: Inspecteer de request van een form submission
    */
   it('should inspect request data', () => {
-    // Intercept login request (zou normaal een POST zijn)
-    cy.intercept('GET', '/api/users.json').as('getUsers');
+    // Intercept login request
+    cy.intercept('GET', '/api/users').as('getUsers');
 
-    cy.visit('/login.html');
+    cy.visit('/login');
 
     // Trigger de page load die users laadt
     cy.wait('@getUsers').then((interception) => {
@@ -94,8 +88,8 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    */
   it('should handle multiple intercepts', () => {
     // TODO: Intercept products en users
-    cy.intercept('GET', '/api/products.json').as('products');
-    cy.intercept('GET', '/api/users.json').as('users');
+    cy.intercept('GET', '/api/products').as('products');
+    cy.intercept('GET', '/api/users').as('users');
 
     // Visit page die beide laadt
     cy.visit('/');
@@ -111,10 +105,10 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    * TODO: Gebruik regex voor flexibele matching
    */
   it('should intercept with regex', () => {
-    // TODO: Intercept alle .json requests
-    // cy.intercept('GET', /\.json$/).as('jsonRequest');
+    // TODO: Intercept alle  requests
+    // cy.intercept('GET', /\$/).as('jsonRequest');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Wacht op de request
     // cy.wait('@jsonRequest');
@@ -133,7 +127,7 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
       requestCount++;
     }).as('apiRequests');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // Wacht even voor alle requests
     cy.wait(1000).then(() => {
@@ -147,9 +141,9 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    * TODO: Wacht tot response aan conditie voldoet
    */
   it('should wait for specific response', () => {
-    cy.intercept('GET', '/api/products.json').as('getProducts');
+    cy.intercept('GET', '/api/products').as('getProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Wacht en valideer response
     cy.wait('@getProducts')
@@ -171,7 +165,7 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
       }
     });
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // Check console in browser DevTools
     cy.get('[data-cy="product-card"]').should('exist');

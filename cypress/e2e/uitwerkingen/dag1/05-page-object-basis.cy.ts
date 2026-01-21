@@ -16,7 +16,7 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
   it('should login using individual methods', () => {
     loginPage.visit();
 
-    loginPage.enterUsername('student');
+    loginPage.enterUsername('student@test.nl');
     loginPage.enterPassword('cypress123');
     loginPage.clickLogin();
 
@@ -26,7 +26,7 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
   it('should login using combined login method', () => {
     loginPage.visit();
 
-    loginPage.login('student', 'cypress123');
+    loginPage.login('student@test.nl', 'cypress123');
 
     cy.url().should('include', '/dashboard');
   });
@@ -34,7 +34,7 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
   it('should show error for invalid credentials', () => {
     loginPage.visit();
 
-    loginPage.login('wrong', 'wrong');
+    loginPage.login('wrong@test.nl', 'wrong');
 
     loginPage.shouldShowError();
   });
@@ -42,7 +42,7 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
   it('should check remember me checkbox', () => {
     loginPage.visit();
 
-    loginPage.enterUsername('student');
+    loginPage.enterUsername('student@test.nl');
     loginPage.enterPassword('cypress123');
     loginPage.checkRememberMe();
 

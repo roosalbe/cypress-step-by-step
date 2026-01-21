@@ -10,15 +10,18 @@ function CheckoutPage() {
   const navigate = useNavigate();
   const { items, total, itemCount, refreshCart } = useCart();
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
     address: '',
-    city: '',
-    postalCode: '',
-    phone: ''
+    postcode: '',
+    city: ''
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [orderError, setOrderError] = useState('');
+  const [orderSuccess, setOrderSuccess] = useState(false);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('nl-NL', {
@@ -42,8 +45,18 @@ function CheckoutPage() {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Naam is verplicht';
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'Voornaam is verplicht';
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Achternaam is verplicht';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'E-mail is verplicht';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Ongeldig e-mailadres';
     }
 
     if (!formData.address.trim()) {
@@ -54,10 +67,10 @@ function CheckoutPage() {
       newErrors.city = 'Plaats is verplicht';
     }
 
-    if (!formData.postalCode.trim()) {
-      newErrors.postalCode = 'Postcode is verplicht';
-    } else if (!/^[0-9]{4}\s?[A-Za-z]{2}$/.test(formData.postalCode)) {
-      newErrors.postalCode = 'Ongeldige postcode (bijv. 1234 AB)';
+    if (!formData.postcode.trim()) {
+      newErrors.postcode = 'Postcode is verplicht';
+    } else if (!/^[0-9]{4}\s?[A-Za-z]{2}$/.test(formData.postcode)) {
+      newErrors.postcode = 'Ongeldige postcode (bijv. 1234 AB)';
     }
 
     setErrors(newErrors);
@@ -73,17 +86,42 @@ function CheckoutPage() {
     setOrderError('');
 
     try {
-      const response = await ordersAPI.create(formData);
+      // Transform formData to match backend expectations
+      const orderData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        postalCode: formData.postcode,
+        city: formData.city
+      };
+
+      const response = await ordersAPI.create(orderData);
       await refreshCart();
-      navigate('/orders', {
-        state: { newOrderId: response.data.order.id }
-      });
+      setOrderSuccess(true);
+      // Navigate after a short delay to show confirmation
+      setTimeout(() => {
+        navigate('/orders', {
+          state: { newOrderId: response.data.order.id }
+        });
+      }, 2000);
     } catch (err) {
       setOrderError(err.response?.data?.error || 'Bestelling plaatsen mislukt');
     } finally {
       setLoading(false);
     }
   };
+
+  if (orderSuccess) {
+    return (
+      <div className="container">
+        <div className="order-confirmation" data-cy="order-confirmation">
+          <h2>Bedankt voor je bestelling!</h2>
+          <p>Je bestelling is succesvol geplaatst. Je wordt doorgestuurd naar je bestellingen...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (itemCount === 0) {
     return (
@@ -112,16 +150,53 @@ function CheckoutPage() {
             </div>
           )}
 
+          <div className="form-row">
+            <Input
+              type="text"
+              name="firstName"
+              label="Voornaam"
+              value={formData.firstName}
+              onChange={handleChange}
+              placeholder="Jan"
+              error={errors.firstName}
+              required
+              data-cy="firstName"
+            />
+
+            <Input
+              type="text"
+              name="lastName"
+              label="Achternaam"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Jansen"
+              error={errors.lastName}
+              required
+              data-cy="lastName"
+            />
+          </div>
+
           <Input
-            type="text"
-            name="name"
-            label="Volledige naam"
-            value={formData.name}
+            type="email"
+            name="email"
+            label="E-mailadres"
+            value={formData.email}
             onChange={handleChange}
-            placeholder="Jan Jansen"
-            error={errors.name}
+            placeholder="jan@example.com"
+            error={errors.email}
             required
-            data-cy="checkout-name"
+            data-cy="email"
+          />
+
+          <Input
+            type="tel"
+            name="phone"
+            label="Telefoonnummer"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="06-12345678"
+            error={errors.phone}
+            data-cy="phone"
           />
 
           <Input
@@ -133,20 +208,20 @@ function CheckoutPage() {
             placeholder="Straatnaam 123"
             error={errors.address}
             required
-            data-cy="checkout-address"
+            data-cy="address"
           />
 
           <div className="form-row">
             <Input
               type="text"
-              name="postalCode"
+              name="postcode"
               label="Postcode"
-              value={formData.postalCode}
+              value={formData.postcode}
               onChange={handleChange}
               placeholder="1234 AB"
-              error={errors.postalCode}
+              error={errors.postcode}
               required
-              data-cy="checkout-postalcode"
+              data-cy="postcode"
             />
 
             <Input
@@ -158,19 +233,9 @@ function CheckoutPage() {
               placeholder="Amsterdam"
               error={errors.city}
               required
-              data-cy="checkout-city"
+              data-cy="city"
             />
           </div>
-
-          <Input
-            type="tel"
-            name="phone"
-            label="Telefoonnummer (optioneel)"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="06-12345678"
-            data-cy="checkout-phone"
-          />
 
           <Button
             type="submit"
@@ -178,7 +243,7 @@ function CheckoutPage() {
             size="large"
             fullWidth
             loading={loading}
-            data-cy="place-order-button"
+            data-cy="submit-order"
           >
             Bestelling plaatsen
           </Button>

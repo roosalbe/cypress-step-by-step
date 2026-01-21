@@ -1,31 +1,32 @@
 /**
- * Minimal Theme for Reveal.js
- * Apple-inspired minimalist design
+ * Minimal Dark Theme for Reveal.js
+ * Apple-inspired minimalist dark design
  */
 
-@import url('https://cdn.jsdelivr.net/npm/reveal.js@4/dist/theme/white.css');
+@import url('https://cdn.jsdelivr.net/npm/reveal.js@4/dist/theme/black.css');
 
 :root {
-  --r-background-color: #ffffff;
+  --r-background-color: #1c1c1e;
   --r-main-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
   --r-main-font-size: 42px;
-  --r-main-color: #1d1d1f;
+  --r-main-color: #f5f5f7;
   --r-heading-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-  --r-heading-color: #1d1d1f;
+  --r-heading-color: #ffffff;
   --r-heading-letter-spacing: -0.02em;
   --r-heading-text-transform: none;
   --r-heading1-size: 2.5em;
   --r-heading2-size: 1.6em;
   --r-heading3-size: 1.3em;
-  --r-link-color: #0071e3;
-  --r-link-color-hover: #0077ed;
-  --r-selection-background-color: #0071e3;
+  --r-link-color: #0a84ff;
+  --r-link-color-hover: #409cff;
+  --r-selection-background-color: #0a84ff;
   --r-selection-color: #fff;
   --r-code-font: 'SF Mono', 'Fira Code', 'Consolas', monospace;
 }
 
 .reveal {
   font-weight: 400;
+  background-color: #1c1c1e;
 }
 
 .reveal h1,
@@ -37,6 +38,7 @@
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: 0.5em;
+  color: #ffffff;
 }
 
 .reveal h1 {
@@ -47,6 +49,7 @@
 .reveal p {
   line-height: 1.6;
   margin-bottom: 1em;
+  color: #f5f5f7;
 }
 
 .reveal ul,
@@ -58,14 +61,15 @@
 .reveal li {
   margin-bottom: 0.5em;
   line-height: 1.5;
+  color: #f5f5f7;
 }
 
-/* Code blocks - subtle gray background */
+/* Code blocks - dark gray background */
 .reveal pre {
-  background: #f5f5f7;
+  background: #2c2c2e;
   border-radius: 12px;
   padding: 1em;
-  box-shadow: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   font-size: 0.55em;
   width: 100%;
   margin: 1em auto;
@@ -76,14 +80,16 @@
   padding: 0;
   max-height: 500px;
   line-height: 1.5;
+  color: #f5f5f7;
 }
 
 .reveal code {
   font-family: var(--r-code-font);
-  background: #f5f5f7;
+  background: #2c2c2e;
   padding: 0.2em 0.4em;
   border-radius: 6px;
   font-size: 0.9em;
+  color: #ff9f0a;
 }
 
 /* Slide specific styles */
@@ -95,23 +101,28 @@
 .reveal .slides section.title-slide h1 {
   font-size: 3.5em;
   margin-bottom: 0.3em;
+  background: linear-gradient(135deg, #0a84ff, #5e5ce6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .reveal .slides section.title-slide p {
   font-size: 1.2em;
-  color: #86868b;
+  color: #98989d;
 }
 
 /* Learning objectives */
 .reveal .leerdoelen {
-  background: #f5f5f7;
+  background: #2c2c2e;
   border-radius: 16px;
   padding: 1.5em 2em;
   text-align: left;
+  border: 1px solid #3a3a3c;
 }
 
 .reveal .leerdoelen h3 {
-  color: #0071e3;
+  color: #0a84ff;
   margin-bottom: 0.8em;
   font-size: 1.1em;
 }
@@ -124,22 +135,23 @@
 .reveal .leerdoelen li {
   margin-bottom: 0.6em;
   font-size: 0.9em;
+  color: #f5f5f7;
 }
 
 /* Subtle emphasis */
 .reveal strong {
   font-weight: 600;
-  color: #1d1d1f;
+  color: #ffffff;
 }
 
 .reveal em {
-  color: #86868b;
+  color: #98989d;
 }
 
 /* Blockquotes */
 .reveal blockquote {
-  background: #f5f5f7;
-  border-left: 4px solid #0071e3;
+  background: #2c2c2e;
+  border-left: 4px solid #0a84ff;
   padding: 1em 1.5em;
   margin: 1em 0;
   font-style: normal;
@@ -159,17 +171,17 @@
 /* Image styling */
 .reveal img {
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Progress bar */
 .reveal .progress {
   height: 3px;
-  background: #f5f5f7;
+  background: #3a3a3c;
 }
 
 .reveal .progress span {
-  background: #0071e3;
+  background: #0a84ff;
 }
 
 /* Speaker notes styling */
@@ -179,9 +191,38 @@
   line-height: 1.6;
 }
 
-/* Syntax highlighting overrides for cleaner look */
+/* Syntax highlighting overrides for dark mode */
 .reveal .hljs {
   background: transparent;
+  color: #f5f5f7;
+}
+
+/* Selector types grid */
+.reveal .selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  text-align: left;
+  font-size: 0.8em;
+}
+
+.reveal .selector-grid .selector-item {
+  background: #2c2c2e;
+  border-radius: 8px;
+  padding: 0.8em 1em;
+  border-left: 3px solid #0a84ff;
+}
+
+.reveal .selector-grid .selector-item strong {
+  color: #ff9f0a;
+  font-size: 0.9em;
+}
+
+.reveal .selector-grid .selector-item code {
+  display: block;
+  margin-top: 0.3em;
+  font-size: 0.85em;
+  color: #30d158;
 }
 
 /* Transitions */
@@ -193,6 +234,6 @@
 @media print {
   .reveal pre {
     box-shadow: none;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #3a3a3c;
   }
 }

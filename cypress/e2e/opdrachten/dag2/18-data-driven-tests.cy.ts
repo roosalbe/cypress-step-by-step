@@ -27,23 +27,7 @@ describe('Opdracht 18: Data-Driven Tests', () => {
     ];
 
     // TODO: Genereer tests voor elk scenario
-    loginScenarios.forEach((scenario) => {
-      it(`should handle login for ${scenario.description}`, () => {
-        cy.visit('/login.html');
 
-        cy.get('[data-cy="username"]').type(scenario.username);
-        cy.get('[data-cy="password"]').type(scenario.password);
-        cy.get('[data-cy="login-button"]').click();
-
-        if (scenario.shouldPass) {
-          // TODO: Check succesvolle login
-          cy.url().should('include', '/dashboard');
-        } else {
-          // TODO: Check mislukte login
-          cy.get('[data-cy="login-error"]').should('be.visible');
-        }
-      });
-    });
   });
 
   /**
@@ -68,11 +52,9 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
         if (search.expectResults) {
           // TODO: Check dat er resultaten zijn
-          cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
         } else {
           // TODO: Check geen resultaten
-          // cy.get('[data-cy="no-products"]').should('be.visible');
-          // Of check dat er 0 results zijn
+
         }
       });
     });
@@ -93,25 +75,7 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
     formTests.forEach((test) => {
       it(`should validate ${test.field} with value "${test.value}"`, () => {
-        cy.loginViaApi('student');
-        cy.addToCart(1, 1);
-        cy.visit('/checkout.html');
 
-        // Vul verplichte velden
-        cy.get('[data-cy="firstName"]').type('Test');
-        cy.get('[data-cy="lastName"]').type('User');
-        cy.get('[data-cy="address"]').type('Teststraat 1');
-        cy.get('[data-cy="city"]').type('Amsterdam');
-        cy.get('[data-cy="postcode"]').type('1234 AB');
-
-        // Vul het te testen veld
-        cy.get(`[data-cy="${test.field}"]`).clear().type(test.value);
-
-        // Blur om validatie te triggeren
-        cy.get(`[data-cy="${test.field}"]`).blur();
-
-        // De validatie gebeurt bij submit in deze app
-        // We kunnen checken of het veld als invalid gemarkeerd is
       });
     });
   });
@@ -151,14 +115,9 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
     quantities.forEach((qty) => {
       it(`should add ${qty} items to cart`, () => {
-        cy.clearCart();
-        cy.addToCart(1, qty);
-
-        cy.visit('/cart.html');
-
-        cy.get('[data-cy="item-quantity"]')
-          .first()
-          .should('contain', qty.toString());
+        // Clear Cart
+        // Add to Cart
+        // Assert
       });
     });
   });
@@ -182,57 +141,9 @@ describe('Opdracht 18: Data-Driven Tests', () => {
       it(`should execute ${scenario.name}`, () => {
         cy.visit('/products.html');
 
-        if (scenario.action === 'search') {
-          cy.get('[data-cy="search-input"]').type(scenario.value);
-        } else if (scenario.action === 'filter') {
-          cy.get('[data-cy="category-filter"]').select(scenario.value);
-        }
-
-        cy.wait(500);
-        cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
+        // TODO zorg dat beide scenarios werken
       });
     });
   });
 
-  /**
-   * BONUS: Parameterized test helper
-   *
-   * TODO: Maak een helper functie voor data-driven tests
-   */
-  describe('Using test helper', () => {
-    // Helper functie
-    const testWithData = <T>(
-      testCases: T[],
-      testName: (tc: T) => string,
-      testFn: (tc: T) => void
-    ) => {
-      testCases.forEach((testCase) => {
-        it(testName(testCase), () => {
-          testFn(testCase);
-        });
-      });
-    };
-
-    // Gebruik de helper
-    interface PriceTest {
-      minPrice: number;
-      maxPrice: number;
-    }
-
-    const priceRanges: PriceTest[] = [
-      { minPrice: 0, maxPrice: 50 },
-      { minPrice: 50, maxPrice: 100 },
-      { minPrice: 100, maxPrice: 500 },
-    ];
-
-    testWithData(
-      priceRanges,
-      (tc) => `should have products in range €${tc.minPrice}-€${tc.maxPrice}`,
-      (tc) => {
-        cy.visit('/products.html');
-        // In een echte app zou je hier een price filter gebruiken
-        cy.get('[data-cy="product-card"]').should('exist');
-      }
-    );
-  });
 });

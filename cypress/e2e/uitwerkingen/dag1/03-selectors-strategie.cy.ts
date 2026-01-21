@@ -4,7 +4,7 @@
 
 describe('Opdracht 3: Selector Strategieën', () => {
   beforeEach(() => {
-    cy.visit('/products.html');
+    cy.visit('/products');
   });
 
   it('should select elements using data-cy', () => {
@@ -40,7 +40,7 @@ describe('Opdracht 3: Selector Strategieën', () => {
       .should('be.visible');
 
     cy.contains('[data-cy="product-card"]', 'Laptop')
-      .find('[data-cy="add-to-cart"]')
+      .find('[data-cy="add-to-cart-button"]')
       .should('exist');
   });
 
@@ -51,13 +51,15 @@ describe('Opdracht 3: Selector Strategieën', () => {
   });
 
   it('should navigate DOM relationships', () => {
+    // Check dat de productnaam in een card content container zit
     cy.get('[data-cy="product-name"]')
       .first()
-      .parent()
-      .should('have.class', 'product-info');
+      .parents('[data-cy="product-card"]')
+      .should('exist');
 
-    cy.get('[data-cy="filters"]')
-      .children()
+    // Check dat de filters children heeft
+    cy.get('[data-cy="product-filters"]')
+      .find('input, select')
       .should('have.length.greaterThan', 0);
   });
 

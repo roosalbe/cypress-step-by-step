@@ -50,6 +50,13 @@ export class DashboardPage {
   }
 
   /**
+   * Alias voor shouldShowWelcomeMessageWithName - voor backwards compatibility
+   */
+  shouldShowWelcomeMessage(name: string): this {
+    return this.shouldShowWelcomeMessageWithName(name);
+  }
+
+  /**
    * Controleer dat we op de dashboard pagina zijn
    */
   shouldBeOnDashboard(): this {

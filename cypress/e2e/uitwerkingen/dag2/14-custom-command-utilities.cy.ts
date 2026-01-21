@@ -4,14 +4,14 @@
 
 describe('Opdracht 14: Custom Commands - Utilities', () => {
   it('should use getByDataCy command', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.getByDataCy('page-title').should('contain', 'Producten');
     cy.getByDataCy('search-input').should('be.visible');
   });
 
   it('should use dataCy shorthand', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // Gebruik getByDataCy (equivalent aan dataCy)
     cy.getByDataCy('page-title').should('contain', 'Producten');
@@ -19,9 +19,10 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   });
 
   it('should use fillForm command', () => {
-    cy.loginViaApi('student');
-    cy.addToCart(1, 1);
-    cy.visit('/checkout.html');
+    cy.loginViaApi('student@test.nl', 'cypress123');
+    cy.visit('/products');
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
+    cy.visit('/checkout');
 
     // Vul formulier velden in
     cy.get('[data-cy="firstName"]').type('John');
@@ -37,7 +38,7 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   });
 
   it('should use shouldBeVisibleWithText pattern', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.getByDataCy('page-title')
       .should('be.visible')
@@ -45,7 +46,7 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   });
 
   it('should use waitForLoading pattern', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // Check for loading element if exists
     cy.get('body').then(($body) => {
@@ -58,10 +59,11 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   });
 
   it('should combine multiple commands', () => {
-    cy.loginViaApi('student');
+    cy.loginViaApi('student@test.nl', 'cypress123');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
     cy.getByDataCy('search-input').type('Laptop');
+    cy.getByDataCy('apply-filters').click();
 
     cy.getByDataCy('product-card')
       .first()
@@ -70,31 +72,34 @@ describe('Opdracht 14: Custom Commands - Utilities', () => {
   });
 
   it('should use addToCart command', () => {
-    cy.addToCart(1, 2);
+    cy.loginViaApi('student@test.nl', 'cypress123');
+    cy.visit('/products');
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
 
-    cy.visit('/cart.html');
+    cy.visit('/cart');
     cy.getByDataCy('cart-item').should('have.length.greaterThan', 0);
-    cy.getByDataCy('item-quantity').first().should('contain', '2');
   });
 
   it('should use clearCart command', () => {
-    cy.addToCart(1, 1);
+    cy.loginViaApi('student@test.nl', 'cypress123');
+    cy.visit('/products');
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
     cy.clearCart();
 
-    cy.visit('/cart.html');
+    cy.visit('/cart');
     cy.getByDataCy('empty-cart').should('be.visible');
   });
 
   it('should select and add product', () => {
-    cy.loginViaApi('student');
+    cy.loginViaApi('student@test.nl', 'cypress123');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
     cy.getByDataCy('search-input').type('Laptop');
-    cy.wait(500);
+    cy.getByDataCy('apply-filters').click();
     cy.contains('[data-cy="product-card"]', 'Laptop')
-      .find('[data-cy="add-to-cart"]')
+      .find('[data-cy="add-to-cart-button"]')
       .click();
 
-    cy.getByDataCy('cart-count').should('contain', '1');
+    cy.getByDataCy('cart-badge').should('contain', '1');
   });
 });

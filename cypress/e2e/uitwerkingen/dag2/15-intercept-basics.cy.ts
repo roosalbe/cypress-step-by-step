@@ -3,29 +3,24 @@
  */
 
 describe('Opdracht 15: cy.intercept() Basics', () => {
+  const apiUrl = Cypress.env('apiUrl');
+
   it('should intercept a GET request', () => {
-    cy.intercept('GET', '/api/products.json').as('getProducts');
-
-    cy.visit('/products.html');
-
+    cy.intercept('GET', '**/api/products*').as('getProducts');
+    cy.visit('/products');
     cy.wait('@getProducts');
-
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
   });
 
   it('should intercept with wildcard', () => {
-    cy.intercept('GET', '/api/*').as('apiCall');
-
-    cy.visit('/products.html');
-
+    cy.intercept('GET', '**/api/**').as('apiCall');
+    cy.visit('/products');
     cy.wait('@apiCall');
   });
 
   it('should inspect response data', () => {
-    cy.intercept('GET', '/api/products.json').as('getProducts');
-
-    cy.visit('/products.html');
-
+    cy.intercept('GET', '**/api/products*').as('getProducts');
+    cy.visit('/products');
     cy.wait('@getProducts').then((interception) => {
       cy.log('Status: ' + interception.response?.statusCode);
       expect(interception.response?.statusCode).to.equal(200);
@@ -33,44 +28,44 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
     });
   });
 
-  it('should inspect request data', () => {
-    cy.intercept('GET', '/api/users.json').as('getUsers');
+  it('should inspect request headers', () => {
+    cy.intercept('GET', '**/api/products*').as('getProducts');
 
-    cy.visit('/login.html');
+    cy.visit('/products');
 
-    cy.wait('@getUsers').then((interception) => {
+    cy.wait('@getProducts').then((interception) => {
       cy.log('URL: ' + interception.request.url);
       cy.log('Headers: ' + JSON.stringify(interception.request.headers));
-      expect(interception.request.url).to.include('/api/users.json');
+      expect(interception.request.url).to.include('/api/products');
     });
   });
 
   it('should handle multiple intercepts', () => {
-    cy.intercept('GET', '/api/products.json').as('products');
-    cy.intercept('GET', '/api/users.json').as('users');
+    cy.intercept('GET', '**/api/products*').as('products');
+    cy.intercept('GET', '**/api/products/categories*').as('categories');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@products');
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
   });
 
   it('should intercept with regex', () => {
-    cy.intercept('GET', /\.json$/).as('jsonRequest');
+    cy.intercept('GET', /\/api\//).as('apiRequest');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
-    cy.wait('@jsonRequest');
+    cy.wait('@apiRequest');
   });
 
   it('should count requests', () => {
     let requestCount = 0;
 
-    cy.intercept('GET', '/api/*', () => {
+    cy.intercept('GET', '**/api/**', () => {
       requestCount++;
     }).as('apiRequests');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait(1000).then(() => {
       cy.log(`Aantal API requests: ${requestCount}`);
@@ -79,9 +74,9 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
   });
 
   it('should wait for specific response', () => {
-    cy.intercept('GET', '/api/products.json').as('getProducts');
+    cy.intercept('GET', '**/api/products*').as('getProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@getProducts')
       .its('response.statusCode')
@@ -95,7 +90,7 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
       }
     });
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="product-card"]').should('exist');
   });

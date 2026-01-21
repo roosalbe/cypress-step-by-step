@@ -7,44 +7,36 @@
  *
  * Gebruik:
  *   node scripts/agents/run-cypress-tests.js
- *   node scripts/agents/run-cypress-tests.js --spec "cypress/e2e/uitwerkingen/**/*.cy.ts"
  *   node scripts/agents/run-cypress-tests.js --headed
  */
 
-import { spawn } from 'child_process';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+const { spawn } = require('child_process');
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const projectRoot = join(__dirname, '../..');
+const projectRoot = path.join(__dirname, '../..');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
 const isHeaded = args.includes('--headed');
-const specIndex = args.indexOf('--spec');
-const specPattern = specIndex !== -1 ? args[specIndex + 1] : 'cypress/e2e/uitwerkingen/**/*.cy.ts';
+const specPattern = 'cypress/e2e/uitwerkingen/**/*.cy.ts';
 
 console.log('╔════════════════════════════════════════════════════════════════╗');
 console.log('║           🧪 Cypress Test Runner Agent                         ║');
 console.log('╠════════════════════════════════════════════════════════════════╣');
-console.log(`║ Spec Pattern: ${specPattern.padEnd(48)}║`);
-console.log(`║ Mode: ${(isHeaded ? 'Headed (browser visible)' : 'Headless').padEnd(56)}║`);
+console.log('║ Spec Pattern: ' + specPattern.padEnd(48) + '║');
+console.log('║ Mode: ' + (isHeaded ? 'Headed (browser visible)' : 'Headless').padEnd(56) + '║');
 console.log('╚════════════════════════════════════════════════════════════════╝');
 console.log('');
 
 // Build cypress command
-const cypressArgs = [
-  'run',
-  '--spec', specPattern,
-];
+const cypressArgs = ['cypress', 'run', '--spec', specPattern];
 
 if (isHeaded) {
   cypressArgs.push('--headed');
 }
 
 // Run cypress
-const cypress = spawn('npx', ['cypress', ...cypressArgs], {
+const cypress = spawn('npx', cypressArgs, {
   cwd: projectRoot,
   stdio: 'inherit',
   shell: true
@@ -57,7 +49,7 @@ cypress.on('close', (code) => {
   if (code === 0) {
     console.log('✅ Alle tests zijn geslaagd!');
   } else {
-    console.log(`❌ Tests gefaald met exit code: ${code}`);
+    console.log('❌ Tests gefaald met exit code: ' + code);
     console.log('');
     console.log('Tips voor debugging:');
     console.log('  1. Draai met --headed om de browser te zien');

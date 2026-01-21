@@ -82,26 +82,12 @@
  *
  * TODO: Maak een bestand: cypress/support/pages/DashboardPage.ts
  *
- * ```typescript
- * export class DashboardPage {
- *   private welcomeMessage = '[data-cy="welcome-message"]';
- *   private userInfo = '[data-cy="user-info"]';
- *   private statOrders = '[data-cy="stat-orders"]';
- *   private statCart = '[data-cy="stat-cart"]';
- *
- *   visit(): void {
- *     cy.visit('/dashboard.html');
- *   }
- *
- *   shouldShowWelcomeMessage(name: string): void {
- *     cy.get(this.welcomeMessage).should('contain', name);
- *   }
- *
- *   shouldBeLoggedIn(): void {
- *     cy.get(this.userInfo).should('be.visible');
- *   }
- * }
- * ```
+ * 
+ * met de volgende functies 
+ *  1. visit
+ *  2. shouldShowWelcomeMessage
+ *  3. shouldBeLoggedIn
+ * 
  */
 
 // TODO: Uncomment zodra je de Page Objects hebt gemaakt

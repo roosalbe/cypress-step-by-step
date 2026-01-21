@@ -12,15 +12,14 @@
  * Tijd: ~25 minuten
  */
 
-// TODO: Uncomment zodra je de Page Objects hebt
-// import { LoginPage } from '../../support/pages/LoginPage';
+// TODO: Import Page Objects
+
 
 describe('Opdracht 7: Complete Login Flow', () => {
-  // const loginPage = new LoginPage();
+  // TODO: Declareer loginPage
 
   beforeEach(() => {
-    cy.visit('/login.html');
-    // loginPage.visit();
+      // TODO: login
   });
 
   /**
@@ -30,22 +29,9 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should login successfully with valid credentials', () => {
     // TODO: Log in met de student account
-    cy.get('[data-cy="username"]').type('student');
-    cy.get('[data-cy="password"]').type('cypress123');
-    cy.get('[data-cy="login-button"]').click();
-    // loginPage.login('student', 'cypress123');
-
-    // TODO: Verify redirect naar dashboard
-    cy.url().should('include', '/dashboard');
-
+    // TODO: Verify Login
     // TODO: Verify user info zichtbaar is in navbar
-    cy.get('[data-cy="user-info"]')
-      .should('be.visible')
-      .and('contain', 'Student');
-
     // TODO: Verify welkomstbericht
-    cy.get('[data-cy="welcome-message"]')
-      .should('contain', 'Welkom');
   });
 
   /**
@@ -55,13 +41,7 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should login with admin account', () => {
     // TODO: Log in met admin account
-    cy.get('[data-cy="username"]').type('admin');
-    cy.get('[data-cy="password"]').type('admin123');
-    cy.get('[data-cy="login-button"]').click();
-
     // TODO: Verify dat admin is ingelogd
-    cy.url().should('include', '/dashboard');
-    cy.get('[data-cy="user-info"]').should('contain', 'Admin');
   });
 
   /**
@@ -70,18 +50,9 @@ describe('Opdracht 7: Complete Login Flow', () => {
    * TODO: Test dat een foutmelding getoond wordt bij foute gegevens
    */
   it('should show error for invalid credentials', () => {
-    // TODO: Probeer in te loggen met foute credentials
-    cy.get('[data-cy="username"]').type('wrong-user');
-    cy.get('[data-cy="password"]').type('wrong-password');
-    cy.get('[data-cy="login-button"]').click();
-
+    // TODO: Probeer in te loggen met foute credential
     // TODO: Verify dat error message zichtbaar is
-    cy.get('[data-cy="login-error"]')
-      .should('be.visible')
-      .and('contain', 'Ongeldige');
-
     // TODO: Verify dat we nog steeds op login pagina zijn
-    cy.url().should('include', '/login');
   });
 
   /**
@@ -91,11 +62,7 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should not allow login with empty username', () => {
     // TODO: Alleen password invullen
-    cy.get('[data-cy="password"]').type('cypress123');
-    cy.get('[data-cy="login-button"]').click();
-
     // TODO: Verify dat we nog op login pagina zijn
-    cy.url().should('include', '/login');
   });
 
   /**
@@ -105,11 +72,7 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should not allow login with empty password', () => {
     // TODO: Alleen username invullen
-    cy.get('[data-cy="username"]').type('student');
-    cy.get('[data-cy="login-button"]').click();
-
     // TODO: Verify dat we nog op login pagina zijn
-    cy.url().should('include', '/login');
   });
 
   /**
@@ -119,11 +82,7 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should login with Enter key', () => {
     // TODO: Type credentials en druk Enter
-    cy.get('[data-cy="username"]').type('student');
-    cy.get('[data-cy="password"]').type('cypress123{enter}');
-
     // TODO: Verify succesvolle login
-    cy.url().should('include', '/dashboard');
   });
 
   /**
@@ -133,19 +92,9 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should logout successfully', () => {
     // Eerst inloggen
-    cy.get('[data-cy="username"]').type('student');
-    cy.get('[data-cy="password"]').type('cypress123');
-    cy.get('[data-cy="login-button"]').click();
-    cy.url().should('include', '/dashboard');
-
     // TODO: Klik op logout
-    cy.get('[data-cy="logout-button"]').click();
-
     // TODO: Verify redirect naar homepage
-    cy.url().should('include', '/index.html').or('eq', 'http://localhost:3000/');
-
     // TODO: Verify dat user info niet meer zichtbaar is
-    cy.get('[data-cy="user-info"]').should('not.be.visible');
   });
 
   /**
@@ -155,27 +104,16 @@ describe('Opdracht 7: Complete Login Flow', () => {
    */
   it('should remember the user', () => {
     // TODO: Login met remember me aangevinkt
-    cy.get('[data-cy="username"]').type('student');
-    cy.get('[data-cy="password"]').type('cypress123');
-    cy.get('[data-cy="remember-me"]').check();
-    cy.get('[data-cy="login-button"]').click();
-
-    cy.url().should('include', '/dashboard');
-
     // Verify dat we ingelogd zijn
-    cy.get('[data-cy="user-info"]').should('be.visible');
   });
 
   /**
-   * BONUS: Protected route test
+   * TEST 7.9: Protected route test
    *
    * TODO: Test dat dashboard niet toegankelijk is zonder login
    */
   it('should redirect to login when accessing protected route', () => {
     // TODO: Probeer direct naar dashboard te gaan
-    cy.visit('/dashboard.html');
-
     // TODO: Verify redirect naar login
-    cy.url().should('include', '/login');
   });
 });

@@ -19,12 +19,8 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Maak een GET request naar de products API
    */
   it('should fetch products from API', () => {
-    // TODO: Maak een GET request naar '/api/products.json'
-    // cy.request('GET', '/api/products.json')
-
+    // TODO: Maak een GET request naar '/api/products'
     // TODO: Controleer dat status 200 is
-    // .its('status')
-    // .should('equal', 200)
   });
 
   /**
@@ -34,15 +30,10 @@ describe('Opdracht 11: API GET Requests', () => {
    */
   it('should validate products response structure', () => {
     // TODO: Maak request en valideer body
-    cy.request('GET', '/api/products.json').then((response) => {
-      // TODO: Check dat response een products array heeft
-      // expect(response.body).to.have.property('products')
-
-      // TODO: Check dat products een array is
-      // expect(response.body.products).to.be.an('array')
-
+    cy.request('GET', '/api/products').then((response) => {
+      // TODO: Check dat response een products array (lijst met objecten) heeft
+      // TODO: Check dat products een array (lijst met objecten) is
       // TODO: Check dat er producten zijn
-      // expect(response.body.products).to.have.length.greaterThan(0)
     });
   });
 
@@ -52,15 +43,13 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Valideer dat elk product de juiste properties heeft
    */
   it('should validate product properties', () => {
-    cy.request('GET', '/api/products.json').then((response) => {
+    cy.request('GET', '/api/products').then((response) => {
       const firstProduct = response.body.products[0];
 
       // TODO: Check dat product de juiste properties heeft
       // expect(firstProduct).to.have.property('id')
-      // expect(firstProduct).to.have.property('name')
-      // expect(firstProduct).to.have.property('price')
-      // expect(firstProduct).to.have.property('category')
-      // expect(firstProduct).to.have.property('stock')
+      // ..
+      // ..
     });
   });
 
@@ -70,13 +59,8 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Haal users op en valideer
    */
   it('should fetch users from API', () => {
-    // TODO: Maak GET request naar '/api/users.json'
-    // cy.request('GET', '/api/users.json')
-
+    // TODO: Maak GET request naar '/api/users'
     // TODO: Valideer dat er users zijn
-    // .then((response) => {
-    //   expect(response.body.users).to.have.length.greaterThan(0)
-    // })
   });
 
   /**
@@ -85,8 +69,7 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Haal orders op en valideer
    */
   it('should fetch orders from API', () => {
-    // TODO: Maak GET request naar '/api/orders.json'
-
+    // TODO: Maak GET request naar '/api/orders'
     // TODO: Valideer response
   });
 
@@ -96,17 +79,10 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Zoek een specifiek product in de response
    */
   it('should find a specific product', () => {
-    cy.request('GET', '/api/products.json').then((response) => {
+    cy.request('GET', '/api/products').then((response) => {
       // TODO: Vind het product met naam 'Laptop'
-      // const laptop = response.body.products.find(
-      //   (p: { name: string }) => p.name.includes('Laptop')
-      // );
-
       // TODO: Valideer dat het product gevonden is
-      // expect(laptop).to.exist
-
-      // TODO: Valideer de prijs
-      // expect(laptop.price).to.be.greaterThan(1000)
+      // TODO: Valideer de prijs van het product
     });
   });
 
@@ -116,15 +92,10 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Gebruik .its() voor cleaner assertions
    */
   it('should use its() for clean assertions', () => {
-    // TODO: Gebruik chaining met its()
-    cy.request('GET', '/api/products.json')
-      .its('status')
-      .should('equal', 200);
+    // TODO: Gebruik chaining met its() om de status en body te valideren
+    cy.request('GET', '/api/products')
 
     // TODO: Chain naar body.products.length
-    // cy.request('GET', '/api/products.json')
-    //   .its('body.products')
-    //   .should('have.length.greaterThan', 0)
   });
 
   /**
@@ -133,7 +104,7 @@ describe('Opdracht 11: API GET Requests', () => {
    * TODO: Controleer de response headers
    */
   it('should validate response headers', () => {
-    cy.request('GET', '/api/products.json').then((response) => {
+    cy.request('GET', '/api/products').then((response) => {
       // TODO: Check content-type header
       // expect(response.headers['content-type']).to.include('application/json')
     });
@@ -146,15 +117,14 @@ describe('Opdracht 11: API GET Requests', () => {
    */
   it('should use API data in UI test', () => {
     // Haal eerst product count op via API
-    cy.request('GET', '/api/products.json').then((response) => {
+    cy.request('GET', '/api/products').then((response) => {
       const apiProductCount = response.body.products.length;
 
       // Ga naar products pagina
-      cy.visit('/products.html');
+      cy.visit('/products');
 
       // TODO: Controleer dat UI hetzelfde aantal producten toont
-      // cy.get('[data-cy="product-card"]')
-      //   .should('have.length', apiProductCount)
+      // cy.get('[data-cy="product-card"]') 
     });
   });
 });

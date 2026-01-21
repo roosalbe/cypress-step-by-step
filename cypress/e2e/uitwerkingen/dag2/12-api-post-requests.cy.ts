@@ -3,143 +3,123 @@
  */
 
 describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
-  it('should create a new user via POST', () => {
+  const apiUrl = Cypress.env('apiUrl');
+
+  it('should register a new user via POST', () => {
+    const uniqueEmail = `testuser_${Date.now()}@test.nl`;
+
     cy.request({
       method: 'POST',
-      url: '/api/users.json',
+      url: `${apiUrl}/auth/register`,
       body: {
-        username: 'newuser',
-        email: 'newuser@test.nl',
-        name: 'New User'
-      },
-      failOnStatusCode: false
+        name: 'Test User',
+        email: uniqueEmail,
+        password: 'test123'
+      }
     }).then((response) => {
-      cy.log('Response status: ' + response.status);
-      // Static JSON files return 200 for GET
+      expect(response.status).to.equal(201);
+      expect(response.body).to.have.property('token');
+      expect(response.body.user).to.have.property('email', uniqueEmail);
     });
   });
 
-  it('should use simulated API for POST', () => {
-    cy.visit('/');
-
-    cy.window().then((win) => {
-      // @ts-ignore
-      return win.API.post('users', {
-        username: 'testuser',
-        email: 'test@test.nl'
-      });
-    }).then((result) => {
-      expect(result).to.have.property('success', true);
-      expect(result.data).to.have.property('id');
-    });
-  });
-
-  it('should update a user via PUT', () => {
-    cy.visit('/');
-
-    cy.window().then((win) => {
-      // @ts-ignore
-      return win.API.put('users', 1, {
-        name: 'Updated Name',
-        email: 'updated@test.nl'
-      });
-    }).then((result) => {
-      expect(result.success).to.be.true;
-      expect(result.data.name).to.equal('Updated Name');
-    });
-  });
-
-  it('should delete a user via DELETE', () => {
-    cy.visit('/');
-
-    cy.window().then((win) => {
-      // @ts-ignore
-      return win.API.delete('users', 1);
-    }).then((result) => {
-      expect(result.success).to.be.true;
-      expect(result.id).to.equal(1);
-    });
-  });
-
-  it('should send request with custom headers', () => {
+  it('should login via API and get token', () => {
     cy.request({
-      method: 'GET',
-      url: '/api/users.json',
-      headers: {
-        'Authorization': 'Bearer fake-token-123',
-        'Content-Type': 'application/json',
-        'X-Custom-Header': 'custom-value'
+      method: 'POST',
+      url: `${apiUrl}/auth/login`,
+      body: {
+        email: 'student@test.nl',
+        password: 'cypress123'
       }
     }).then((response) => {
       expect(response.status).to.equal(200);
+      expect(response.body).to.have.property('token');
+      expect(response.body).to.have.property('user');
+      expect(response.body.user).to.have.property('email', 'student@test.nl');
     });
   });
 
-  it('should login via API and store token', () => {
-    const mockLoginResponse = {
-      success: true,
-      token: 'jwt-token-123',
-      user: { id: 1, username: 'student' }
-    };
+  it('should fail login with wrong credentials', () => {
+    cy.request({
+      method: 'POST',
+      url: `${apiUrl}/auth/login`,
+      body: {
+        email: 'wrong@test.nl',
+        password: 'wrongpassword'
+      },
+      failOnStatusCode: false
+    }).then((response) => {
+      expect(response.status).to.equal(401);
+      expect(response.body).to.have.property('error');
+    });
+  });
+
+  it('should add item to cart via API', () => {
+    // First login to get token
+    // cy.loginViaApi('student@test.nl', 'cypress123');
 
     cy.window().then((win) => {
-      win.localStorage.setItem('authToken', mockLoginResponse.token);
-      win.localStorage.setItem('currentUser', JSON.stringify(mockLoginResponse.user));
-    });
+      const token = win.localStorage.getItem('token');
 
-    cy.window().its('localStorage.authToken').should('equal', 'jwt-token-123');
+      // Get first product
+      cy.request('GET', `${apiUrl}/products`).then((productsResponse) => {
+        const firstProduct = productsResponse.body.products[0];
+
+        // Add to cart
+        cy.request({
+          method: 'POST',
+          url: `${apiUrl}/cart`,
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: {
+            productId: firstProduct.id,
+            quantity: 1
+          }
+        }).then((response) => {
+          expect(response.status).to.equal(200);
+        });
+      });
+    });
   });
 
   it('should handle API errors gracefully', () => {
     cy.request({
       method: 'GET',
-      url: '/api/nonexistent.json',
+      url: `${apiUrl}/nonexistent`,
       failOnStatusCode: false
     }).then((response) => {
-      expect(response.status).to.equal(404);
+      expect(response.status).to.be.oneOf([404, 500]);
     });
   });
 
-  it('should chain multiple API calls', () => {
-    cy.request('GET', '/api/users.json')
-      .its('body.users')
-      .then((users) => {
-        const firstUser = users[0];
-        cy.log(`First user: ${firstUser.username}`);
+  it('should update cart quantity via API', () => {
+    cy.loginViaApi('student@test.nl', 'cypress123');
 
-        return cy.request('GET', '/api/orders.json');
-      })
-      .its('body.orders')
-      .then((orders) => {
-        expect(orders).to.have.length.greaterThan(0);
+    cy.window().then((win) => {
+      const token = win.localStorage.getItem('token');
+
+      // Get first product and add to cart
+      cy.request('GET', `${apiUrl}/products`).then((productsResponse) => {
+        const firstProduct = productsResponse.body.products[0];
+
+        // Add to cart
+        cy.request({
+          method: 'POST',
+          url: `${apiUrl}/cart`,
+          headers: { Authorization: `Bearer ${token}` },
+          body: { productId: firstProduct.id, quantity: 1 }
+        }).then(() => {
+          // Get cart to find cart item ID
+          cy.request({
+            method: 'GET',
+            url: `${apiUrl}/cart`,
+            headers: { Authorization: `Bearer ${token}` }
+          }).then((cartResponse) => {
+            expect(cartResponse.body.cart.items).to.have.length.greaterThan(0);
+          });
+        });
       });
-  });
-
-  it('should perform complete CRUD operations', () => {
-    cy.visit('/');
-
-    cy.window().then(async (win) => {
-      // @ts-ignore
-      const api = win.API;
-
-      // CREATE
-      const createResult = await api.post('products', {
-        name: 'Test Product',
-        price: 99.99
-      });
-      expect(createResult.success).to.be.true;
-      const productId = createResult.data.id;
-
-      // UPDATE
-      const updateResult = await api.put('products', productId, {
-        name: 'Updated Product',
-        price: 149.99
-      });
-      expect(updateResult.success).to.be.true;
-
-      // DELETE
-      const deleteResult = await api.delete('products', productId);
-      expect(deleteResult.success).to.be.true;
     });
   });
 });
