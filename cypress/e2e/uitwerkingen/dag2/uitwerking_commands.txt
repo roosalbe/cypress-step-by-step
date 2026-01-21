@@ -6,7 +6,6 @@
 // ***********************************************************
 
 // Import type definitions
-/// <reference types="cypress" />
 
 /**
  * Custom command: login

@@ -166,7 +166,7 @@ describe('Opdracht 10: Timeout Handling', () => {
    *
    * TODO: Test gedrag bij trage API (preview voor Dag 2)
    */
-  it.only('should handle slow API response', () => {
+  it('should handle slow API response', () => {
     // Intercept en vertraag de response
     cy.intercept('GET', '**/api/products', (req) => {
       req.on('response', (res) => {

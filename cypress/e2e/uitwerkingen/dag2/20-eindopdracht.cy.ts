@@ -20,7 +20,7 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
     it('should login successfully', () => {
       loginPage.visit();
       loginPage.login('student@test.nl', 'cypress123');
-
+      
       cy.url().should('include', '/dashboard');
       cy.get('[data-cy="user-info"]').should('contain', 'Student');
     });

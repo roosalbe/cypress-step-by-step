@@ -59,6 +59,16 @@
       "lastName": "",
       "role": "user",
       "createdAt": "2026-01-20T20:05:15.087Z"
+    },
+    {
+      "id": "a73285a3-15d9-4d4c-aec6-c67d7ccd2b8a",
+      "email": "testuser_1769003061879@test.nl",
+      "password": "$2a$10$TREO4FoDbGjNw/Rrx5eRBO4u8MlxsU1ulZPgVRle2F1DR8.25eXUa",
+      "name": "Test User",
+      "firstName": "",
+      "lastName": "",
+      "role": "user",
+      "createdAt": "2026-01-21T13:44:22.038Z"
     }
   ],
   "products": [

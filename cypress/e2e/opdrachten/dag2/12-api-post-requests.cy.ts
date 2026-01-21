@@ -13,28 +13,74 @@
  * Tijd: ~25 minuten
  */
 
+const apiUrl = Cypress.env('apiUrl');
+
 describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
   /**
    * TEST 12.1: POST request - Nieuwe user aanmaken
    *
    * TODO: Maak een POST request om een user aan te maken
    */
-  it('should create a new user via POST', () => {
-    // TODO: Maak een POST request
-    // De demo app simuleert dit, maar de syntax is belangrijk
+  it('should register a new user via POST', () => {
+    const uniqueEmail = `testuser_${Date.now()}@test.nl`;
+
     cy.request({
       method: 'POST',
-      url: '/api/users.json', // In echte app zou dit POST naar /api/users zijn
+      url: `${apiUrl}/auth/register`,
       body: {
-        username: 'newuser',
-        email: 'newuser@test.nl',
-        name: 'New User'
-      },
-      failOnStatusCode: false // Laat test niet falen
+        name: '',
+        email: '',
+        password: ''
+      }
     }).then((response) => {
-      // TODO: Log de response voor nu (we kunnen niet echt POSTen naar JSON)
-      cy.log('Response status: ' + response.status);
+      expect(response.status).to.equal(201);
+      expect(response.body).to.have.property('token');
+      expect(response.body.user).to.have.property('email', uniqueEmail);
     });
+  });
+
+    /**
+   * TEST 12.1: POST request - Login via de API
+   *
+   * TODO: Maak een POST request in te loggen via de API 
+   */
+    it('should login via API and get token', () => {
+    cy.request({
+      method: 'POST',
+      url: `${apiUrl}/auth/login`,
+      body: {
+        email: 'student@test.nl',
+        password: 'cypress123'
+      }
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body).to.have.property('token');
+      expect(response.body).to.have.property('user');
+      expect(response.body.user).to.have.property('email', 'student@test.nl');
+    });
+  });
+
+    /**
+   * TEST 12.3: POST request - Login via API and sla token op
+   *
+   * TODO: Maak een POST request in te loggen via de API en valideer inlog
+   */
+  it.only('should login via API and store token', () => {
+  cy.request({
+    method: 'POST',
+    url: `${Cypress.env('apiUrl')}/auth/login`,
+    body: { email: "student@test.nl", password: "cypress123" },
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+    const { token, user } = response.body;
+
+    cy.window().then((win) => {
+      win.localStorage.setItem('token', token);
+      win.localStorage.setItem('user', JSON.stringify(user));
+    });
+  });
+
+    cy.visit("/")
   });
 
   /**
