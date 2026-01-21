@@ -15,7 +15,7 @@
 
 describe('Opdracht 9: Debugging Oefeningen', () => {
   beforeEach(() => {
-    cy.visit('/products.html');
+    cy.visit('/products');
   });
 
   /**
@@ -25,18 +25,12 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
    */
   it('should use cy.log for debugging', () => {
     // TODO: Log het begin van de test
-    // cy.log('Start: Zoeken naar producten');
-
     cy.get('[data-cy="search-input"]').type('Laptop');
-
     // TODO: Log na het typen
-    // cy.log('Zoekopdracht ingevoerd: Laptop');
-
-    cy.wait(500);
-
     // TODO: Log het aantal gevonden producten
+    
     cy.get('[data-cy="product-card"]').then(($cards) => {
-      // cy.log(`Gevonden: ${$cards.length} producten`);
+      
     });
   });
 
@@ -46,14 +40,14 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
    * TODO: Log informatie naar de browser console
    */
   it('should use console.log for debugging', () => {
+
     cy.get('[data-cy="product-card"]').first().then(($card) => {
       // TODO: Log de HTML van de card naar console
-      // console.log('Product card HTML:', $card.html());
-
       // TODO: Log de tekst van de product naam
+
       const productName = $card.find('[data-cy="product-name"]').text();
-      // console.log('Product naam:', productName);
     });
+
   });
 
   /**
@@ -63,7 +57,7 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
    *
    * LET OP: Uncomment .debug() alleen als je wilt pauzeren!
    */
-  it('should use debug() to inspect state', () => {
+  it.only('should use debug() to inspect state', () => {
     cy.get('[data-cy="product-card"]')
       .first()
       // .debug() // TODO: Uncomment om te debuggen
@@ -75,6 +69,8 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
    * TEST 9.4: Maak screenshots
    *
    * TODO: Maak screenshots op belangrijke momenten
+   * 
+   * TIP *.screenshot()
    */
   it('should take screenshots', () => {
     // TODO: Maak screenshot van initiele staat
@@ -85,10 +81,7 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
     cy.wait(500);
 
     // TODO: Maak screenshot na filteren
-    // cy.screenshot('products-filtered');
-
     // TODO: Maak screenshot van specifiek element
-    // cy.get('[data-cy="product-card"]').first().screenshot('first-product');
   });
 
   /**
@@ -97,16 +90,11 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
    * Deze test faalt expres! Debug en fix hem.
    */
   it('should find and fix failing selector', () => {
-    // Deze selector is FOUT - debug en vind de juiste
-    // Tip: Gebruik de Cypress Selector Playground
+    // TODO: Fix deze input
+    cy.get('[data-cy="zoek-invoer"]').type('test'); // FOUT!
 
-    // TODO: Fix deze selector (hint: check de data-cy waarde)
-    // cy.get('[data-cy="zoek-invoer"]').type('test'); // FOUT!
-    cy.get('[data-cy="search-input"]').type('test'); // GOED
-
-    // TODO: Fix deze selector
-    // cy.get('[data-cy="product-kaart"]').should('exist'); // FOUT!
-    cy.get('[data-cy="product-card"]').should('exist'); // GOED
+    // TODO: Fix deze assert
+    cy.get('[data-cy="product-kaart"]').should('exist'); 
   });
 
   /**
@@ -124,10 +112,6 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
     // TODO: Voeg juiste wait strategie toe
     // Optie 1: cy.wait(500) - niet ideaal
     // Optie 2: Wacht tot producten gefilterd zijn
-    cy.get('[data-cy="product-card"]')
-      .should('have.length.greaterThan', 0)
-      .first()
-      .should('contain', 'Laptop');
   });
 
   /**
@@ -138,10 +122,10 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
   it('should log network requests', () => {
     // TODO: Intercept alle requests en log ze
     cy.intercept('*', (req) => {
-      // console.log('Request:', req.method, req.url);
+      // request method, and request url
     });
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // De console toont nu alle requests
   });
@@ -157,9 +141,7 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
       .then((count) => {
         // TODO: Log het aantal producten
         // cy.log(`Aantal producten: ${count}`);
-
         // TODO: Assert op basis van de waarde
-        expect(count).to.be.greaterThan(0);
       });
 
     cy.get('[data-cy="product-price"]')
@@ -181,20 +163,9 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
    * Deze test heeft meerdere problemen. Vind en fix ze alle!
    */
   it('should fix multiple issues in this test', () => {
-    // PROBLEEM 1: Verkeerde URL
-    // cy.visit('/producten.html'); // FOUT
-    cy.visit('/products.html'); // GOED
-
-    // PROBLEEM 2: Verkeerde selector
-    // cy.get('[data-cy="search"]').type('Mouse'); // FOUT
-    cy.get('[data-cy="search-input"]').type('Mouse'); // GOED
-
-    // PROBLEEM 3: Geen wacht op filter
-    cy.wait(500); // Of beter: wacht op conditie
-
-    // PROBLEEM 4: Verkeerde assertion
+    cy.visit('/producten.html');
+    cy.get('[data-cy="search"]').type('Mouse');
     cy.get('[data-cy="product-card"]')
-      .should('have.length.greaterThan', 0);
-      // .should('have.length', 100); // FOUT - te specifiek
+      .should('have.length', 100); 
   });
 });

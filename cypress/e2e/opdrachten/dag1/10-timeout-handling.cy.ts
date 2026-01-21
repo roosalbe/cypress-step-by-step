@@ -32,16 +32,14 @@ describe('Opdracht 10: Timeout Handling', () => {
    * TODO: Gebruik een langere timeout voor specifieke elementen
    */
   it('should use custom timeout for slow elements', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Voeg een langere timeout toe voor dit element
     // Gebruik: { timeout: 10000 } als tweede argument
-    cy.get('[data-cy="product-card"]', { timeout: 10000 })
-      .should('be.visible');
 
     // TODO: Doe hetzelfde voor een assertion
     cy.get('[data-cy="product-card"]')
-      .should('have.length.greaterThan', 0, { timeout: 10000 });
+      .should('have.length.greaterThan', 0);
   });
 
   /**
@@ -50,16 +48,16 @@ describe('Opdracht 10: Timeout Handling', () => {
    * TODO: Wacht tot de URL verandert na navigatie
    */
   it('should wait for URL change', () => {
-    cy.visit('/login.html');
+    cy.visit('/login');
 
     // Login
     cy.get('[data-cy="username"]').type('student');
     cy.get('[data-cy="password"]').type('cypress123');
     cy.get('[data-cy="login-button"]').click();
 
-    // TODO: Wacht tot URL dashboard bevat
+    // TODO: Wacht tot URL dashboard bevat, voeg timeout toe van 10 seconden
     // Cypress retry automatisch tot timeout
-    cy.url().should('include', '/dashboard', { timeout: 10000 });
+    cy.url().should('include', '/dashboard');
   });
 
   /**
@@ -68,18 +66,12 @@ describe('Opdracht 10: Timeout Handling', () => {
    * TODO: Wacht tot element bepaalde state heeft
    */
   it('should wait for element state', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Wacht tot search input niet disabled is
     cy.get('[data-cy="search-input"]')
-      .should('not.be.disabled');
+      .should(""); // To do wacht tot element enabled is
 
-    // TODO: Type en wacht tot products geladen zijn
-    cy.get('[data-cy="search-input"]').type('Laptop');
-
-    // Wacht tot er producten zijn (retry tot ze er zijn)
-    cy.get('[data-cy="product-card"]')
-      .should('have.length.greaterThan', 0);
   });
 
   /**
@@ -91,10 +83,10 @@ describe('Opdracht 10: Timeout Handling', () => {
     // Intercept de request
     cy.intercept('GET', '**/api/products.json').as('getProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // Dit is een preview - we gaan dit uitgebreid behandelen in Dag 2
-    // cy.wait('@getProducts');
+    cy.wait('@getProducts');
   });
 
   /**
@@ -103,7 +95,7 @@ describe('Opdracht 10: Timeout Handling', () => {
    * TODO: Begrijp welke commands retry-en en welke niet
    */
   it('should understand retry-ability', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // RETRY: cy.get() + assertions retry automatisch
     cy.get('[data-cy="product-card"]')  // Retry tot gevonden
@@ -113,7 +105,7 @@ describe('Opdracht 10: Timeout Handling', () => {
     cy.get('[data-cy="product-card"]')
       .first()
       .then(($card) => {
-        // Code hier wordt NIET geretried
+        // Code hier wordt NIET geretried, dit is gewoon javascript.
         // Als dit faalt, faalt de test direct
         expect($card).to.be.visible;
       });
@@ -127,11 +119,11 @@ describe('Opdracht 10: Timeout Handling', () => {
   it('should conditionally wait', () => {
     cy.visit('/products.html');
 
-    // Check of loading indicator bestaat, zo ja, wacht tot weg
+    // Check of loading indicator bestaat, zo ja, wacht tot die weg is
     cy.get('body').then(($body) => {
       if ($body.find('[data-cy="loading"]').length > 0) {
         // Loading exists, wait for it to disappear
-        cy.get('[data-cy="loading"]').should('not.exist');
+        cy.get('[data-cy="loading"]').should('not.exist'); // Deze retried weer wel, ook al staat die binnen een .then
       }
     });
 
@@ -150,13 +142,10 @@ describe('Opdracht 10: Timeout Handling', () => {
     cy.get('[data-cy="search-input"]').type('Laptop');
 
     // ❌ SLECHT: Hardcoded wait
-    // cy.wait(2000);
+    cy.wait(2000);
 
     // ✅ GOED: Wacht op conditie
-    cy.get('[data-cy="product-card"]')
-      .should('have.length.greaterThan', 0)
-      .first()
-      .should('contain', 'Laptop');
+    // TODO: wacht op laden producten via de UI
   });
 
   /**
@@ -166,7 +155,8 @@ describe('Opdracht 10: Timeout Handling', () => {
    */
   it('should handle slow page load', () => {
     // TODO: Visit met custom pageLoadTimeout
-    cy.visit('/products.html', { timeout: 30000 });
+    // Gebruik hier weer {Timeout: 30000}
+    cy.visit('/products');
 
     cy.get('[data-cy="page-title"]').should('be.visible');
   });
@@ -176,21 +166,22 @@ describe('Opdracht 10: Timeout Handling', () => {
    *
    * TODO: Test gedrag bij trage API (preview voor Dag 2)
    */
-  it('should handle slow API response', () => {
+  it.only('should handle slow API response', () => {
     // Intercept en vertraag de response
-    cy.intercept('GET', '**/api/products.json', (req) => {
+    cy.intercept('GET', '**/api/products', (req) => {
       req.on('response', (res) => {
-        // Vertraag response met 2 seconden
-        res.setDelay(2000);
+        // Vertraag response met 10 seconden
+        res.setDelay(10000);
       });
     }).as('slowProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
-    // Wacht met langere timeout
+    // Voorbeeld dag 2: Wacht met langere timeout
     // cy.wait('@slowProducts', { timeout: 10000 });
 
-    cy.get('[data-cy="product-card"]', { timeout: 15000 })
+    // TODO: Maak onderstaande werkend
+    cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0);
   });
 });

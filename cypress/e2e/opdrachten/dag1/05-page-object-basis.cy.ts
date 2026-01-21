@@ -12,6 +12,8 @@
  * Tijd: ~25 minuten
  */
 
+import { LoginPage } from "@pages/LoginPage";
+
 /**
  * STAP 1: Maak de LoginPage class
  *
@@ -82,7 +84,6 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
   it('should visit login page using page object', () => {
     // TODO: Vervang directe cy.visit() met page object methode
     cy.visit('/login.html');
-    // loginPage.visit();
 
     // Verify de pagina is geladen
     cy.get('[data-cy="login-form"]').should('be.visible');
@@ -91,21 +92,14 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
   /**
    * TEST 5.2: Login via Page Object methodes
    *
-   * TODO: Gebruik de individuele methodes
+   * TODO: Vervang de scripts voor een Page Object aanroep
    */
   it('should login using individual methods', () => {
     cy.visit('/login.html');
-    // loginPage.visit();
 
-    // TODO: Vervang directe calls met page object methodes
     cy.get('[data-cy="username"]').type('student');
-    // loginPage.enterUsername('student');
-
     cy.get('[data-cy="password"]').type('cypress123');
-    // loginPage.enterPassword('cypress123');
-
     cy.get('[data-cy="login-button"]').click();
-    // loginPage.clickLogin();
 
     cy.url().should('include', '/dashboard');
   });
@@ -117,13 +111,11 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
    */
   it('should login using combined login method', () => {
     cy.visit('/login.html');
-    // loginPage.visit();
 
-    // TODO: Vervang met de login() methode
+    // TODO: Vervang met de login() methode doormiddel van chaining
     cy.get('[data-cy="username"]').type('student');
     cy.get('[data-cy="password"]').type('cypress123');
     cy.get('[data-cy="login-button"]').click();
-    // loginPage.login('student', 'cypress123');
 
     cy.url().should('include', '/dashboard');
   });
@@ -135,17 +127,14 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
    */
   it('should show error for invalid credentials', () => {
     cy.visit('/login.html');
-    // loginPage.visit();
 
     // TODO: Login met foute credentials
     cy.get('[data-cy="username"]').type('wrong');
     cy.get('[data-cy="password"]').type('wrong');
     cy.get('[data-cy="login-button"]').click();
-    // loginPage.login('wrong', 'wrong');
 
     // TODO: Gebruik de shouldShowError() methode
     cy.get('[data-cy="login-error"]').should('be.visible');
-    // loginPage.shouldShowError();
   });
 
   /**
@@ -155,18 +144,13 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
    */
   it('should check remember me checkbox', () => {
     cy.visit('/login.html');
-    // loginPage.visit();
 
     // TODO: Vul credentials in
     cy.get('[data-cy="username"]').type('student');
     cy.get('[data-cy="password"]').type('cypress123');
-    // loginPage.enterUsername('student');
-    // loginPage.enterPassword('cypress123');
 
     // TODO: Check remember me met page object methode
     cy.get('[data-cy="remember-me"]').check();
-    // loginPage.checkRememberMe();
-
     cy.get('[data-cy="remember-me"]').should('be.checked');
   });
 
