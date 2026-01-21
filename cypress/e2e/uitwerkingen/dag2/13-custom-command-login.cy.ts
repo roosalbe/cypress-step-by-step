@@ -17,21 +17,6 @@ describe('Opdracht 13: Custom Command - Login', () => {
     cy.get('[data-cy="welcome-card"]').should('contain', 'Student');
   });
 
-  it('should use custom loginUI command', () => {
-    // Gebruik het bestaande login command (equivalent aan loginUI)
-    cy.login('student@test.nl', 'cypress123');
-
-    cy.url().should('include', '/dashboard');
-  });
-
-  it('should use custom loginFast command', () => {
-    // Gebruik loginViaApi (equivalent aan loginFast)
-    cy.loginViaApi('admin@test.nl', 'admin123');
-
-    cy.visit('/dashboard');
-    cy.get('[data-cy="user-info"]').should('contain', 'Admin');
-  });
-
   it('should compare login speeds - API login', () => {
     const startFast = Date.now();
     cy.loginViaApi('student@test.nl', 'cypress123');

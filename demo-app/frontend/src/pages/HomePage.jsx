@@ -1,10 +1,28 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from '../components/common/Button';
 import './HomePage.css';
 
+const quotes = [
+  { text: "Testing leads to failure, and failure leads to understanding.", author: "Burt Rutan" },
+  { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
+  { text: "The bitterness of poor quality remains long after the sweetness of low price is forgotten.", author: "Benjamin Franklin" },
+  { text: "If you don't like testing your product, most likely your customers won't like to test it either.", author: "Anonymous" },
+  { text: "A bug is never just a mistake. It represents something bigger.", author: "James Whittaker" },
+  { text: "Testing is not about finding bugs, it's about building quality.", author: "Anonymous" },
+  { text: "The earlier you catch defects, the cheaper they are to fix.", author: "David Farley" },
+  { text: "Automated testing is a safety net that enables fearless refactoring.", author: "Kent Beck" }
+];
+
 function HomePage() {
   const { user } = useAuth();
+  const [quote, setQuote] = useState(quotes[0]);
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    setQuote(quotes[randomIndex]);
+  }, []);
 
   return (
     <div className="home-page" data-cy="home-page">
@@ -55,40 +73,12 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="test-accounts">
+      <section className="quote-section" data-cy="quote-section">
         <div className="container">
-          <h2 className="section-title">Test Accounts</h2>
-          <p className="section-subtitle">
-            Gebruik deze accounts om de applicatie te testen:
-          </p>
-          <div className="accounts-table-wrapper">
-            <table className="accounts-table" data-cy="test-accounts-table">
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Wachtwoord</th>
-                  <th>Rol</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>student@test.nl</td>
-                  <td>cypress123</td>
-                  <td>user</td>
-                </tr>
-                <tr>
-                  <td>admin@test.nl</td>
-                  <td>admin123</td>
-                  <td>admin</td>
-                </tr>
-                <tr>
-                  <td>tester@test.nl</td>
-                  <td>test123</td>
-                  <td>user</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <blockquote className="quote-block" data-cy="random-quote">
+            <p className="quote-text">"{quote.text}"</p>
+            <footer className="quote-author">— {quote.author}</footer>
+          </blockquote>
         </div>
       </section>
     </div>

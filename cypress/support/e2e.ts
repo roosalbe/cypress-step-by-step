@@ -4,6 +4,7 @@
 // ***********************************************************
 
 // Import custom commands
+import ".commands.ts"
 
 // Prevent Cypress from failing tests on uncaught exceptions from the app
 Cypress.on('uncaught:exception', (err, runnable) => {

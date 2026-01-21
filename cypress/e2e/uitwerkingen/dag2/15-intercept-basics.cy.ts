@@ -7,27 +7,20 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
 
   it('should intercept a GET request', () => {
     cy.intercept('GET', '**/api/products*').as('getProducts');
-
     cy.visit('/products');
-
     cy.wait('@getProducts');
-
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
   });
 
   it('should intercept with wildcard', () => {
     cy.intercept('GET', '**/api/**').as('apiCall');
-
     cy.visit('/products');
-
     cy.wait('@apiCall');
   });
 
   it('should inspect response data', () => {
     cy.intercept('GET', '**/api/products*').as('getProducts');
-
     cy.visit('/products');
-
     cy.wait('@getProducts').then((interception) => {
       cy.log('Status: ' + interception.response?.statusCode);
       expect(interception.response?.statusCode).to.equal(200);

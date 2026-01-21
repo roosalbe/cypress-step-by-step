@@ -101,6 +101,39 @@ function LoginForm() {
           Registreer hier
         </Link>
       </p>
+
+      <div className="test-accounts" data-cy="test-accounts">
+        <h3 className="test-accounts-title">Test Accounts</h3>
+        <p className="test-accounts-subtitle">
+          Gebruik deze accounts om in te loggen:
+        </p>
+        <table className="accounts-table" data-cy="test-accounts-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Wachtwoord</th>
+              <th>Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>student@test.nl</td>
+              <td>cypress123</td>
+              <td>user</td>
+            </tr>
+            <tr>
+              <td>admin@test.nl</td>
+              <td>admin123</td>
+              <td>admin</td>
+            </tr>
+            <tr>
+              <td>tester@test.nl</td>
+              <td>test123</td>
+              <td>user</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </form>
   );
 }

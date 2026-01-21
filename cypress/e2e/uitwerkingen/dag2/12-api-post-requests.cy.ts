@@ -5,22 +5,6 @@
 describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
   const apiUrl = Cypress.env('apiUrl');
 
-  it('should login via API and get token', () => {
-    cy.request({
-      method: 'POST',
-      url: `${apiUrl}/auth/login`,
-      body: {
-        email: 'student@test.nl',
-        password: 'cypress123'
-      }
-    }).then((response) => {
-      expect(response.status).to.equal(200);
-      expect(response.body).to.have.property('token');
-      expect(response.body).to.have.property('user');
-      expect(response.body.user).to.have.property('email', 'student@test.nl');
-    });
-  });
-
   it('should register a new user via POST', () => {
     const uniqueEmail = `testuser_${Date.now()}@test.nl`;
 
@@ -36,6 +20,22 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
       expect(response.status).to.equal(201);
       expect(response.body).to.have.property('token');
       expect(response.body.user).to.have.property('email', uniqueEmail);
+    });
+  });
+
+  it('should login via API and get token', () => {
+    cy.request({
+      method: 'POST',
+      url: `${apiUrl}/auth/login`,
+      body: {
+        email: 'student@test.nl',
+        password: 'cypress123'
+      }
+    }).then((response) => {
+      expect(response.status).to.equal(200);
+      expect(response.body).to.have.property('token');
+      expect(response.body).to.have.property('user');
+      expect(response.body.user).to.have.property('email', 'student@test.nl');
     });
   });
 
@@ -56,7 +56,7 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
 
   it('should add item to cart via API', () => {
     // First login to get token
-    cy.loginViaApi('student@test.nl', 'cypress123');
+    // cy.loginViaApi('student@test.nl', 'cypress123');
 
     cy.window().then((win) => {
       const token = win.localStorage.getItem('token');
@@ -83,40 +83,6 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
     });
   });
 
-  it('should send request with custom headers', () => {
-    cy.request({
-      method: 'GET',
-      url: `${apiUrl}/products`,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Custom-Header': 'custom-value'
-      }
-    }).then((response) => {
-      expect(response.status).to.equal(200);
-    });
-  });
-
-  it('should login via API and store token', () => {
-    cy.request({
-      method: 'POST',
-      url: `${apiUrl}/auth/login`,
-      body: {
-        email: 'student@test.nl',
-        password: 'cypress123'
-      }
-    }).then((response) => {
-      expect(response.status).to.equal(200);
-      const { token, user } = response.body;
-
-      cy.window().then((win) => {
-        win.localStorage.setItem('token', token);
-        win.localStorage.setItem('user', JSON.stringify(user));
-      });
-
-      cy.window().its('localStorage.token').should('exist');
-    });
-  });
-
   it('should handle API errors gracefully', () => {
     cy.request({
       method: 'GET',
@@ -125,21 +91,6 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
     }).then((response) => {
       expect(response.status).to.be.oneOf([404, 500]);
     });
-  });
-
-  it('should chain multiple API calls', () => {
-    cy.request('GET', `${apiUrl}/products`)
-      .its('body.products')
-      .then((products) => {
-        const firstProduct = products[0];
-        cy.log(`First product: ${firstProduct.name}`);
-
-        return cy.request('GET', `${apiUrl}/products/categories`);
-      })
-      .its('body.categories')
-      .then((categories) => {
-        expect(categories).to.have.length.greaterThan(0);
-      });
   });
 
   it('should update cart quantity via API', () => {

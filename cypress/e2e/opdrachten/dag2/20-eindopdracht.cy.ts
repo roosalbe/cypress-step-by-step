@@ -65,30 +65,18 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
      * TODO: Schrijf een test voor succesvolle login
      */
     it('should login successfully', () => {
-      // JOUW CODE HIER
-      // Tip: Gebruik cy.login() of loginPage.login()
-
-      cy.visit('/login.html');
-      // TODO: Implementeer login test
     });
 
     /**
      * TODO: Schrijf een test voor ongeldige login
      */
     it('should show error for invalid login', () => {
-      // JOUW CODE HIER
-
-      cy.visit('/login.html');
-      // TODO: Implementeer invalid login test
     });
 
     /**
      * TODO: Schrijf een test voor logout
      */
     it('should logout successfully', () => {
-      // JOUW CODE HIER
-
-      // TODO: Login eerst, dan logout
     });
   });
 
@@ -104,27 +92,18 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
      * TODO: Test dat producten geladen worden
      */
     it('should display products', () => {
-      // JOUW CODE HIER
-
-      // TODO: Check dat er producten zijn
     });
 
     /**
      * TODO: Test de zoekfunctie
      */
     it('should search for products', () => {
-      // JOUW CODE HIER
-
-      // TODO: Zoek naar een product en verify resultaten
     });
 
     /**
      * TODO: Test het categorie filter
      */
     it('should filter by category', () => {
-      // JOUW CODE HIER
-
-      // TODO: Filter op categorie en verify
     });
 
     /**
@@ -142,43 +121,33 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
   // ============================================
   describe('3. Shopping Cart', () => {
     beforeEach(() => {
-      // Start met schone cart
-      cy.clearCart();
-      cy.loginViaApi('student');
+
     });
 
     /**
      * TODO: Test product toevoegen aan cart
      */
     it('should add product to cart', () => {
-      // JOUW CODE HIER
-
-      // TODO: Voeg product toe en verify
     });
 
     /**
      * TODO: Test hoeveelheid wijzigen
      */
     it('should update quantity', () => {
-      // JOUW CODE HIER
-
-      // Tip: Gebruik cy.addToCart() voor setup
     });
 
     /**
      * TODO: Test product verwijderen
      */
     it('should remove product from cart', () => {
-      // JOUW CODE HIER
+
     });
 
     /**
      * TODO: Test totaalprijs berekening
      */
     it('should calculate total correctly', () => {
-      // JOUW CODE HIER
 
-      // Tip: Voeg meerdere producten toe en verify totaal
     });
   });
 
@@ -187,32 +156,20 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
   // ============================================
   describe('4. Checkout Flow', () => {
     beforeEach(() => {
-      cy.clearCart();
-      cy.loginViaApi('student');
-      cy.addToCart(1, 1);
+
     });
 
     /**
      * TODO: Test checkout formulier invullen
      */
     it('should fill checkout form', () => {
-      cy.visit('/checkout.html');
 
-      // JOUW CODE HIER
-
-      // TODO: Vul alle velden in
-      // Tip: Gebruik fixture data of cy.fillForm()
     });
 
     /**
      * TODO: Test formulier validatie
      */
     it('should validate required fields', () => {
-      cy.visit('/checkout.html');
-
-      // JOUW CODE HIER
-
-      // TODO: Submit zonder velden en check errors
     });
   });
 
@@ -252,10 +209,8 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
       // TODO: Login -> Browse -> Add to Cart -> Checkout
 
       // Stap 1: Login
-      cy.loginViaApi('student');
 
       // Stap 2: Browse producten
-      cy.visit('/products.html');
 
       // Stap 3: Voeg toe aan cart
       // TODO

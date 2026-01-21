@@ -22,8 +22,6 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
     // TODO: Laad de users fixture
     cy.fixture('users.json').then((data) => {
       // TODO: Log de data
-      // cy.log('Users: ' + JSON.stringify(data));
-
       // TODO: Check dat data geladen is
       // expect(data.users).to.have.length.greaterThan(0);
     });
@@ -40,9 +38,7 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
 
     // TODO: Gebruik de alias
     cy.get('@userData').then((data: unknown) => {
-      const users = data as { users: Array<{ username: string }> };
-      const firstUser = users.users[0];
-      cy.log(`First user: ${firstUser.username}`);
+
     });
   });
 
@@ -54,11 +50,10 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
   it('should use fixture for mocking', () => {
     // TODO: Mock met fixture
     cy.intercept('GET', '/api/products.json', {
-      fixture: 'products.json'
+      // Todo: Gebruik fixture als body
     }).as('products');
 
-    cy.visit('/products.html');
-
+    cy.visit('/products');
     cy.wait('@products');
 
     // TODO: Verify products geladen zijn
@@ -82,10 +77,8 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
     let testUsers: User[];
 
     beforeEach(() => {
-      // TODO: Laad fixture voor alle tests
-      cy.fixture('users.json').then((data: { users: User[] }) => {
-        testUsers = data.users;
-      });
+      // TODO: Laad fixture voor alle tests gebruik users.json
+
     });
 
     it('should have access to fixture data', () => {
@@ -108,24 +101,23 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
    */
   it('should use fixture for form data', () => {
     cy.fixture('testdata.json').then((data) => {
-      cy.loginViaApi('student');
-      cy.addToCart(1, 1);
-      cy.visit('/checkout.html');
+      // cy.loginViaApi('student');
+      // cy.addToCart(1, 1);
+      // cy.visit('/checkout');
 
       // TODO: Vul formulier met fixture data
-      // cy.get('[data-cy="firstName"]').type(data.checkoutForm.firstName);
-      // cy.get('[data-cy="lastName"]').type(data.checkoutForm.lastName);
-      // cy.get('[data-cy="email"]').type(data.checkoutForm.email);
+      // cy.get('[data-cy="firstName"]').type();
+      // cy.get('[data-cy="lastName"]').type();
+      // cy.get('[data-cy="email"]').type();
     });
   });
 
   /**
    * TEST 17.6: Dynamische fixture data
    *
-   * TODO: Genereer test data dynamisch
+   * INFO: Genereer test data dynamisch
    */
   it('should generate dynamic test data', () => {
-    // Genereer unieke data
     const timestamp = Date.now();
     const testData = {
       username: `user_${timestamp}`,
@@ -136,9 +128,8 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
     cy.log(`Generated user: ${testData.username}`);
     cy.log(`Generated email: ${testData.email}`);
 
-    // TODO: Gebruik dynamische data in test
-    cy.visit('/login.html');
-    // Deze user bestaat niet, maar we kunnen de data wel gebruiken
+    expect(testData.username).to.include('user_');
+    expect(testData.email).to.include('@example.com');
   });
 
   /**
@@ -148,13 +139,14 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
    */
   it('should use environment variables', () => {
     // TODO: Haal credentials uit env
+    // TODO: Waarom werkt hier een const wel?
     const username = Cypress.env('testUser') || 'student';
     const password = Cypress.env('testPassword') || 'cypress123';
 
     cy.log(`Using user: ${username}`);
 
     // TODO: Login met env credentials
-    cy.visit('/login.html');
+    cy.visit('/login');
     cy.get('[data-cy="username"]').type(username);
     cy.get('[data-cy="password"]').type(password);
     cy.get('[data-cy="login-button"]').click();
@@ -169,18 +161,9 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
    */
   it('should combine multiple fixtures', () => {
     // TODO: Laad meerdere fixtures
-    cy.fixture('users.json').as('users');
-    cy.fixture('products.json').as('products');
+    // TIP: Maak gebruik van aliassen
 
     // TODO: Combineer de data
-    cy.get('@users').then((users) => {
-      cy.get('@products').then((products) => {
-        // Nu heb je toegang tot beide
-        cy.log('Users and products loaded');
-        // expect(users.users).to.exist;
-        // expect(products.products).to.exist;
-      });
-    });
   });
 
   /**
@@ -198,13 +181,12 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
       ...overrides
     });
 
-    // Genereer test users
-    const user1 = createTestUser({ name: 'Custom User 1' });
-    const user2 = createTestUser({ name: 'Custom User 2' });
+    // TODO: Genereer test users
+ 
+    // TODO: Dit moet slagen
+    // cy.log(`Created users: ${user1.username}, ${user2.username}`);
 
-    cy.log(`Created users: ${user1.username}, ${user2.username}`);
-
-    expect(user1.name).to.equal('Custom User 1');
-    expect(user2.name).to.equal('Custom User 2');
+    // expect(user1.name).to.equal('Custom User 1');
+    // expect(user2.name).to.equal('Custom User 2');
   });
 });

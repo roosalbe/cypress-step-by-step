@@ -18,3 +18,51 @@
   margin-bottom: 0;
   color: var(--rhs-color-grijs-4);
 }
+
+.test-accounts {
+  margin-top: var(--rhs-space-6);
+  padding-top: var(--rhs-space-5);
+  border-top: 1px solid var(--rhs-color-grijs-2);
+}
+
+.test-accounts-title {
+  font-size: var(--rhs-font-size-base);
+  color: var(--rhs-color-donkerblauw);
+  margin-bottom: var(--rhs-space-2);
+  text-align: center;
+}
+
+.test-accounts-subtitle {
+  font-size: var(--rhs-font-size-sm);
+  color: var(--rhs-color-grijs-4);
+  text-align: center;
+  margin-bottom: var(--rhs-space-3);
+}
+
+.test-accounts .accounts-table {
+  width: 100%;
+  font-size: var(--rhs-font-size-sm);
+  border-collapse: collapse;
+  border-radius: var(--rhs-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--rhs-color-grijs-2);
+}
+
+.test-accounts .accounts-table th {
+  background-color: var(--rhs-color-donkerblauw);
+  color: var(--rhs-color-wit);
+  padding: var(--rhs-space-2) var(--rhs-space-3);
+  text-align: left;
+  font-weight: 500;
+}
+
+.test-accounts .accounts-table td {
+  padding: var(--rhs-space-2) var(--rhs-space-3);
+  border-bottom: 1px solid var(--rhs-color-grijs-2);
+  font-family: monospace;
+  font-size: var(--rhs-font-size-xs);
+}
+
+.test-accounts .accounts-table tr:last-child td {
+  border-bottom: none;
+}

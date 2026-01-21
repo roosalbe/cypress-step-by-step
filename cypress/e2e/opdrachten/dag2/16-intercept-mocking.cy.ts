@@ -20,8 +20,8 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    * TODO: Vervang de echte response met mock data
    */
   it('should mock with static data', () => {
-    // TODO: Mock de products response
-    cy.intercept('GET', '/api/products.json', {
+    // TODO: Kijk naar onderstaande call en probeer de mock data aan te passen en kijk hoe de UI verandert
+    cy.intercept('GET', '**/api/products', {
       statusCode: 200,
       body: {
         products: [
@@ -31,7 +31,7 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
       }
     }).as('mockProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@mockProducts');
 
@@ -47,11 +47,11 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should mock with fixture', () => {
     // TODO: Mock met fixture
-    // cy.intercept('GET', '/api/products.json', {
-    //   fixture: 'products.json'
+    // cy.intercept('GET', '/api/products', {
+    //   fixture: 'products'
     // }).as('fixtureProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Verify products geladen zijn
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
@@ -64,19 +64,13 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should handle empty response', () => {
     // TODO: Mock lege products array
-    cy.intercept('GET', '/api/products.json', {
-      statusCode: 200,
-      body: {
-        products: []
-      }
-    }).as('emptyProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@emptyProducts');
 
-    // TODO: Verify dat "geen producten" bericht getoond wordt
-    // cy.get('[data-cy="no-products"]').should('be.visible')
+    //Verify dat "geen producten" bericht getoond wordt
+    cy.get('[data-cy="no-products"]').should('be.visible')
   });
 
   /**
@@ -86,14 +80,9 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should handle 404 error', () => {
     // TODO: Mock 404 response
-    // cy.intercept('GET', '/api/products.json', {
-    //   statusCode: 404,
-    //   body: {
-    //     error: 'Products not found'
-    //   }
-    // }).as('notFound');
 
-    cy.visit('/products.html');
+
+    cy.visit('/products');
 
     // TODO: Check error handling in UI
     // (De demo app toont mogelijk geen specifieke error)
@@ -106,14 +95,8 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should handle 500 error', () => {
     // TODO: Mock 500 response
-    // cy.intercept('GET', '/api/products.json', {
-    //   statusCode: 500,
-    //   body: {
-    //     error: 'Internal server error'
-    //   }
-    // }).as('serverError');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Check error handling
   });
@@ -125,20 +108,13 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should handle slow response', () => {
     // TODO: Mock met delay
-    cy.intercept('GET', '/api/products.json', {
-      statusCode: 200,
-      body: {
-        products: [
-          { id: 1, name: 'Slow Product', price: 99.99, category: 'test', stock: 10 }
-        ]
-      },
-      delay: 2000 // 2 seconden vertraging
+    cy.intercept('GET', '/api/products', {
+      // TODO: delay toevoegen aan mock
     }).as('slowProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Check dat loading state getoond wordt (indien aanwezig)
-    // cy.get('[data-cy="loading"]').should('be.visible');
 
     // Wacht op response
     cy.wait('@slowProducts');
@@ -154,11 +130,8 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should handle network error', () => {
     // TODO: Mock network error
-    // cy.intercept('GET', '/api/products.json', {
-    //   forceNetworkError: true
-    // }).as('networkError');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // App zou graceful moeten omgaan met network errors
   });
@@ -170,7 +143,7 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    */
   it('should modify real response', () => {
     // TODO: Intercept en modificeer
-    cy.intercept('GET', '/api/products.json', (req) => {
+    cy.intercept('GET', '/api/products', (req) => {
       req.continue((res) => {
         // Pas response aan
         if (res.body && res.body.products) {
@@ -181,7 +154,7 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
       });
     }).as('modifiedProducts');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@modifiedProducts');
 
@@ -195,7 +168,7 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    * TODO: Mock alleen onder bepaalde condities
    */
   it('should conditionally mock based on request', () => {
-    cy.intercept('GET', '/api/products.json', (req) => {
+    cy.intercept('GET', '/api/products', (req) => {
       // Check query params of headers
       if (req.url.includes('category=electronics')) {
         req.reply({
@@ -212,7 +185,7 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
       }
     });
 
-    cy.visit('/products.html?category=electronics');
+    cy.visit('/products?category=electronics');
 
     // De mock wordt alleen toegepast voor electronics
   });
