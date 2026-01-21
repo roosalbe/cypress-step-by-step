@@ -4,11 +4,12 @@
 
 describe('Opdracht 8: Product & Cart Flow', () => {
   beforeEach(() => {
-    cy.loginViaApi('student');
+    cy.loginViaApi('student@test.nl', 'cypress123');
+    cy.clearCart();
   });
 
   it('should display all products', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0);
@@ -20,11 +21,10 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should search for products', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="search-input"]').type('Laptop');
-
-    cy.wait(500);
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0)
@@ -33,11 +33,10 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should filter by category', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="category-filter"]').select('electronics');
-
-    cy.wait(500);
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.get('[data-cy="product-card"]').each(($card) => {
       cy.wrap($card)
@@ -47,35 +46,35 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should sort products by price', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
-    cy.get('[data-cy="sort-select"]').select('price-asc');
-
-    cy.wait(500);
+    cy.get('[data-cy="sort-filter"]').select('price-asc');
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.get('[data-cy="product-price"]').first().invoke('text').then((firstPrice) => {
       cy.get('[data-cy="product-price"]').last().invoke('text').then((lastPrice) => {
-        const first = parseFloat(firstPrice.replace('€', '').replace('.', '').replace(',', '.'));
-        const last = parseFloat(lastPrice.replace('€', '').replace('.', '').replace(',', '.'));
+        const first = parseFloat(firstPrice.replace('€', '').replace('.', '').replace(',', '.').trim());
+        const last = parseFloat(lastPrice.replace('€', '').replace('.', '').replace(',', '.').trim());
         expect(first).to.be.at.most(last);
       });
     });
   });
 
   it('should add product to cart', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
-    cy.get('[data-cy="add-to-cart"]').first().click();
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
 
-    cy.get('[data-cy="cart-count"]')
+    cy.get('[data-cy="cart-badge"]')
       .should('be.visible')
       .and('contain', '1');
   });
 
   it('should view cart with added product', () => {
-    cy.addToCart(1, 1);
+    cy.visit('/products');
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
 
-    cy.visit('/cart.html');
+    cy.visit('/cart');
 
     cy.get('[data-cy="cart-item"]').should('have.length.greaterThan', 0);
 
@@ -83,8 +82,9 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should update product quantity in cart', () => {
-    cy.addToCart(1, 1);
-    cy.visit('/cart.html');
+    cy.visit('/products');
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
+    cy.visit('/cart');
 
     cy.get('[data-cy="increase-quantity"]').first().click();
 
@@ -92,8 +92,9 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should remove product from cart', () => {
-    cy.addToCart(1, 1);
-    cy.visit('/cart.html');
+    cy.visit('/products');
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
+    cy.visit('/cart');
 
     cy.get('[data-cy="cart-item"]').should('have.length', 1);
 
@@ -103,11 +104,11 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should view product details', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
-    cy.get('[data-cy="view-product"]').first().click();
+    cy.get('[data-cy="product-card"]').first().click();
 
-    cy.url().should('include', '/product-detail.html');
+    cy.url().should('include', '/products/');
 
     cy.get('[data-cy="product-name"]').should('be.visible');
     cy.get('[data-cy="product-price"]').should('be.visible');
@@ -115,12 +116,12 @@ describe('Opdracht 8: Product & Cart Flow', () => {
   });
 
   it('should complete full shopping flow', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="search-input"]').type('Mouse');
-    cy.wait(500);
+    cy.get('[data-cy="apply-filters"]').click();
 
-    cy.get('[data-cy="add-to-cart"]').first().click();
+    cy.get('[data-cy="add-to-cart-button"]').first().click();
 
     cy.get('[data-cy="nav-cart"]').click();
 
@@ -128,7 +129,7 @@ describe('Opdracht 8: Product & Cart Flow', () => {
 
     cy.get('[data-cy="checkout-button"]').click();
 
-    cy.url().should('include', '/checkout.html');
+    cy.url().should('include', '/checkout');
     cy.get('[data-cy="checkout-form"]').should('be.visible');
   });
 });

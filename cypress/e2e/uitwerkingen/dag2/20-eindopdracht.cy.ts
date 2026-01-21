@@ -19,7 +19,7 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
   describe('1. User Authentication', () => {
     it('should login successfully', () => {
       loginPage.visit();
-      loginPage.login('student', 'cypress123');
+      loginPage.login('student@test.nl', 'cypress123');
 
       cy.url().should('include', '/dashboard');
       cy.get('[data-cy="user-info"]').should('contain', 'Student');
@@ -27,14 +27,14 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
 
     it('should show error for invalid login', () => {
       loginPage.visit();
-      loginPage.login('invalid', 'wrongpassword');
+      loginPage.login('invalid@test.nl', 'wrongpassword');
 
       loginPage.shouldShowError();
       cy.url().should('include', '/login');
     });
 
     it('should logout successfully', () => {
-      cy.login('student', 'cypress123');
+      cy.login('student@test.nl', 'cypress123');
       cy.get('[data-cy="logout-button"]').click();
 
       cy.url().should('not.include', '/dashboard');
@@ -89,19 +89,19 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
   describe('3. Shopping Cart', () => {
     beforeEach(() => {
       cy.clearCart();
-      cy.loginViaApi('student');
+      cy.loginViaApi('student@test.nl', 'cypress123');
     });
 
     it('should add product to cart', () => {
-      cy.visit('/products.html');
-      cy.get('[data-cy="add-to-cart"]').first().click();
+      cy.visit('/products');
+      cy.get('[data-cy="add-to-cart-button"]').first().click();
 
-      cy.get('[data-cy="cart-count"]').should('contain', '1');
+      cy.get('[data-cy="cart-badge"]').should('contain', '1');
     });
 
     it('should update quantity', () => {
       cy.addToCart(1, 1);
-      cy.visit('/cart.html');
+      cy.visit('/cart');
 
       cy.get('[data-cy="increase-quantity"]').first().click();
       cy.get('[data-cy="item-quantity"]').first().should('contain', '2');
@@ -109,7 +109,7 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
 
     it('should remove product from cart', () => {
       cy.addToCart(1, 1);
-      cy.visit('/cart.html');
+      cy.visit('/cart');
 
       cy.get('[data-cy="remove-item"]').first().click();
       cy.get('[data-cy="empty-cart"]').should('be.visible');
@@ -117,7 +117,7 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
 
     it('should calculate total correctly', () => {
       cy.addToCart(1, 2);
-      cy.visit('/cart.html');
+      cy.visit('/cart');
 
       cy.get('[data-cy="cart-total"]').should('be.visible');
       cy.get('[data-cy="cart-item"]').should('have.length', 1);
@@ -130,7 +130,7 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
   describe('4. Checkout Flow', () => {
     beforeEach(() => {
       cy.clearCart();
-      cy.loginViaApi('student');
+      cy.loginViaApi('student@test.nl', 'cypress123');
       cy.addToCart(1, 1);
     });
 
@@ -173,9 +173,9 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
       ];
 
       scenarios.forEach((scenario) => {
-        cy.visit('/products.html');
+        cy.visit('/products');
         cy.get('[data-cy="search-input"]').clear().type(scenario.search);
-        cy.wait(500);
+        cy.get('[data-cy="apply-filters"]').click();
 
         if (scenario.expectResults) {
           cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
@@ -186,16 +186,14 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
     });
 
     it('should handle mocked API response', () => {
-      cy.intercept('GET', '/api/products.json', {
+      cy.intercept('GET', '**/api/products*', {
         statusCode: 200,
-        body: {
-          products: [
-            { id: 999, name: 'Mocked Product', price: 123.45, category: 'test', stock: 99 }
-          ]
-        }
+        body: [
+          { id: 999, name: 'Mocked Product', price: 123.45, category: 'test', stock: 99 }
+        ]
       }).as('mockProducts');
 
-      cy.visit('/products.html');
+      cy.visit('/products');
       cy.wait('@mockProducts');
 
       cy.contains('Mocked Product').should('be.visible');
@@ -204,22 +202,22 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
 
     it('should complete full user journey', () => {
       // Stap 1: Login
-      cy.loginViaApi('student');
+      cy.loginViaApi('student@test.nl', 'cypress123');
 
       // Stap 2: Browse producten
-      cy.visit('/products.html');
+      cy.visit('/products');
       cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
 
       // Stap 3: Zoek product
       cy.get('[data-cy="search-input"]').type('Laptop');
-      cy.wait(500);
+      cy.get('[data-cy="apply-filters"]').click();
 
       // Stap 4: Voeg toe aan cart
-      cy.get('[data-cy="add-to-cart"]').first().click();
-      cy.get('[data-cy="cart-count"]').should('contain', '1');
+      cy.get('[data-cy="add-to-cart-button"]').first().click();
+      cy.get('[data-cy="cart-badge"]').should('contain', '1');
 
       // Stap 5: Ga naar cart
-      cy.visit('/cart.html');
+      cy.visit('/cart');
       cy.get('[data-cy="cart-item"]').should('have.length', 1);
 
       // Stap 6: Ga naar checkout
@@ -248,10 +246,12 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
   // ============================================
   describe('6. API Integration Tests', () => {
     it('should validate API responses match UI', () => {
-      cy.request('GET', '/api/products.json').then((response) => {
-        const apiProducts = response.body.products;
+      const apiUrl = Cypress.env('apiUrl') || 'http://localhost:3001';
 
-        cy.visit('/products.html');
+      cy.request('GET', `${apiUrl}/api/products`).then((response) => {
+        const apiProducts = response.body;
+
+        cy.visit('/products');
 
         cy.get('[data-cy="product-card"]')
           .should('have.length', apiProducts.length);
@@ -260,9 +260,9 @@ describe('Eindopdracht: Complete E-Commerce Test Suite', () => {
 
     it('should use fixtures for consistent test data', () => {
       cy.fixture('testdata.json').then((testData) => {
-        cy.loginViaApi('student');
+        cy.loginViaApi('student@test.nl', 'cypress123');
         cy.addToCart(1, 1);
-        cy.visit('/checkout.html');
+        cy.visit('/checkout');
 
         const form = testData.checkoutForm;
         cy.get('[data-cy="firstName"]').type(form.firstName);

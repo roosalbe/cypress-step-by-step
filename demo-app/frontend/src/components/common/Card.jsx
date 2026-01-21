@@ -28,9 +28,9 @@ function CardContent({ children, className = '' }) {
   );
 }
 
-function CardTitle({ children, className = '' }) {
+function CardTitle({ children, className = '', ...props }) {
   return (
-    <h3 className={`card-title ${className}`}>
+    <h3 className={`card-title ${className}`} {...props}>
       {children}
     </h3>
   );

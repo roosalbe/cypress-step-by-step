@@ -17,12 +17,15 @@ function Header() {
     <header className="header" data-cy="header">
       <div className="header-container">
         <div className="header-brand">
-          <Link to="/" className="header-logo" data-cy="header-logo">
-            Demo Shop
+          <Link to="/" className="header-logo" data-cy="navbar-brand">
+            Cypress Shop
           </Link>
         </div>
 
         <nav className="header-nav" data-cy="main-nav">
+          <Link to="/" className="nav-link" data-cy="nav-home">
+            Home
+          </Link>
           <Link to="/products" className="nav-link" data-cy="nav-products">
             Producten
           </Link>
@@ -47,7 +50,7 @@ function Header() {
                   <span className="cart-badge" data-cy="cart-badge">{itemCount}</span>
                 )}
               </Link>
-              <span className="user-name" data-cy="user-name">{user.name}</span>
+              <span className="user-name" data-cy="user-info">{user.name}</span>
               <button
                 onClick={handleLogout}
                 className="logout-button"

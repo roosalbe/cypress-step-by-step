@@ -31,7 +31,7 @@ describe('Opdracht 6: Page Object Model - Uitbreiding', () => {
 
   it('should complete login flow with page objects', () => {
     loginPage.visit();
-    loginPage.login('student', 'cypress123');
+    loginPage.login('student@test.nl', 'cypress123');
 
     cy.url().should('include', '/dashboard');
 
@@ -58,7 +58,7 @@ describe('Opdracht 6: Page Object Model - Uitbreiding', () => {
   it('should navigate through multiple pages', () => {
     // Login
     loginPage.visit();
-    loginPage.login('student', 'cypress123');
+    loginPage.login('student@test.nl', 'cypress123');
 
     // Ga naar products
     productsPage.visit();

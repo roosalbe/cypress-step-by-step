@@ -2,12 +2,14 @@
  * CheckoutPage - Page Object voor de checkout pagina
  */
 
-interface ShippingInfo {
-  name: string;
-  address: string;
-  postalCode: string;
-  city: string;
+interface CheckoutFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
   phone?: string;
+  address: string;
+  postcode: string;
+  city: string;
 }
 
 export class CheckoutPage {
@@ -16,14 +18,17 @@ export class CheckoutPage {
   private checkoutForm = '[data-cy="checkout-form"]';
   private checkoutSummary = '[data-cy="checkout-summary"]';
   private checkoutTotal = '[data-cy="checkout-total"]';
-  private nameInput = '[data-cy="checkout-name"]';
-  private addressInput = '[data-cy="checkout-address"]';
-  private postalCodeInput = '[data-cy="checkout-postalcode"]';
-  private cityInput = '[data-cy="checkout-city"]';
-  private phoneInput = '[data-cy="checkout-phone"]';
-  private placeOrderButton = '[data-cy="place-order-button"]';
+  private firstNameInput = '[data-cy="firstName"]';
+  private lastNameInput = '[data-cy="lastName"]';
+  private emailInput = '[data-cy="email"]';
+  private phoneInput = '[data-cy="phone"]';
+  private addressInput = '[data-cy="address"]';
+  private postcodeInput = '[data-cy="postcode"]';
+  private cityInput = '[data-cy="city"]';
+  private submitOrderButton = '[data-cy="submit-order"]';
   private checkoutError = '[data-cy="checkout-error"]';
   private emptyCheckout = '[data-cy="empty-checkout"]';
+  private orderConfirmation = '[data-cy="order-confirmation"]';
 
   /**
    * Navigeer naar de checkout pagina
@@ -42,10 +47,34 @@ export class CheckoutPage {
   }
 
   /**
-   * Vul naam in
+   * Vul voornaam in
    */
-  typeName(name: string): this {
-    cy.get(this.nameInput).clear().type(name);
+  typeFirstName(firstName: string): this {
+    cy.get(this.firstNameInput).clear().type(firstName);
+    return this;
+  }
+
+  /**
+   * Vul achternaam in
+   */
+  typeLastName(lastName: string): this {
+    cy.get(this.lastNameInput).clear().type(lastName);
+    return this;
+  }
+
+  /**
+   * Vul email in
+   */
+  typeEmail(email: string): this {
+    cy.get(this.emailInput).clear().type(email);
+    return this;
+  }
+
+  /**
+   * Vul telefoon in
+   */
+  typePhone(phone: string): this {
+    cy.get(this.phoneInput).clear().type(phone);
     return this;
   }
 
@@ -60,8 +89,8 @@ export class CheckoutPage {
   /**
    * Vul postcode in
    */
-  typePostalCode(postalCode: string): this {
-    cy.get(this.postalCodeInput).clear().type(postalCode);
+  typePostcode(postcode: string): this {
+    cy.get(this.postcodeInput).clear().type(postcode);
     return this;
   }
 
@@ -74,41 +103,42 @@ export class CheckoutPage {
   }
 
   /**
-   * Vul telefoon in
+   * Vul het hele checkout formulier in
    */
-  typePhone(phone: string): this {
-    cy.get(this.phoneInput).clear().type(phone);
-    return this;
-  }
-
-  /**
-   * Vul het hele verzendformulier in
-   */
-  fillShippingInfo(info: ShippingInfo): this {
-    this.typeName(info.name);
-    this.typeAddress(info.address);
-    this.typePostalCode(info.postalCode);
-    this.typeCity(info.city);
-    if (info.phone) {
-      this.typePhone(info.phone);
+  fillForm(data: CheckoutFormData): this {
+    this.typeFirstName(data.firstName);
+    this.typeLastName(data.lastName);
+    this.typeEmail(data.email);
+    if (data.phone) {
+      this.typePhone(data.phone);
     }
+    this.typeAddress(data.address);
+    this.typePostcode(data.postcode);
+    this.typeCity(data.city);
     return this;
   }
 
   /**
    * Klik op bestelling plaatsen
    */
-  placeOrder(): this {
-    cy.get(this.placeOrderButton).click();
+  submitOrder(): this {
+    cy.get(this.submitOrderButton).click();
     return this;
+  }
+
+  /**
+   * Alias voor submitOrder
+   */
+  placeOrder(): this {
+    return this.submitOrder();
   }
 
   /**
    * Volledige checkout flow
    */
-  completeCheckout(info: ShippingInfo): this {
-    this.fillShippingInfo(info);
-    this.placeOrder();
+  completeCheckout(data: CheckoutFormData): this {
+    this.fillForm(data);
+    this.submitOrder();
     return this;
   }
 
@@ -125,6 +155,14 @@ export class CheckoutPage {
    */
   shouldShowEmptyCheckout(): this {
     cy.get(this.emptyCheckout).should('be.visible');
+    return this;
+  }
+
+  /**
+   * Controleer dat order bevestiging zichtbaar is
+   */
+  shouldShowOrderConfirmation(): this {
+    cy.get(this.orderConfirmation).should('be.visible');
     return this;
   }
 

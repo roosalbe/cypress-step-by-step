@@ -5,15 +5,15 @@
 describe('Opdracht 18: Data-Driven Tests', () => {
   describe('Login with multiple users', () => {
     const loginScenarios = [
-      { username: 'student', password: 'cypress123', shouldPass: true, description: 'valid student' },
-      { username: 'admin', password: 'admin123', shouldPass: true, description: 'valid admin' },
-      { username: 'wrong', password: 'wrong', shouldPass: false, description: 'invalid user' },
-      { username: 'student', password: 'wrong', shouldPass: false, description: 'wrong password' },
+      { username: 'student@test.nl', password: 'cypress123', shouldPass: true, description: 'valid student' },
+      { username: 'admin@test.nl', password: 'admin123', shouldPass: true, description: 'valid admin' },
+      { username: 'wrong@test.nl', password: 'wrong', shouldPass: false, description: 'invalid user' },
+      { username: 'student@test.nl', password: 'wrong', shouldPass: false, description: 'wrong password' },
     ];
 
     loginScenarios.forEach((scenario) => {
       it(`should handle login for ${scenario.description}`, () => {
-        cy.visit('/login.html');
+        cy.visit('/login');
 
         cy.get('[data-cy="username"]').type(scenario.username);
         cy.get('[data-cy="password"]').type(scenario.password);
@@ -39,10 +39,10 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
     searchTerms.forEach((search) => {
       it(`should search for "${search.term}"`, () => {
-        cy.visit('/products.html');
+        cy.visit('/products');
 
         cy.get('[data-cy="search-input"]').type(search.term);
-        cy.wait(500);
+        cy.get('[data-cy="apply-filters"]').click();
 
         if (search.expectResults) {
           cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
@@ -62,9 +62,9 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
     formTests.forEach((test) => {
       it(`should validate ${test.field} with value "${test.value}"`, () => {
-        cy.loginViaApi('student');
+        cy.loginViaApi('student@test.nl', 'cypress123');
         cy.addToCart(1, 1);
-        cy.visit('/checkout.html');
+        cy.visit('/checkout');
 
         cy.get('[data-cy="firstName"]').type('Test');
         cy.get('[data-cy="lastName"]').type('User');
@@ -86,10 +86,10 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
     categories.forEach((category) => {
       it(`should filter by category: ${category}`, () => {
-        cy.visit('/products.html');
+        cy.visit('/products');
 
         cy.get('[data-cy="category-filter"]').select(category);
-        cy.wait(500);
+        cy.get('[data-cy="apply-filters"]').click();
 
         cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
         cy.get('[data-cy="product-card"]').each(($card) => {
@@ -112,7 +112,7 @@ describe('Opdracht 18: Data-Driven Tests', () => {
         cy.clearCart();
         cy.addToCart(1, qty);
 
-        cy.visit('/cart.html');
+        cy.visit('/cart');
 
         cy.get('[data-cy="item-quantity"]')
           .first()
@@ -129,15 +129,16 @@ describe('Opdracht 18: Data-Driven Tests', () => {
 
     scenarios.forEach((scenario) => {
       it(`should execute ${scenario.name}`, () => {
-        cy.visit('/products.html');
+        cy.visit('/products');
 
         if (scenario.action === 'search') {
           cy.get('[data-cy="search-input"]').type(scenario.value);
+          cy.get('[data-cy="apply-filters"]').click();
         } else if (scenario.action === 'filter') {
           cy.get('[data-cy="category-filter"]').select(scenario.value);
+          cy.get('[data-cy="apply-filters"]').click();
         }
 
-        cy.wait(500);
         cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
       });
     });
@@ -171,7 +172,7 @@ describe('Opdracht 18: Data-Driven Tests', () => {
       priceRanges,
       (tc) => `should have products in range €${tc.minPrice}-€${tc.maxPrice}`,
       (tc) => {
-        cy.visit('/products.html');
+        cy.visit('/products');
         cy.get('[data-cy="product-card"]').should('exist');
         cy.log(`Testing price range: €${tc.minPrice} - €${tc.maxPrice}`);
       }

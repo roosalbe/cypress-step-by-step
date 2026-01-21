@@ -10,16 +10,17 @@ function LoginForm() {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
     setError('');
   };
@@ -57,7 +58,7 @@ function LoginForm() {
         onChange={handleChange}
         placeholder="uw@email.nl"
         required
-        data-cy="email-input"
+        data-cy="username"
       />
 
       <Input
@@ -68,8 +69,21 @@ function LoginForm() {
         onChange={handleChange}
         placeholder="Uw wachtwoord"
         required
-        data-cy="password-input"
+        data-cy="password"
       />
+
+      <div className="form-group checkbox-group">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            name="rememberMe"
+            checked={formData.rememberMe}
+            onChange={handleChange}
+            data-cy="remember-me"
+          />
+          <span>Onthoud mij</span>
+        </label>
+      </div>
 
       <Button
         type="submit"

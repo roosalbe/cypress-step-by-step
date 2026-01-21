@@ -8,15 +8,15 @@ function HomePage() {
 
   return (
     <div className="home-page" data-cy="home-page">
-      <section className="hero">
+      <section className="hero" data-cy="hero-section">
         <div className="container">
-          <h1 className="hero-title">Welkom bij Demo Shop</h1>
-          <p className="hero-subtitle">
+          <h1 className="hero-title" data-cy="hero-title">Welkom bij Cypress Shop</h1>
+          <p className="hero-subtitle" data-cy="hero-subtitle">
             Een e-commerce demo applicatie voor de Cypress cursus
           </p>
           <div className="hero-actions">
             <Link to="/products">
-              <Button variant="primary" size="large" data-cy="browse-products">
+              <Button variant="primary" size="large" data-cy="shop-now-button">
                 Bekijk producten
               </Button>
             </Link>

@@ -53,13 +53,13 @@ function CartItem({ item }) {
         >
           -
         </Button>
-        <span className="quantity-value" data-cy="quantity-value">{quantity}</span>
+        <span className="quantity-value" data-cy="item-quantity">{quantity}</span>
         <Button
           variant="secondary"
           size="small"
           onClick={() => handleQuantityChange(quantity + 1)}
           disabled={loading || quantity >= product.stock}
-          data-cy="quantity-increase"
+          data-cy="increase-quantity"
         >
           +
         </Button>

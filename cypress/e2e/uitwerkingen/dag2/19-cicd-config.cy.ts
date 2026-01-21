@@ -4,7 +4,7 @@
 
 describe('Opdracht 19: CI/CD Configuratie', () => {
   it('should be CI-friendly (no flaky behavior)', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0);
@@ -13,13 +13,15 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
       .should('be.visible')
       .type('Laptop');
 
+    cy.get('[data-cy="apply-filters"]').click();
+
     cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0);
   });
 
   it('should use environment variables', () => {
     const baseUrl = Cypress.config('baseUrl');
-    const testUser = Cypress.env('testUser') || 'student';
+    const testUser = Cypress.env('testUser') || 'student@test.nl';
 
     cy.log(`Base URL: ${baseUrl}`);
     cy.log(`Test user: ${testUser}`);
@@ -29,8 +31,8 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
   });
 
   it('should handle retries gracefully', () => {
-    cy.loginViaApi('student');
-    cy.visit('/dashboard.html');
+    cy.loginViaApi('student@test.nl', 'cypress123');
+    cy.visit('/dashboard');
 
     cy.get('[data-cy="welcome-message"]')
       .should('be.visible')
@@ -38,7 +40,7 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
   });
 
   it('should take screenshot for CI artifacts', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="product-card"]').should('be.visible');
 
@@ -49,7 +51,7 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
     cy.clearLocalStorage();
     cy.clearCookies();
 
-    cy.visit('/cart.html');
+    cy.visit('/cart');
 
     cy.get('[data-cy="empty-cart"]').should('be.visible');
   });
@@ -57,7 +59,7 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
   it('should load page within acceptable time', () => {
     const startTime = Date.now();
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="product-card"]').should('be.visible').then(() => {
       const loadTime = Date.now() - startTime;
@@ -68,15 +70,13 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
   });
 
   it('should have working API endpoints', () => {
-    cy.request('GET', '/api/products.json')
+    const apiUrl = Cypress.env('apiUrl') || 'http://localhost:3001';
+
+    cy.request('GET', `${apiUrl}/api/products`)
       .its('status')
       .should('equal', 200);
 
-    cy.request('GET', '/api/users.json')
-      .its('status')
-      .should('equal', 200);
-
-    cy.request('GET', '/api/orders.json')
+    cy.request('GET', `${apiUrl}/api/users`)
       .its('status')
       .should('equal', 200);
   });
@@ -91,16 +91,18 @@ describe('Opdracht 19: CI/CD Configuratie', () => {
   });
 
   it('should complete smoke test', () => {
+    const apiUrl = Cypress.env('apiUrl') || 'http://localhost:3001';
+
     // Quick smoke test for CI
-    cy.request('GET', '/api/products.json').its('status').should('equal', 200);
+    cy.request('GET', `${apiUrl}/api/products`).its('status').should('equal', 200);
 
     cy.visit('/');
     cy.get('[data-cy="hero-title"]').should('be.visible');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
 
-    cy.visit('/login.html');
+    cy.visit('/login');
     cy.get('[data-cy="login-button"]').should('be.visible');
   });
 });

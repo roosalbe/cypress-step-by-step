@@ -45,7 +45,7 @@ function ProductsPage() {
 
   return (
     <div className="container products-page" data-cy="products-page">
-      <h1 className="page-title">Producten</h1>
+      <h1 className="page-title" data-cy="page-title">Producten</h1>
 
       <ProductFilters filters={filters} onFilterChange={handleFilterChange} />
 

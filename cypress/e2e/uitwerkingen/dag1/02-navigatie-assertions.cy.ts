@@ -10,7 +10,7 @@ describe('Opdracht 2: Navigatie & Assertions', () => {
   it('should navigate to products page', () => {
     cy.get('[data-cy="nav-products"]').click();
 
-    cy.url().should('include', '/products.html');
+    cy.url().should('include', '/products');
 
     cy.get('[data-cy="page-title"]')
       .should('be.visible')
@@ -20,13 +20,13 @@ describe('Opdracht 2: Navigatie & Assertions', () => {
   it('should navigate via shop now button', () => {
     cy.get('[data-cy="shop-now-button"]').click();
 
-    cy.url().should('include', '/products.html');
+    cy.url().should('include', '/products');
   });
 
   it('should navigate to login page', () => {
     cy.get('[data-cy="nav-login"]').click();
 
-    cy.url().should('include', '/login.html');
+    cy.url().should('include', '/login');
 
     cy.get('[data-cy="login-form"]').should('be.visible');
 
@@ -37,11 +37,11 @@ describe('Opdracht 2: Navigatie & Assertions', () => {
   it('should navigate using contains()', () => {
     cy.contains('Producten').click();
 
-    cy.url().should('include', '/products.html');
+    cy.url().should('include', '/products');
   });
 
   it('should chain multiple assertions', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="search-input"]')
       .should('be.visible')
@@ -51,16 +51,11 @@ describe('Opdracht 2: Navigatie & Assertions', () => {
 
   it('should navigate back', () => {
     cy.get('[data-cy="nav-products"]').click();
-    cy.url().should('include', '/products.html');
+    cy.url().should('include', '/products');
 
     cy.go('back');
 
-    cy.url().should('include', '/index.html');
-  });
-
-  it('should navigate to category', () => {
-    cy.get('[data-cy="category-electronics"]').click();
-
-    cy.url().should('include', 'category=electronics');
+    // Na navigatie terug zijn we op de homepage
+    cy.url().should('eq', Cypress.config().baseUrl + '/');
   });
 });

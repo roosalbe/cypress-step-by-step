@@ -16,8 +16,8 @@
  */
 Cypress.Commands.add('login', (email: string, password: string) => {
   cy.visit('/login');
-  cy.get('[data-cy="email-input"]').type(email);
-  cy.get('[data-cy="password-input"]').type(password);
+  cy.get('[data-cy="username"]').type(email);
+  cy.get('[data-cy="password"]').type(password);
   cy.get('[data-cy="login-button"]').click();
   cy.url().should('include', '/dashboard');
   cy.get('[data-cy="welcome-card"]').should('be.visible');

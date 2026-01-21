@@ -14,7 +14,7 @@ function DashboardPage() {
       <h1 className="page-title">Dashboard</h1>
 
       <div className="welcome-card" data-cy="welcome-card">
-        <h2>Welkom terug, {user?.name}!</h2>
+        <h2 data-cy="welcome-message">Welkom terug, {user?.name}!</h2>
         <p>Je bent ingelogd als {user?.email}</p>
       </div>
 

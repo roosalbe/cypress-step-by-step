@@ -22,11 +22,11 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
   });
 
   it('should use fixture for mocking', () => {
-    cy.intercept('GET', '/api/products.json', {
+    cy.intercept('GET', '**/api/products*', {
       fixture: 'products.json'
     }).as('products');
 
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.wait('@products');
 
@@ -56,16 +56,16 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
 
     it('should use user from fixture for login', () => {
       const user = testUsers[0];
-      cy.login(user.username, 'cypress123');
+      cy.login(user.email || user.username, 'cypress123');
       cy.url().should('include', '/dashboard');
     });
   });
 
   it('should use fixture for form data', () => {
     cy.fixture('testdata.json').then((data) => {
-      cy.loginViaApi('student');
+      cy.loginViaApi('student@test.nl', 'cypress123');
       cy.addToCart(1, 1);
-      cy.visit('/checkout.html');
+      cy.visit('/checkout');
 
       cy.get('[data-cy="firstName"]').type(data.checkoutForm.firstName);
       cy.get('[data-cy="lastName"]').type(data.checkoutForm.lastName);
@@ -95,12 +95,12 @@ describe('Opdracht 17: Fixtures & Testdata', () => {
   });
 
   it('should use environment variables', () => {
-    const username = Cypress.env('testUser') || 'student';
+    const username = Cypress.env('testUser') || 'student@test.nl';
     const password = Cypress.env('testPassword') || 'cypress123';
 
     cy.log(`Using user: ${username}`);
 
-    cy.visit('/login.html');
+    cy.visit('/login');
     cy.get('[data-cy="username"]').type(username);
     cy.get('[data-cy="password"]').type(password);
     cy.get('[data-cy="login-button"]').click();

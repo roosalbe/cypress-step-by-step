@@ -4,17 +4,16 @@
 
 describe('Opdracht 9: Debugging Oefeningen', () => {
   beforeEach(() => {
-    cy.visit('/products.html');
+    cy.visit('/products');
   });
 
   it('should use cy.log for debugging', () => {
     cy.log('Start: Zoeken naar producten');
 
     cy.get('[data-cy="search-input"]').type('Laptop');
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.log('Zoekopdracht ingevoerd: Laptop');
-
-    cy.wait(500);
 
     cy.get('[data-cy="product-card"]').then(($cards) => {
       cy.log(`Gevonden: ${$cards.length} producten`);
@@ -42,7 +41,7 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
     cy.screenshot('products-initial');
 
     cy.get('[data-cy="category-filter"]').select('electronics');
-    cy.wait(500);
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.screenshot('products-filtered');
 
@@ -51,11 +50,13 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
 
   it('should find and fix failing selector', () => {
     cy.get('[data-cy="search-input"]').type('test');
+    cy.get('[data-cy="apply-filters"]').click();
     cy.get('[data-cy="product-card"]').should('exist');
   });
 
   it('should handle timing issues', () => {
     cy.get('[data-cy="search-input"]').type('Laptop');
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0)
@@ -68,7 +69,7 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
       console.log('Request:', req.method, req.url);
     });
 
-    cy.visit('/products.html');
+    cy.visit('/products');
   });
 
   it('should use then() to inspect values', () => {
@@ -84,17 +85,16 @@ describe('Opdracht 9: Debugging Oefeningen', () => {
       .invoke('text')
       .then((priceText) => {
         cy.log(`Eerste prijs: ${priceText}`);
-        const price = parseFloat(priceText.replace('€', '').replace('.', '').replace(',', '.'));
+        const price = parseFloat(priceText.replace('€', '').replace('.', '').replace(',', '.').trim());
         expect(price).to.be.greaterThan(0);
       });
   });
 
   it('should fix multiple issues in this test', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     cy.get('[data-cy="search-input"]').type('Mouse');
-
-    cy.wait(500);
+    cy.get('[data-cy="apply-filters"]').click();
 
     cy.get('[data-cy="product-card"]')
       .should('have.length.greaterThan', 0);
