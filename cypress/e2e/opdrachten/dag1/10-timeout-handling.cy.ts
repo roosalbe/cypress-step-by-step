@@ -166,7 +166,7 @@ describe('Opdracht 10: Timeout Handling', () => {
    *
    * TODO: Test gedrag bij trage API (preview voor Dag 2)
    */
-  it('should handle slow API response', () => {
+  it.only('should handle slow API response', () => {
     // Intercept en vertraag de response
     cy.intercept('GET', '**/api/products', (req) => {
       req.on('response', (res) => {
@@ -181,7 +181,7 @@ describe('Opdracht 10: Timeout Handling', () => {
     // cy.wait('@slowProducts', { timeout: 10000 });
 
     // TODO: Maak onderstaande werkend
-    cy.get('[data-cy="product-card"]')
+    cy.get('[data-cy="product-card"]', {timeout: 15000})
       .should('have.length.greaterThan', 0);
   });
 });

@@ -19,7 +19,7 @@ describe('Opdracht 16: cy.intercept() - Mocking', () => {
    *
    * TODO: Vervang de echte response met mock data
    */
-  it('should mock with static data', () => {
+  it.only('should mock with static data', () => {
     // TODO: Kijk naar onderstaande call en probeer de mock data aan te passen en kijk hoe de UI verandert
     cy.intercept('GET', '**/api/products', {
       statusCode: 200,

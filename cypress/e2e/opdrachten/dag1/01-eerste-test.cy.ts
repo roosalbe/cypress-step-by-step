@@ -22,9 +22,11 @@ describe('Opdracht 1: Eerste Test', () => {
    */
   it.only('should visit the homepage', () => {
     // TODO: Bezoek de homepage
+    cy.visit("/")
 
     // TODO: Controleer dat de pagina geladen is door te checken
     // dat de titel zichtbaar is.
+    cy.get('[data-cy="hero-title"]').should("be.visible")
   });
 
   /**
@@ -34,8 +36,10 @@ describe('Opdracht 1: Eerste Test', () => {
    *
    * Tip: Gebruik cy.title() en .should('contain', '...')
    */
-  it('should have the correct page title', () => {
+  it.only('should have the correct page title', () => {
     // TODO: Check dat de titel "Cypress Shop" bevat
+    cy.visit("/")
+    cy.title().should("contain", "Cypress Shop")
   });
 
   /**
@@ -44,10 +48,12 @@ describe('Opdracht 1: Eerste Test', () => {
    * TODO: Controleer dat de hero sectie correct weergegeven wordt
    */
   it('should display the hero section', () => {
+    cy.visit("/")
     // TODO: Check dat de hero title zichtbaar is en "Welkom" bevat
-
+    cy.get('[data-cy="hero-title"]').should("be.visible").and("contain.text", "Welkom")
     // TODO: Check dat de hero subtitle zichtbaar is
-
+    cy.get('[data-cy="hero-subtitle"]').should("be.visible");
+    cy.get('[data-cy="nav-products"]').should("be.visible");
     // TODO: Check dat de "Bekijk Producten" button zichtbaar is
   });
 

@@ -69,6 +69,26 @@
       "lastName": "",
       "role": "user",
       "createdAt": "2026-01-21T13:44:22.038Z"
+    },
+    {
+      "id": "34c2be8e-9646-45fa-8d7f-d30de4483134",
+      "email": "testuser_1769160394014@test.nl",
+      "password": "$2a$10$k5aPHODC4oI2JrsvVy/.vOve4wmq4KTtRriSMMQzx4o7WZItMxKZ.",
+      "name": "Test User",
+      "firstName": "",
+      "lastName": "",
+      "role": "user",
+      "createdAt": "2026-01-23T09:26:34.114Z"
+    },
+    {
+      "id": "ea9a6621-ea6f-4f32-b364-9fec9e3572d5",
+      "email": "testuser_1769160412845@test.nl",
+      "password": "$2a$10$7M5kiGw0.WEVQNB6RbT6BeEcijpJwg5HVJJzqlFxTKGdT2gi3hXTK",
+      "name": "Test User",
+      "firstName": "",
+      "lastName": "",
+      "role": "user",
+      "createdAt": "2026-01-23T09:26:52.920Z"
     }
   ],
   "products": [

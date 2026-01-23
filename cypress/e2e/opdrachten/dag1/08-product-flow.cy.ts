@@ -14,7 +14,7 @@
 
 describe('Opdracht 8: Product & Cart Flow', () => {
   beforeEach(() => {
-    // Login
+    
   });
 
   /**

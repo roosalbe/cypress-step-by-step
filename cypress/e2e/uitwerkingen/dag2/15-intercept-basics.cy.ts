@@ -5,7 +5,7 @@
 describe('Opdracht 15: cy.intercept() Basics', () => {
   const apiUrl = Cypress.env('apiUrl');
 
-  it('should intercept a GET request', () => {
+  it.only('should intercept a GET request', () => {
     cy.intercept('GET', '**/api/products*').as('getProducts');
     cy.visit('/products');
     cy.wait('@getProducts');

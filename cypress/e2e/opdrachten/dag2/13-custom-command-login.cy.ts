@@ -19,9 +19,10 @@ describe('Opdracht 13: Custom Command - Login', () => {
    *
    * Het login command bestaat al in commands.ts
    */
-  it('should use existing login command', () => {
+  it.only('should use existing login command', () => {
+    cy.visit("/login");
     // Gebruik het bestaande custom command om in te loggen via de UI
-
+    cy.login('student', 'cypress123');
 
     // Valideer dat je ingelogd ben
     cy.url().should('include', '/dashboard');

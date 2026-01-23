@@ -71,7 +71,6 @@ describe('Opdracht 4: Formulier Interacties', () => {
 
     cy.get('[data-cy="username"]').type('student@test.nl');
     cy.get('[data-cy="password"]').type('cypress123{enter}');
-
     cy.url().should('include', '/dashboard');
   });
 });
