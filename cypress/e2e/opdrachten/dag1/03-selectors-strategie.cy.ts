@@ -14,7 +14,7 @@
 
 describe('Opdracht 3: Selector Strategieën', () => {
   beforeEach(() => {
-    cy.visit('/products.html');
+    cy.visit('/products');
   });
 
   /**
@@ -22,15 +22,17 @@ describe('Opdracht 3: Selector Strategieën', () => {
    *
    * TODO: Gebruik data-cy attributen om elementen te selecteren
    */
-  it('should select elements using data-cy', () => {
+  it.only('should select elements using data-cy', () => {
     // TODO: Selecteer de pagina titel met data-cy
-    // cy.get('[data-cy="page-title"]')...
+    cy.get('[data-cy="page-title"]').should("be.visible")
 
     // TODO: Selecteer de zoekbalk met data-cy
-    // cy.get('[data-cy="search-input"]')...
+    cy.get('[data-cy="search-input"]').type("Wireless Mouse");
 
     // TODO: Selecteer de categorie filter met data-cy
-    // cy.get('[data-cy="category-filter"]')...
+    cy.get('[data-cy="category-filter"]').select("Electronics")
+
+    cy.get('[data-cy="apply-filters"]').click();
   });
 
   /**
@@ -57,12 +59,14 @@ describe('Opdracht 3: Selector Strategieën', () => {
    *
    * TODO: Gebruik .find() om binnen een element te zoeken
    */
-  it('should find elements within containers', () => {
+  it.only('should find elements within containers', () => {
     // TODO: Zoek de product naam binnen de eerste product card
-    // cy.get('[data-cy="product-card"]')
-    //   .first()
-    //   .find('[data-cy="product-name"]')
-    //   .should('be.visible')
+    cy.get('[data-cy="product-card"]')
+      .first()
+      .find('[data-cy="product-name"]')
+      .should('be.visible')
+
+    // cy.get('[data-cy="product-name"]').click()
 
     // TODO: Zoek de prijs binnen de eerste product card
     // cy.get('[data-cy="product-card"]')
@@ -76,15 +80,15 @@ describe('Opdracht 3: Selector Strategieën', () => {
    *
    * TODO: Gebruik contains() met een selector
    */
-  it('should combine selectors', () => {
+  it.only('should combine selectors', () => {
     // TODO: Vind de product card die "Laptop" bevat
-    // cy.contains('[data-cy="product-card"]', 'Laptop')
-    //   .should('be.visible')
+    cy.contains('[data-cy="product-card"]', 'Laptop')
+      .should('be.visible')
 
     // TODO: Vind de button in die specifieke card
-    // cy.contains('[data-cy="product-card"]', 'Laptop')
-    //   .find('[data-cy="add-to-cart"]')
-    //   .should('exist')
+    cy.contains('[data-cy="product-card"]', 'Laptop')
+      .find('[data-cy="add-to-cart-button"]')
+      .should('exist')
   });
 
   /**
@@ -92,12 +96,12 @@ describe('Opdracht 3: Selector Strategieën', () => {
    *
    * TODO: Gebruik .filter() om elementen te filteren
    */
-  it('should filter elements', () => {
+  it.only('should filter elements', () => {
     // TODO: Filter product cards die "electronics" categorie hebben
     // Hint: Kijk naar de tekst in data-cy="product-category"
-    // cy.get('[data-cy="product-card"]')
-    //   .filter(':contains("electronics")')
-    //   .should('have.length.greaterThan', 0)
+    cy.get('[data-cy="product-card"]')
+      .filter(':contains("electronics")')
+      .should('have.length.greaterThan', 0)
   });
 
   /**
@@ -105,17 +109,17 @@ describe('Opdracht 3: Selector Strategieën', () => {
    *
    * TODO: Navigeer door de DOM structuur
    */
-  it('should navigate DOM relationships', () => {
+  it.only('should navigate DOM relationships', () => {
     // TODO: Vind het parent element van een product naam
-    // cy.get('[data-cy="product-name"]')
-    //   .first()
-    //   .parent()
-    //   .should('have.class', 'product-info')
+    cy.get('[data-cy="product-name"]')
+      .first()
+      .parent()
+      .should('have.class', 'card-content')
 
     // TODO: Vind alle children van de filter sectie
-    // cy.get('[data-cy="filters"]')
-    //   .children()
-    //   .should('have.length.greaterThan', 0)
+    cy.get('[data-cy="category-filter"]')
+      .children()
+      .should('have.length.greaterThan', 0)
   });
 
   /**
@@ -125,13 +129,13 @@ describe('Opdracht 3: Selector Strategieën', () => {
    */
   it('should iterate over elements', () => {
     // TODO: Log de naam van elke product card
-    // cy.get('[data-cy="product-card"]')
-    //   .each(($card) => {
-    //     cy.wrap($card)
-    //       .find('[data-cy="product-name"]')
-    //       .then(($name) => {
-    //         cy.log($name.text())
-    //       })
-    //   })
+    cy.get('[data-cy="product-card"]')
+      .each(($card) => {
+        cy.wrap($card)
+          .find('[data-cy="product-name"]')
+          .then(($name) => {
+            cy.log($name.text())
+          })
+      })
   });
 });

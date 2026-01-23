@@ -35,15 +35,15 @@ describe('Opdracht 4: Formulier Interacties', () => {
    */
   it('should clear and type new text', () => {
     cy.visit('/products.html');
-
+    const varA = "Keyboard"
     // TODO: Type eerst "Test" in de zoekbalk
-    // cy.get('[data-cy="search-input"]').type('Test')
+    cy.get('[data-cy="search-input"]').type('Test')
 
     // TODO: Clear de input en type "Keyboard"
-    // cy.get('[data-cy="search-input"]').clear().type('Keyboard')
+    cy.get('[data-cy="search-input"]').clear().type('Keyboard')
 
     // TODO: Controleer de nieuwe waarde
-    // cy.get('[data-cy="search-input"]').should('have.value', 'Keyboard')
+    cy.get('[data-cy="search-input"]').should('have.value', 'Keyboard')
   });
 
   /**
@@ -52,7 +52,7 @@ describe('Opdracht 4: Formulier Interacties', () => {
    * TODO: Selecteer een optie uit een dropdown
    */
   it('should select from dropdown', () => {
-    cy.visit('/products.html');
+    cy.visit('/products');
 
     // TODO: Selecteer "electronics" uit de category filter
     // cy.get('[data-cy="category-filter"]').select('electronics')

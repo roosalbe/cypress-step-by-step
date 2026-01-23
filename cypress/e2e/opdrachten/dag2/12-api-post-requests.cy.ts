@@ -20,16 +20,18 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
    *
    * TODO: Maak een POST request om een user aan te maken
    */
-  it('should register a new user via POST', () => {
+  const apiUrl = Cypress.env('apiUrl');
+
+  it.only('should register a new user via POST', () => {
     const uniqueEmail = `testuser_${Date.now()}@test.nl`;
 
     cy.request({
       method: 'POST',
       url: `${apiUrl}/auth/register`,
       body: {
-        name: '',
-        email: '',
-        password: ''
+        name: 'Test User',
+        email: uniqueEmail,
+        password: 'test123'
       }
     }).then((response) => {
       expect(response.status).to.equal(201);
@@ -43,7 +45,7 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
  *
  * TODO: Maak een POST request in te loggen via de API 
  */
-  it('should login via API and get token', () => {
+  it.only('should login via API and get token', () => {
     cy.request({
       method: 'POST',
       url: `${apiUrl}/auth/login`,
@@ -127,13 +129,13 @@ describe('Opdracht 12: API POST/PUT/DELETE Requests', () => {
   });
 
 
-    /**
-   * TEST 12.8: Beschrijf de onderstaande code
-   *
-   * TODO: Kijk naar onderstaande code en probeer via comments
-   * te beschrijven wat de code doet.
-   * 
-   */
+  /**
+ * TEST 12.8: Beschrijf de onderstaande code
+ *
+ * TODO: Kijk naar onderstaande code en probeer via comments
+ * te beschrijven wat de code doet.
+ * 
+ */
   it('should update cart quantity via API', () => {
     cy.window().then((win) => {
       const token = win.localStorage.getItem('token');

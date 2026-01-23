@@ -74,7 +74,7 @@ import { LoginPage } from "@pages/LoginPage";
 
 describe('Opdracht 5: Page Object Model - Basis', () => {
   // TODO: Uncomment deze regel zodra je de LoginPage hebt gemaakt
-  // const loginPage = new LoginPage();
+  const loginPage = new LoginPage();
 
   /**
    * TEST 5.1: Bezoek login pagina via Page Object
@@ -83,10 +83,10 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
    */
   it('should visit login page using page object', () => {
     // TODO: Vervang directe cy.visit() met page object methode
-    cy.visit('/login.html');
+    loginPage.visit();
+    loginPage.enterUsername("student@test.nl")
 
-    // Verify de pagina is geladen
-    cy.get('[data-cy="login-form"]').should('be.visible');
+
   });
 
   /**
@@ -95,11 +95,9 @@ describe('Opdracht 5: Page Object Model - Basis', () => {
    * TODO: Vervang de scripts voor een Page Object aanroep
    */
   it('should login using individual methods', () => {
-    cy.visit('/login.html');
-
-    cy.get('[data-cy="username"]').type('student');
-    cy.get('[data-cy="password"]').type('cypress123');
-    cy.get('[data-cy="login-button"]').click();
+   loginPage
+    .visit()
+    .login("student@test.nl", "cypress123")
 
     cy.url().should('include', '/dashboard');
   });

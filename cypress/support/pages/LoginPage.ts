@@ -14,9 +14,9 @@ export class LoginPage {
   /**
    * Navigeer naar de login pagina
    */
-  visit(): this {
+  visit() {
     cy.visit('/login');
-    return this;
+    return this
   }
 
   /**
@@ -46,7 +46,7 @@ export class LoginPage {
   /**
    * Volledige login flow
    */
-  login(email: string, password: string): this {
+  login(email: string, password: string) {
     this.typeEmail(email);
     this.typePassword(password);
     this.clickLogin();

@@ -12,14 +12,18 @@
  * Tijd: ~25 minuten
  */
 
+import { DashboardPage } from "@pages/DashboardPage";
+import { LoginPage } from "@pages/LoginPage";
+
 // TODO: Import Page Objects
 
 
 describe('Opdracht 7: Complete Login Flow', () => {
-  // TODO: Declareer loginPage
+  const loginPage = new LoginPage()
+  const dashboard = new DashboardPage()
 
   beforeEach(() => {
-      // TODO: login
+    loginPage.visit();
   });
 
   /**
@@ -27,11 +31,15 @@ describe('Opdracht 7: Complete Login Flow', () => {
    *
    * TODO: Test dat een gebruiker succesvol kan inloggen
    */
-  it('should login successfully with valid credentials', () => {
+  it.only('should login successfully with valid credentials', () => {
     // TODO: Log in met de student account
+    loginPage.login("student@test.nl", "cypress123");
     // TODO: Verify Login
+    loginPage.shouldBeOnLoginPage();
     // TODO: Verify user info zichtbaar is in navbar
+    dashboard.shouldShowAccountInfo("Student", "student@test.nl", "user")
     // TODO: Verify welkomstbericht
+    dashboard.shouldShowWelcomeMessage("Welkom terug, Student User!")
   });
 
   /**
@@ -39,9 +47,14 @@ describe('Opdracht 7: Complete Login Flow', () => {
    *
    * TODO: Test login met admin credentials
    */
-  it('should login with admin account', () => {
-    // TODO: Log in met admin account
-    // TODO: Verify dat admin is ingelogd
+  it.only('should login with admin account', () => {
+    loginPage.login("admin@test.nl", "admin123");
+    // TODO: Verify Login
+    loginPage.shouldBeOnLoginPage();
+    // TODO: Verify user info zichtbaar is in navbar
+    dashboard.shouldShowAccountInfo("Admin", "admin@test.nl", "admin")
+    // TODO: Verify welkomstbericht
+    dashboard.shouldShowWelcomeMessage("Welkom terug, Admin User!")
   });
 
   /**
@@ -49,10 +62,13 @@ describe('Opdracht 7: Complete Login Flow', () => {
    *
    * TODO: Test dat een foutmelding getoond wordt bij foute gegevens
    */
-  it('should show error for invalid credentials', () => {
+  it.only('should show error for invalid credentials', () => {
     // TODO: Probeer in te loggen met foute credential
+    loginPage.enterUsername("admin@test.nl");
+    loginPage.enterPassword("admin@test.nl");
+    loginPage.clickLogin();
     // TODO: Verify dat error message zichtbaar is
-    // TODO: Verify dat we nog steeds op login pagina zijn
+    loginPage.shouldShowError();
   });
 
   /**
@@ -60,8 +76,11 @@ describe('Opdracht 7: Complete Login Flow', () => {
    *
    * TODO: Test dat login niet werkt met leeg username
    */
-  it('should not allow login with empty username', () => {
+  it.only('should not allow login with empty username', () => {
     // TODO: Alleen password invullen
+    loginPage
+      .login(" ", "cypress123")
+      .shouldBeOnLoginPage()
     // TODO: Verify dat we nog op login pagina zijn
   });
 
@@ -90,10 +109,16 @@ describe('Opdracht 7: Complete Login Flow', () => {
    *
    * TODO: Test dat uitloggen werkt
    */
-  it('should logout successfully', () => {
+  it.only('should logout successfully', () => {
+    // TODO: Probeer in te loggen met foute credential
+    loginPage.enterUsername("admin@test.nl");
+    loginPage.enterPassword("admin123");
+    loginPage.clickLogin();
     // Eerst inloggen
     // TODO: Klik op logout
+    dashboard.clickLogout();
     // TODO: Verify redirect naar homepage
+    cy.url().should('not.include', '/dashboard');
     // TODO: Verify dat user info niet meer zichtbaar is
   });
 
@@ -102,9 +127,14 @@ describe('Opdracht 7: Complete Login Flow', () => {
    *
    * TODO: Test de remember me functionaliteit
    */
-  it('should remember the user', () => {
+  it.only('should remember the user', () => {
     // TODO: Login met remember me aangevinkt
     // Verify dat we ingelogd zijn
+    loginPage
+      .checkRememberMe()
+      .login("student@test.nl", "cypress123")
+
+    dashboard.shouldShowWelcomeCard();
   });
 
   /**

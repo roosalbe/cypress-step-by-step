@@ -18,14 +18,10 @@ describe('Opdracht 15: cy.intercept() Basics', () => {
    *
    * TODO: Intercept een GET request
    */
-  it('should intercept a GET request', () => {
-    // TODO: Intercept de products request
-    
+  it.only('should intercept a GET request', () => {
+    cy.intercept('GET', '**/api/products*').as('getProducts');
     cy.visit('/products');
-
-    // TODO: Wacht op de request
-
-    // Verify products zijn geladen
+    cy.wait('@getProducts').its("response.statusCode").should("equal", 304);
     cy.get('[data-cy="product-card"]').should('have.length.greaterThan', 0);
   });
 

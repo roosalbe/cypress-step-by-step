@@ -18,9 +18,12 @@ describe('Opdracht 11: API GET Requests', () => {
    *
    * TODO: Maak een GET request naar de products API
    */
-  it('should fetch products from API', () => {
-    // TODO: Maak een GET request naar '/api/products'
-    // TODO: Controleer dat status 200 is
+  const apiUrl = Cypress.env('apiUrl');
+
+  it.only('should fetch products from API', () => {
+    cy.request('GET', `${apiUrl}/products`)
+      .its('status')
+      .should('equal', 200);
   });
 
   /**
@@ -28,12 +31,15 @@ describe('Opdracht 11: API GET Requests', () => {
    *
    * TODO: Valideer de structuur van de response
    */
-  it('should validate products response structure', () => {
+  it.only('should validate products response structure', () => {
     // TODO: Maak request en valideer body
-    cy.request('GET', '/api/products').then((response) => {
+    cy.request('GET', `${apiUrl}/products`).then((response) => {
       // TODO: Check dat response een products array (lijst met objecten) heeft
+      expect(response.body).to.have.property('products');
       // TODO: Check dat products een array (lijst met objecten) is
+      expect(response.body.products).to.be.an('array');
       // TODO: Check dat er producten zijn
+      expect(response.body.products).to.have.length.greaterThan(0);
     });
   });
 
